@@ -1,25 +1,37 @@
-{% load static %}
 <!doctype html>
+{% load static %}
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <title>{% block title %} {% endblock %}</title>
-    {% block staticcss %}
-    {% endblock %}
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}" />
+    <title>Keep Control</title>
+    <link rel="icon" type="image/png" href="../static/painel-de-controle.png">
 </head>
 <body>
-    <div class="container">
-        {% block main %} {% endblock %}
-    </div>
 
-    {% block static %}
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
-    {% endblock %}
-</body>
+    <header>
+      <h2>Keep Control - Watch</h2>
+    </header>
+    
+    <section>
+      <nav>
+        <ul>
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li><a href="{% url 'animes:animes' %}">Animes</a></li>
+            <li><a href="{% url 'mangas:mangas' %}">Mangás</a></li>
+            <li><a href="{% url 'series:series' %}">Séries</a></li>
+            <li><a href="{% url 'movies:movies' %}">Filmes</a></li>
+        </ul>
+      </nav>
+      {% block principal%} {% endblock%}
+    </section>
+    
+    <footer>
+      <p>Todos os direitos reservados a &copy; Ewerson Pulquerio Santos, 2023</p>
+    </footer>
+    
+    </body>
 </html>
