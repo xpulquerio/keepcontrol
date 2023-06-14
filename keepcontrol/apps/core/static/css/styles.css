@@ -1,14 +1,7 @@
 * {
     box-sizing: border-box;
   }
-
-  table tr:nth-child(even) {
-    background-color: #3f3b66;
-  }
-  table tr:nth-child(odd) {
-    background-color: #3b5d66;
-  }
-
+ 
   body {
     font-family: cursive; /* Arial, Helvetica, sans-serif;*/
   }
@@ -92,6 +85,20 @@
   }
 
   /*STYLES DA TABLE*/
- 
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
   
   
