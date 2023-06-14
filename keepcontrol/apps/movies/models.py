@@ -17,5 +17,5 @@ class Movies(models.Model):
         return self.title
     
     class Meta:
-        ordering = ['year']
+        ordering = ['collection', 'title']
     
