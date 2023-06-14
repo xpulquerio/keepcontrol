@@ -3,9 +3,27 @@
 {% block principal %}
 <article>
     <h1>Lista de Filmes</h1>
-    <ul>
-        <li>Filme 1</li>
-        <li>Filme 2</li>
-    </ul>
+    <!-- Aqui começa a lista dos filmes -->
+    <table>
+        <tr>
+            <th>Título</th>
+            <th>Título em Inglês</th>
+            <th>Coleção</th>
+            <th>Ano</th>
+          </tr>
+        {% for movie in movies %}
+        <tr>
+            <td>{{movie.title}}</td>
+            <td>{{movie.title_en}}</td>
+            <td>{{movie.collection}}</td>
+            <td>{{movie.year}}</td>
+        </tr>
+        
+        {%empty%}
+        <tr>
+            <td>nhum filme encontrado na plataforma</td>
+        </tr>
+    {% endfor %}
+    </table>
   </article>
   {% endblock %}
