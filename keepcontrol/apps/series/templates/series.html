@@ -9,12 +9,13 @@
         <tr>
             <th>Título</th>
             <th>Temporadas</th>
-            <th></th>
+            <th>Situação</th>
         </tr>
         {% for serie in series %}
         <tr>
             <td>{{serie.title}}</td>
             <td>{{serie.qtd_temps}}</td>
+            <td>{{serie.situation}}</td>
             <td><a class="detalhe" href="{{ serie.get_absolute_url }}">Detalhe</a></td>
         </tr>
         {%empty%}

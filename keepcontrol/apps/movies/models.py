@@ -15,7 +15,7 @@ class Movie(models.Model):
     director = models.CharField('Diretor', null=True, max_length=255, blank=True)
     collection = models.CharField('Coleção', null=True, max_length=255, blank=True)
     year = models.IntegerField('Ano', null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
 
     objects = MovieManager()
 

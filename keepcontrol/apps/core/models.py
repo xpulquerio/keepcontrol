@@ -28,6 +28,7 @@ class Episode(models.Model):
     
     def get_qtd_episodes(id):
         return Episode.objects.filter(season_id=id).count() #Número de Episódios da Temporada com este ID
+    
     class Meta:
         verbose_name = 'Episódio'
         verbose_name_plural = 'Episódios'

@@ -8,14 +8,14 @@
     <table>
         <tr>
             <th>Título</th>
-            <th>Título em Inglês</th>
+            <th>Direção</th>
             <th>Coleção</th>
             <th>Ano</th>
           </tr>
         {% for movie in movies %}
         <tr>
             <td>{{movie.title}}</td>
-            <td>{% if movie.title_en %}{{movie.title_en}} {% endif %}</td>
+            <td>{% if movie.director %}{{movie.director}} {% endif %}</td>
             <td>{% if movie.collection %}{{movie.collection}} {% endif %}</td>
             <td>{% if movie.year %}{{movie.year}} {% endif %}</td>
         </tr>
