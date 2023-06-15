@@ -4,9 +4,10 @@ from django.db import models
    
 class Serie(models.Model):
     title = models.CharField('Título', max_length=255)
-    title_en = models.CharField('Título em Inglês', null=True, max_length=255, blank=True)
-    autor = models.CharField('Autor', null=True, max_length=255, blank=True)
+    or_title = models.CharField('Título original', null=True, max_length=255, blank=True)
+    director = models.CharField('Diretor', null=True, max_length=255, blank=True)
     situation = models.CharField('Situação', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__ (self):
         return self.title
@@ -17,4 +18,5 @@ class Serie(models.Model):
     class Meta:
         verbose_name = 'Série'
         verbose_name_plural = 'Séries'
+        ordering = ['created_at']
     

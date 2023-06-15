@@ -11,10 +11,11 @@ class MovieManager(models.Manager): #Custom Manager para fazer pesquisas... Movi
    
 class Movie(models.Model):
     title = models.CharField('Título', max_length=255)
-    title_en = models.CharField('Título em inglês', null=True, max_length=255, blank=True)
-    autor = models.CharField('Autor', null=True, max_length=255, blank=True)
+    or_title = models.CharField('Título original', null=True, max_length=255, blank=True)
+    director = models.CharField('Diretor', null=True, max_length=255, blank=True)
     collection = models.CharField('Coleção', null=True, max_length=255, blank=True)
     year = models.IntegerField('Ano', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     objects = MovieManager()
 
@@ -24,5 +25,5 @@ class Movie(models.Model):
     class Meta:
         verbose_name = 'Filme'
         verbose_name_plural = 'Filmes'
-        ordering = ['collection', 'title']
+        ordering = ['-created_at']
     
