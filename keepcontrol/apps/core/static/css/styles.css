@@ -92,7 +92,7 @@
   }
   
   td, th {
-    border: 1px solid #dddddd;
+    /* border: 1px solid #dddddd; */
     text-align: left;
     padding: 8px;
   }
@@ -101,4 +101,17 @@
     background-color: #dddddd;
   }
   
-  
+/*botão de detalhes*/
+
+.detalhe:link, .detalhe:visited {
+  background-color: #252392;
+  color: white;
+  padding: 5px 10px 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.detalhe:hover, .detalhe:active {
+  background-color: #383737;
+}

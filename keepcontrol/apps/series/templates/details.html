@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block principal %}
+<article>
+    <h1>{{serie.title}}</h1>
+    <p>Status da série: <b>{{serie.situation}}</b></p>
+    <table>
+        <tr>
+            <th>Temporada</th>
+            <th>Episódios</th>
+        </tr>
+        {% for season in seasons %}
+        <tr>
+            <td>{{season.title}}</a></td>
+            <td>{{season.qtd_eps}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td><b>TOTAL</b></td>
+            <td><b>{{serie.qtd_total_eps}}</b></td>
+            
+        </tr>
+    </table>
+
+  </article>
+  {% endblock %}

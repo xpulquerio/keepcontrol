@@ -24,7 +24,11 @@
             <li class="{% if request.resolver_match.url_name == 'mangas' %}active{% endif %}"><a href="{% url 'mangas:mangas' %}">Mangás</a></li>
             <li class="{% if request.resolver_match.url_name == 'series' %}active{% endif %}"><a href="{% url 'series:series' %}">Séries</a></li>
             <li class="{% if request.resolver_match.url_name == 'movies' %}active{% endif %}"><a href="{% url 'movies:movies' %}">Filmes</a></li>
-        </ul>
+          </ul>
+          <br>
+          <ul>
+            <li><a href="http://localhost:8000/admin/">Painel</a></li>
+          </ul>
       </nav>
       {% block principal %} {% endblock%}
     </section>

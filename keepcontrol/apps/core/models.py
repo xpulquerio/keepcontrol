@@ -10,6 +10,9 @@ class Season(models.Model):
 
     def __str__ (self):
         return self.title
+    
+    def get_qtd_seasons(id):
+        return Season.objects.filter(serie_id=id).count() #Número de Temporadas da Série com este ID
 
 class Episode(models.Model):
     title = models.CharField(max_length=255)
@@ -20,6 +23,9 @@ class Episode(models.Model):
 
     def __str__ (self):
         return self.title
+    
+    def get_qtd_episodes(id):
+        return Episode.objects.filter(season_id=id).count() #Número de Episódios da Temporada com este ID
 
 
     
