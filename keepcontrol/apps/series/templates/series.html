@@ -3,9 +3,24 @@
 {% block principal %}
 <article>
     <h1>Lista de Séries</h1>
-    <ul>
-        <li>Série 1</li>
-        <li>Série 2</li>
-    </ul>
+    <p><b>Quantidade de séries cadastradas: {{qtd_series}}</b></p>
+    <!-- Aqui começa a lista dos filmes -->
+    <table>
+        <tr>
+            <th>Título</th>
+            <th>Temporadas</th>
+        </tr>
+        {% for serie in series %}
+        <tr>
+            <td>{{serie.title}}</td>
+            <td>{{serie.qtd_temps}}</td>
+            <td></td>
+        </tr>
+        {%empty%}
+        <tr>
+            <td>Nenhum Temporada encontrado na plataforma</td>
+        </tr>
+        {% endfor %}
+    </table>
   </article>
   {% endblock %}
