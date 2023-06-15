@@ -1,12 +1,12 @@
 from django.shortcuts import render
-from .models import Movies
+from .models import Movie
 # Create your models here.
 
 
 
 def movies (request):
     
-    movies = Movies.objects.all()
+    movies = Movie.objects.all()
     qtd_movies = len(movies)
 
     template_name = 'movies.html'
