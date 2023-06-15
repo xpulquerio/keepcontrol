@@ -27,7 +27,7 @@ def details (request, id):
     serie.qtd_temps = Season.get_qtd_seasons(id) #Incluindo quantidade de temporadas como atributo de serie
     serie.qtd_total_eps = 0
 
-    seasons = Season.objects.all().filter(serie_id=id)
+    seasons = Season.get_seasons(id_da_serie=id)
     for season in seasons:
         season.qtd_eps = Episode.get_qtd_episodes(season.id)
         serie.qtd_total_eps += season.qtd_eps
@@ -35,5 +35,7 @@ def details (request, id):
     context['seasons'] = seasons
     context['serie'] = serie
     template_name = 'details.html'
+
+    
 
     return render(request, template_name, context)

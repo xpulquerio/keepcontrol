@@ -11,11 +11,14 @@ class Season(models.Model):
     def __str__ (self):
         return self.title
     
-    def get_qtd_seasons(id):
-        return Season.objects.filter(serie_id=id).count() #Número de Temporadas da Série com este ID
+    def get_qtd_seasons(id_da_serie):
+        return Season.objects.filter(serie_id=id_da_serie).count() #Número de Temporadas da Série com este ID
     class Meta:
         verbose_name = 'Temporada'
         verbose_name_plural = 'Temporadas'
+
+    def get_seasons(id_da_serie):
+        return Season.objects.filter(serie_id=id_da_serie)
 
 class Episode(models.Model):
     title = models.CharField('Episódio', max_length=255)
@@ -29,6 +32,9 @@ class Episode(models.Model):
     def get_qtd_episodes(id):
         return Episode.objects.filter(season_id=id).count() #Número de Episódios da Temporada com este ID
     
+    def get_episodes(id_da_season):
+        return Episode.objects.filter(season_id=id_da_season)
+
     class Meta:
         verbose_name = 'Episódio'
         verbose_name_plural = 'Episódios'
