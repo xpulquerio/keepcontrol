@@ -45,6 +45,7 @@ MY_APPS = [
     'apps.mangas',
     'apps.series',
     'apps.movies',
+    'apps.accounts',
 ]
 
 THIRD_APPS = [
@@ -143,3 +144,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'accounts:dashboard'
+LOGOUT_URL = 'accounts:logout'

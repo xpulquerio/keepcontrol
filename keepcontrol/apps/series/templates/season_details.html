@@ -9,10 +9,18 @@
     <table class="table_c">
         <tr>
             <th>Episódios</th>
+            {% if user.is_authenticated %}
+            <th>Assistido</th>
+            {% else %}
+            {% endif %}
         </tr>
         {% for ep in eps %}
         <tr>
             <td>{{ep.title}}</a></td>
+            {% if user.is_authenticated %}
+            <td>{{user.username}}</td> <!-- Colocar se o episódio já foi assistido pelo usuário-->
+            {% else %}
+            {% endif %}
         </tr>
         {% endfor %}
     </table>

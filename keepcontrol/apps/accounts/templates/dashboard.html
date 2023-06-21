@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block principal %}
+<article>
+        <div>
+            <div>
+                {% block dashboard_content %}
+                <p><strong>Nome</strong>: {{ user.first_name }}</p>
+                <p><strong>Sobrenome</strong>: {{ user.last_name }}</p>
+                <p><strong>Usuário</strong>: {{ user }}</p>
+                <p><strong>E-mail</strong>: {{ user.email }}</p>
+                {% endblock %}
+            </div>
+        </div>
+    </article>
+{%endblock%}

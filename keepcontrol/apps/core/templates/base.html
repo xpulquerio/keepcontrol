@@ -20,13 +20,15 @@
         <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><a href="{% url 'core:home' %}">Home</a></li>
         <li class="{% if request.resolver_match.url_name == 'series' %}active{% endif %}"><a href="{% url 'series:series' %}">Séries</a></li>
         <li class="{% if request.resolver_match.url_name == 'movies' %}active{% endif %}"><a href="{% url 'movies:movies' %}">Filmes</a></li>
-        <li style="float:right"><a href="http://localhost:8000/admin/">Painel</a></li>
+        {% if user.is_authenticated %} <!-- Se há algum usuário autenticado, -->
+        <li><a href="{%url 'accounts:dashboard'%}">Painel</a></li>
+        <li><a href="{%url 'accounts:logout'%}">Sair</a></li>
+        {% else %}
+        <li><a href="{%url 'accounts:login'%}">Entrar</a></li>
+        {% endif %}
       </ul>
   </nav>
-  <header>
-    <h3>Keep Control - O melhor site de controle de conteúdo assistido da internet!</h3>
-  </header>
-
+  
   {% block principal %} {% endblock%}
  
   <footer>

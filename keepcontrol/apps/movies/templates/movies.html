@@ -11,6 +11,10 @@
             <th>Direção</th>
             <th>Coleção</th>
             <th>Ano</th>
+            {% if user.is_authenticated %}
+            <th>{{user.username}}</th> <!-- Colocar se o episódio já foi assistido pelo usuário-->
+            {% else %}
+            {% endif %}
           </tr>
         {% for movie in movies %}
         <tr>
@@ -18,6 +22,10 @@
             <td>{% if movie.director %}{{movie.director}} {% endif %}</td>
             <td>{% if movie.collection %}{{movie.collection}} {% endif %}</td>
             <td>{% if movie.year %}{{movie.year}} {% endif %}</td>
+            {% if user.is_authenticated %}
+            <td>{{user.username}}</td> <!-- Colocar se o episódio já foi assistido pelo usuário-->
+            {% else %}
+            {% endif %}
         </tr>
         
         {%empty%}
