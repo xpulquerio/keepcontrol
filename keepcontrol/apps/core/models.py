@@ -13,12 +13,12 @@ class Season(models.Model):
     
     def get_qtd_seasons(id_da_serie):
         return Season.objects.filter(serie_id=id_da_serie).count() #Número de Temporadas da Série com este ID
-    class Meta:
-        verbose_name = 'Temporada'
-        verbose_name_plural = 'Temporadas'
-
+        
     def get_seasons(id_da_serie):
         return Season.objects.filter(serie_id=id_da_serie)
+    
+    def get_absolute_url(self):
+        return '/series/'+ str(self.serie_id)+'/'+ str(self.id) #retorna a URL do curso
     
     def insert_eps(self, qtd_eps):
         cont = 0
@@ -35,7 +35,11 @@ class Season(models.Model):
                 temp.save()
                 print(temp.title+' inserido!')
                 cont = cont+1
-        return 'Número de episódios adicionados: '+str(cont)         
+        return 'Número de episódios adicionados: '+str(cont)
+    
+    class Meta:
+        verbose_name = 'Temporada'
+        verbose_name_plural = 'Temporadas'
             
 
 class Episode(models.Model):

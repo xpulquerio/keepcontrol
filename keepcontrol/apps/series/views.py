@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Serie
-from apps.core.models import Season
-from apps.core.models import Episode
+from apps.core.models import Season, Episode
+
 # Create your models here.
 
 def series (request):
@@ -19,7 +19,7 @@ def series (request):
 
     return render(request, template_name, context)
 
-def details (request, id):
+def serie_details (request, id):
     context = {}
 
     serie = get_object_or_404(Serie, id=id)
@@ -33,8 +33,20 @@ def details (request, id):
 
     context['seasons'] = seasons
     context['serie'] = serie
-    template_name = 'details.html'
+    template_name = 'serie_details.html'
 
+    return render(request, template_name, context)
+
+def season_details (request, serie_id, season_id):
+    context = {}
     
-
+    season = Season.objects.filter(id=season_id)
+    serie = Serie.objects.filter(id=serie_id)
+    eps = Episode.get_episodes(id_da_season=season_id)
+    
+    context['eps'] = eps
+    context['season'] = season[0]
+    context['serie'] = serie[0]
+    template_name = 'season_details.html'
+    
     return render(request, template_name, context)
