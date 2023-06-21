@@ -19,6 +19,24 @@ class Season(models.Model):
 
     def get_seasons(id_da_serie):
         return Season.objects.filter(serie_id=id_da_serie)
+    
+    def insert_eps(self, qtd_eps):
+        cont = 0
+        for i in range(qtd_eps):
+            nummber_of_ep = i+1
+            title_of_episode_for_insert = 'Episódio '+str(nummber_of_ep) 
+            id_of_season = self.id
+            temp = Episode(title=title_of_episode_for_insert, season_id=id_of_season)
+            if Episode.objects.filter(title=temp.title, season_id=temp.season_id).exists():
+                print(title_of_episode_for_insert+' já existe')
+                #Se o episódio existir, não fazer nada.
+            else:
+                #Se o episódio não existir, inserir no banco.
+                temp.save()
+                print(temp.title+' inserido!')
+                cont = cont+1
+        return 'Número de episódios adicionados: '+str(cont)         
+            
 
 class Episode(models.Model):
     title = models.CharField('Episódio', max_length=255)

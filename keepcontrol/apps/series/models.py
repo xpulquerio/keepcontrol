@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
    
 class Serie(models.Model):
@@ -19,4 +20,22 @@ class Serie(models.Model):
         verbose_name = 'Série'
         verbose_name_plural = 'Séries'
         ordering = ['created_at']
+        
+    def insert_temps(self, qtd_temps):
+            from apps.core.models import Season #Importando dentro da função para evitar importação circular
+            cont = 0
+            for i in range(qtd_temps):
+                nummber_of_season = i+1
+                title_of_season_for_insert = 'Temporada '+str(nummber_of_season) 
+                id_of_serie = self.id
+                temp = Season(title=title_of_season_for_insert, serie_id=id_of_serie)
+                if Season.objects.filter(title=temp.title, serie_id=temp.serie_id).exists():
+                    print(title_of_season_for_insert+' já existe')
+                    #Se a temporada existe, não fazer nada.
+                else:
+                    #Se a temporada não existe, inserir no banco.
+                    temp.save()
+                    print(temp.title+' inserida!')
+                    cont = cont+1
+            return 'Número de temporadas adicionadas: '+str(cont)
     
