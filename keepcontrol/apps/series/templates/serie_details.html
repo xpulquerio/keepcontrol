@@ -2,24 +2,28 @@
 
 {% block principal %}
 <article>
-    <h1>{{serie.title}}</h1>
+    <h1>
+        {% block ordem %}
+            {{serie.title}}
+        {% endblock %}
+    </h1>
     <p>Status da série: <b>{{serie.situation}}</b></p>
-    <table>
+    <table class="table_c">
         <tr>
             <th>Temporada</th>
             <th>Episódios</th>
         </tr>
         {% for season in seasons %}
         <tr>
-            <td>{{season.title}}</a></td>
+            <td><a class="detalhe" href="{{ season.get_absolute_url }}">{{season.title}}</a></td>
             <td>{{season.qtd_eps}}</td>
-            <td><a class="detalhe" href="{{ season.get_absolute_url }}">Detalhe</a></td>          
+            <!-- <td><a class="detalhe" href="{% url 'series:season_details' serie.id season.id %}">Episódios</a></td>           -->
+          
         </tr>
         {% endfor %}
         <tr>
-            <td><b>TOTAL</b></td>
+            <td></td>
             <td><b>{{serie.qtd_total_eps}}</b></td>
-            
         </tr>
     </table>
 

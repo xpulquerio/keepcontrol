@@ -1,9 +1,12 @@
-{% extends "base.html" %}
+{% extends "serie_details.html" %}
 
 {% block principal %}
 <article>
-    <h1>{{serie.title}} - {{season.title}}</h1>
-    <table>
+    {% block ordem %}
+    <h1>{{block.super}} - {{season.title}}</h1>
+    {% endblock %}
+   
+    <table class="table_c">
         <tr>
             <th>Episódios</th>
         </tr>

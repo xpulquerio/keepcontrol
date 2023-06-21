@@ -9,33 +9,29 @@
     <link rel="stylesheet" href="{% static 'css/styles.css'%}" />
     <title>Keep Control</title>
     <link rel="icon" type="image/png" href="../static/painel-de-controle.png">
+    <style>
+
+      
+    </style>
 </head>
 <body>
+  <nav> 
+    <ul>
+        <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="{% if request.resolver_match.url_name == 'series' %}active{% endif %}"><a href="{% url 'series:series' %}">Séries</a></li>
+        <li class="{% if request.resolver_match.url_name == 'movies' %}active{% endif %}"><a href="{% url 'movies:movies' %}">Filmes</a></li>
+        <li style="float:right"><a href="http://localhost:8000/admin/">Painel</a></li>
+      </ul>
+  </nav>
+  <header>
+    <h3>Keep Control - O melhor site de controle de conteúdo assistido da internet!</h3>
+  </header>
 
-    <header>
-      <h2>Keep Control</h2>
-    </header>
+  {% block principal %} {% endblock%}
+ 
+  <footer>
+    <p>Todos os direitos reservados a &copy; Ewerson Pulquerio Santos, 2023</p>
+  </footer>
     
-    <section>
-      <nav>
-        <ul>
-            <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><a href="{% url 'core:home' %}">Home</a></li>
-            <!-- <li class="{% if request.resolver_match.url_name == 'animes' %}active{% endif %}"><a href="{% url 'animes:animes' %}">Animes</a></li>
-            <li class="{% if request.resolver_match.url_name == 'mangas' %}active{% endif %}"><a href="{% url 'mangas:mangas' %}">Mangás</a></li> -->
-            <li class="{% if request.resolver_match.url_name == 'series' %}active{% endif %}"><a href="{% url 'series:series' %}">Séries</a></li>
-            <li class="{% if request.resolver_match.url_name == 'movies' %}active{% endif %}"><a href="{% url 'movies:movies' %}">Filmes</a></li>
-          </ul>
-          <br>
-          <ul>
-            <li><a href="http://localhost:8000/admin/">Painel</a></li>
-          </ul>
-      </nav>
-      {% block principal %} {% endblock%}
-    </section>
-    
-    <footer>
-      <p>Todos os direitos reservados a &copy; Ewerson Pulquerio Santos, 2023</p>
-    </footer>
-    
-    </body>
+</body>
 </html>

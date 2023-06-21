@@ -5,7 +5,7 @@
     <h1>Lista de Séries</h1>
     <p><b>Quantidade de séries cadastradas: {{qtd_series}}</b></p>
     <!-- Aqui começa a lista dos filmes -->
-    <table>
+    <table class="table_c">
         <tr>
             <th>Título</th>
             <th>Temporadas</th>
@@ -13,10 +13,10 @@
         </tr>
         {% for serie in series %}
         <tr>
-            <td>{{serie.title}}</td>
+            <td><a class="detalhe" href="{{ serie.get_absolute_url }}">{{serie.title}}</a></td>
             <td>{{serie.qtd_temps}}</td>
             <td>{{serie.situation}}</td>
-            <td><a class="detalhe" href="{{ serie.get_absolute_url }}">Detalhe</a></td>
+            <!-- <td><a class="detalhe" href="{{ serie.get_absolute_url }}">Temporadas</a></td> -->
         </tr>
         {%empty%}
         <tr>
