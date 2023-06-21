@@ -15,11 +15,6 @@ class Serie(models.Model):
     
     def get_absolute_url(self):
         return '/series/'+ str(self.id) #retorna a URL do curso
-    
-    class Meta:
-        verbose_name = 'Série'
-        verbose_name_plural = 'Séries'
-        ordering = ['created_at']
         
     def insert_temps(self, qtd_temps):
             from apps.core.models import Season #Importando dentro da função para evitar importação circular
@@ -38,4 +33,9 @@ class Serie(models.Model):
                     print(temp.title+' inserida!')
                     cont = cont+1
             return 'Número de temporadas adicionadas: '+str(cont)
+        
+    class Meta:
+        verbose_name = 'Série'
+        verbose_name_plural = 'Séries'
+        ordering = ['created_at']
     

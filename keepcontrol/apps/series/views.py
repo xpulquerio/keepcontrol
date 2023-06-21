@@ -12,7 +12,6 @@ def series (request):
     for serie in series:
         temp_count = Season.get_qtd_seasons(serie.id)
         serie.qtd_temps = temp_count
-
     
     template_name = 'series.html'
     context['series'] = series
