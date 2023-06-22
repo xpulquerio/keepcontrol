@@ -3,8 +3,8 @@
 {% block principal %}
 <article>
     <h1>Lista de Séries</h1>
-    <p><b>Quantidade de séries cadastradas: {{qtd_series}}</b></p>
     <!-- Aqui começa a lista dos filmes -->
+    {% if qtd_series %}
     <table class="table_c">
         <tr>
             <th>Título</th>
@@ -18,11 +18,12 @@
             <td>{{serie.situation}}</td>      
             <!-- <td><a class="detalhe" href="{{ serie.get_absolute_url }}">Temporadas</a></td> -->
         </tr>
-        {%empty%}
-        <tr>
-            <td>Nenhum Temporada encontrado na plataforma</td>
-        </tr>
         {% endfor %}
     </table>
+    {% else %}
+    <p><b>Quantidade de séries cadastradas: {{qtd_series}}</b></p>
+    {% endif %}
+
+
   </article>
   {% endblock %}

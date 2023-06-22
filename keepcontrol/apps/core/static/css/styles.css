@@ -98,4 +98,21 @@ footer {
 }
 
 
-/*FORMULÁRIO*/
+/*FORMULÁRIO */
+
+/*FORMULÁRIO ERRORS*/
+ul.errorlist {
+  margin: 0;
+  padding: 0;
+}
+ul.errorlist li {
+  color: #C53F3F;
+  display: block;
+  margin: 0.3em 0;
+  font-size: 0.9em;
+  border: none;
+  padding: 0;
+}
+form.pure-form-aligned ul.errorlist li {
+  padding-left: 11.5em;
+}

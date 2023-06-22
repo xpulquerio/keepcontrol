@@ -148,3 +148,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'accounts:dashboard'
 LOGOUT_URL = 'accounts:logout'
+AUTH_USER_MODEL ='accounts.User' #Dizer ao Django quem é o model de usuário do sistema
