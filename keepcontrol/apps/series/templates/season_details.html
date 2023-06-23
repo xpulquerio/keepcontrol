@@ -18,11 +18,16 @@
         <tr>
             <td>{{ep.title}} - {{ep.season.title}}</td>
             {% if user.is_authenticated %}
-            {% if ep in user.episodes.all %}
-            <td><b>Já assistido</b> {{ep}}</td>
-            {%else%}
-            <td>Não assistido</td>
-            {%endif%}
+                {% if ep in user.episodes.all %}
+<!--                    {% if ep in ep.userepisode_set.all %}-->
+<!--                    X-->
+<!--                    {%else%}-->
+<!--                    Y-->
+                    {% endif%}
+                    <td><b>Já assistido</b>  </td>
+                {%else%}
+                    <td>Não assistido</td>
+                {%endif%}
             {% endif %}
         </tr>
         {% endfor %}

@@ -46,9 +46,6 @@ def season_details (request, serie_id, season_id):
     season = Season.objects.filter(id=season_id)
     serie = Serie.objects.filter(id=serie_id)
     eps = Episode.objects.filter(season_id=season_id)
-    
-    # for ep in eps:
-        #ep.data = ep.get_date_w
         
     context['eps'] = eps
     context['season'] = season[0].title

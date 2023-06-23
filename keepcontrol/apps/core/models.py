@@ -60,8 +60,8 @@ class Episode(models.Model):
     def get_episodes(self, id_da_season):
         return Episode.objects.filter(season_id=id_da_season)
     
-    def get_date_w (self, user_id):
-        return str(UserEpisode.objects.filter(episode=self.id, user=user_id).first().date_watched)
+    def dd(self, user_id):
+        return UserEpisode.objects.filter(episode=self.id, user=user_id).first().date_watched
 
     class Meta:
         verbose_name = 'Episódio'
