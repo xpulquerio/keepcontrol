@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Serie
 from apps.core.models import Season, Episode
+from django.contrib.auth import get_user_model #Para usar o model do nosso usuário
+
+User = get_user_model()
 
 # Create your models here.
 
@@ -26,7 +29,7 @@ def serie_details (request, id):
     serie.qtd_temps = Season.get_qtd_seasons(id) #Incluindo quantidade de temporadas como atributo de serie
     serie.qtd_total_eps = 0
 
-    seasons = Season.get_seasons(id_da_serie=id)
+    seasons = Season.objects.filter(serie_id=id)
     for season in seasons:
         season.qtd_eps = Episode.get_qtd_episodes(season.id)
         serie.qtd_total_eps += season.qtd_eps
@@ -42,11 +45,14 @@ def season_details (request, serie_id, season_id):
     
     season = Season.objects.filter(id=season_id)
     serie = Serie.objects.filter(id=serie_id)
-    eps = Episode.get_episodes(id_da_season=season_id)
+    eps = Episode.objects.filter(season_id=season_id)
     
+    # for ep in eps:
+        #ep.data = ep.get_date_w
+        
     context['eps'] = eps
-    context['season'] = season[0]
-    context['serie'] = serie[0]
+    context['season'] = season[0].title
+    context['serie'] = serie[0].title
     template_name = 'season_details.html'
     
     return render(request, template_name, context)

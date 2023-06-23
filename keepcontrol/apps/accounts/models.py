@@ -2,11 +2,12 @@ import re
 from django.db import models
 from django.core import validators
 from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, UserManager)
-from apps.core.models import Episode
 from apps.movies.models import Movie
+from apps.core.models import Episode
 # from books.models import Book
 
 class User (AbstractBaseUser, PermissionsMixin):
+  
     username = models.CharField('Nome de usuário', max_length=30, unique=True,
                                 validators=[
                                     validators.RegexValidator(
@@ -22,8 +23,8 @@ class User (AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField('Data de entrada', auto_now_add=True)
     
     #Conteúdo
-    episodes = models.ManyToManyField(Episode)
-    movies = models.ManyToManyField(Movie)
+    episodes = models.ManyToManyField(Episode, through='core.UserEpisode', blank=True)
+    movies = models.ManyToManyField(Movie, through='core.UserMovie', blank=True)
     # chapters = models.ManyToManyField(Chapter)
     # books = models.ManyToManyField(Book)
     

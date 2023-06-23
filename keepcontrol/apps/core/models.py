@@ -1,5 +1,8 @@
 from django.db import models
 from apps.series.models import Serie
+from apps.movies.models import Movie
+
+
 
 # Create your models here.
 class Season(models.Model):
@@ -49,16 +52,45 @@ class Episode(models.Model):
     season = models.ForeignKey(Season, on_delete=models.CASCADE, blank=True, null=False, verbose_name="Temporada")
     
     def __str__ (self):
-        return self.title
+        return f"{self.title} {self.season.title} {self.season.serie.title}"
     
     def get_qtd_episodes(id):
         return Episode.objects.filter(season_id=id).count() #Número de Episódios da Temporada com este ID
     
-    def get_episodes(id_da_season):
+    def get_episodes(self, id_da_season):
         return Episode.objects.filter(season_id=id_da_season)
+    
+    def get_date_w (self, user_id):
+        return str(UserEpisode.objects.filter(episode=self.id, user=user_id).first().date_watched)
 
     class Meta:
         verbose_name = 'Episódio'
         verbose_name_plural = 'Episódios'
 
+class UserEpisode(models.Model):
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    episode = models.ForeignKey(Episode, on_delete=models.CASCADE)
+    date_watched = models.DateTimeField()
+
+    def __str__(self):
+        return f"User: {self.user.username}, Episode: {self.episode.title}, Date Watched: {self.date_watched}"
+
+    class Meta:
+        verbose_name = 'Episódio do Usuário'
+        verbose_name_plural = 'Episódios do Usuário'
+
+class UserMovie(models.Model):
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    date_watched = models.DateTimeField()
+
+    def __str__(self):
+        return f"User: {self.user.username}, Movie: {self.movie.title}, Date Watched: {self.date_watched}"
     
+    class Meta:
+        verbose_name = 'Filme do Usuário'
+        verbose_name_plural = 'Filmes do Usuário'

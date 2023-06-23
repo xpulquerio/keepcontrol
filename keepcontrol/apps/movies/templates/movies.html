@@ -12,7 +12,7 @@
             <th>Coleção</th>
             <th>Ano</th>
             {% if user.is_authenticated %}
-            <th>{{user.username}}</th> <!-- Colocar se o episódio já foi assistido pelo usuário-->
+            <th>Assistido</th> <!-- Colocar se o episódio já foi assistido pelo usuário-->
             {% else %}
             {% endif %}
           </tr>
@@ -23,7 +23,11 @@
             <td>{% if movie.collection %}{{movie.collection}} {% endif %}</td>
             <td>{% if movie.year %}{{movie.year}} {% endif %}</td>
             {% if user.is_authenticated %}
-            <td>{{user.username}}</td> <!-- Colocar se o episódio já foi assistido pelo usuário-->
+            {% if movie in user.movies.all %}
+            <td><b>Já assistido</b></td>
+            {%else%}
+            <td>Não assistido</td>
+            {%endif%}
             {% else %}
             {% endif %}
         </tr>
