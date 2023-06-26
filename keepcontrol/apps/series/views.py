@@ -29,7 +29,7 @@ def serie_details (request, id):
     serie.qtd_temps = Season.get_qtd_seasons(id) #Incluindo quantidade de temporadas como atributo de serie
     serie.qtd_total_eps = 0
 
-    seasons = Season.objects.filter(serie_id=id)
+    seasons = Season.objects.filter(serie_id=id).order_by('title')
     for season in seasons:
         season.qtd_eps = Episode.get_qtd_episodes(season.id)
         serie.qtd_total_eps += season.qtd_eps
@@ -45,7 +45,7 @@ def season_details (request, serie_id, season_id):
     
     season = Season.objects.filter(id=season_id)
     serie = Serie.objects.filter(id=serie_id)
-    eps = Episode.objects.filter(season_id=season_id)
+    eps = Episode.objects.filter(season_id=season_id).order_by('number')
     
     usuario = request.user #Pegando o usuário logado
     

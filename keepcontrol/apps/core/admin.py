@@ -5,7 +5,7 @@ class SeasonAdmin(admin.ModelAdmin):
     fields = ['title', 'serie']
     
 class EpisodeAdmin(admin.ModelAdmin):
-    fields = ['title', 'season']
+    fields = ['number', 'season', 'title']
 
 class UserEpisodeAdmin(admin.ModelAdmin):
     list_display = ['user', 'episode']

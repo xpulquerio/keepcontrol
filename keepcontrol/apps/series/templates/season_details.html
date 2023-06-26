@@ -16,7 +16,11 @@
         </tr>
         {% for ep in eps %}
         <tr>
-            <td>{{ep.title}} - {{ep.season.title}}</td>
+            {% if ep.title %}
+            <td>Episódio {{ep.number}}: {{ep.title}}</td>
+            {% else %}
+            <td>Episódio {{ep.number}}</td>
+            {% endif %}
             {% if user.is_authenticated %}
                 {% if ep in user.episodes.all %}
                     

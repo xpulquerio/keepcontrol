@@ -8,11 +8,12 @@ from apps.movies.models import Movie
 class Season(models.Model):
     title = models.CharField('Temporada', max_length=255)
     serie = models.ForeignKey(Serie, on_delete=models.CASCADE, blank=True, null=False, verbose_name="Série")
+    
     # created_at = models.DateTimeField(auto_now_add=True)
     # updated_at = models.DateTimeField(auto_now=True)
 
     def __str__ (self):
-        return self.title
+        return f"{self.title} - {self.serie.title}"
     
     def get_qtd_seasons(id_da_serie):
         return Season.objects.filter(serie_id=id_da_serie).count() #Número de Temporadas da Série com este ID
@@ -26,17 +27,17 @@ class Season(models.Model):
     def insert_eps(self, qtd_eps):
         cont = 0
         for i in range(qtd_eps):
-            nummber_of_ep = i+1
-            title_of_episode_for_insert = 'Episódio '+str(nummber_of_ep) 
+            number_of_ep = i+1
+            title_of_episode_for_insert = 'Episódio '+str(number_of_ep) 
             id_of_season = self.id
-            temp = Episode(title=title_of_episode_for_insert, season_id=id_of_season)
-            if Episode.objects.filter(title=temp.title, season_id=temp.season_id).exists():
+            temp = Episode(number=number_of_ep, season_id=id_of_season)
+            if Episode.objects.filter(number=temp.number, season_id=temp.season_id).exists():
                 print(title_of_episode_for_insert+' já existe')
                 #Se o episódio existir, não fazer nada.
             else:
                 #Se o episódio não existir, inserir no banco.
                 temp.save()
-                print(temp.title+' inserido!')
+                print('EP: '+str(temp.number)+' inserido!')
                 cont = cont+1
         return 'Número de episódios adicionados: '+str(cont)
     
@@ -46,13 +47,14 @@ class Season(models.Model):
             
 
 class Episode(models.Model):
-    title = models.CharField('Episódio', max_length=255)
+    title = models.CharField('Título', max_length=255, blank=True, null=True)
+    number = models.BigIntegerField('Episódio', blank=True, null=True)
     # created_at = models.DateTimeField(auto_now_add=True)
     # updated_at = models.DateTimeField(auto_now=True)
     season = models.ForeignKey(Season, on_delete=models.CASCADE, blank=True, null=False, verbose_name="Temporada")
     
     def __str__ (self):
-        return f"{self.title} {self.season.title} {self.season.serie.title}"
+        return f"EP:{self.number} - {self.season.title} {self.season.serie.title}"
     
     def get_qtd_episodes(id):
         return Episode.objects.filter(season_id=id).count() #Número de Episódios da Temporada com este ID
@@ -75,7 +77,7 @@ class UserEpisode(models.Model):
     date_watched = models.DateTimeField()
 
     def __str__(self):
-        return f"User: {self.user.username}, Episode: {self.episode.title}, Date Watched: {self.date_watched}"
+        return f"Usuário: {self.user.username}, Episódio: {self.episode.number}, Assistido em: {self.date_watched}"
 
     class Meta:
         verbose_name = 'Episódio do Usuário'
@@ -89,7 +91,7 @@ class UserMovie(models.Model):
     date_watched = models.DateTimeField()
 
     def __str__(self):
-        return f"User: {self.user.username}, Movie: {self.movie.title}, Date Watched: {self.date_watched}"
+        return f"Usuário: {self.user.username}, Movie: {self.movie.title}, Assistido em: {self.date_watched}"
     
     class Meta:
         verbose_name = 'Filme do Usuário'
