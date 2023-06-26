@@ -24,7 +24,7 @@
             <td>{% if movie.year %}{{movie.year}} {% endif %}</td>
             {% if user.is_authenticated %}
             {% if movie in user.movies.all %}
-            <td><b>Já assistido</b></td>
+            <td><b>Já assistido</b> - {{movie.assist}}</td>
             {%else%}
             <td>Não assistido</td>
             {%endif%}

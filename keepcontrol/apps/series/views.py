@@ -46,7 +46,14 @@ def season_details (request, serie_id, season_id):
     season = Season.objects.filter(id=season_id)
     serie = Serie.objects.filter(id=serie_id)
     eps = Episode.objects.filter(season_id=season_id)
-        
+    
+    usuario = request.user #Pegando o usuário logado
+    
+    for ep in eps:
+        user_episode = ep.userepisode_set.filter(user=usuario.id).first()
+        if user_episode and user_episode.date_watched:
+            ep.assist = user_episode.date_watched
+    
     context['eps'] = eps
     context['season'] = season[0].title
     context['serie'] = serie[0].title
