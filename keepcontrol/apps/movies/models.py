@@ -5,14 +5,13 @@ class MovieManager(models.Manager): #Custom Manager para fazer pesquisas... Movi
 
     def search(self, query):
         return self.get_queryset().filter(
-            models.Q(title__icontains=query) | 
-            models.Q(title_en__icontains=query)
+            models.Q(pt_title__icontains=query) | 
+            models.Q(or_title__icontains=query)
             )
    
 class Movie(models.Model):
-    title = models.CharField('Título', max_length=255)
-    or_title = models.CharField('Título original', null=True, max_length=255, blank=True)
-    director = models.CharField('Diretor', null=True, max_length=255, blank=True)
+    pt_title = models.CharField('Título brasileiro', max_length=255, blank=True, null=True)
+    or_title = models.CharField('Título original', max_length=255)
     collection = models.CharField('Coleção', null=True, max_length=255, blank=True)
     year = models.IntegerField('Ano', null=True, blank=True)
     created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
@@ -20,10 +19,10 @@ class Movie(models.Model):
     objects = MovieManager()
 
     def __str__ (self):
-        return self.title
+        return self.pt_title
     
     class Meta:
         verbose_name = 'Filme'
         verbose_name_plural = 'Filmes'
-        ordering = ['title']
+        ordering = ['pt_title']
     

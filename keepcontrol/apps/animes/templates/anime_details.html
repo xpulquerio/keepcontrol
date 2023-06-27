@@ -4,10 +4,10 @@
 <article>
     <h1>
         {% block ordem %}
-            {{serie.pt_title}}
+            {{anime.pt_title}}
         {% endblock %}
     </h1>
-    <p>Status da série: <b>{{serie.situation}}</b></p>
+    <p>Status da série: <b>{{anime.situation}}</b></p>
     <table class="table_c">
         <tr>
             <th>Temporada</th>
@@ -17,13 +17,13 @@
         <tr>
             <td><a class="detalhe" href="{{ season.get_absolute_url }}">{{season.pt_title}}</a></td>
             <td>{{season.qtd_eps}}</td>
-            <!-- <td><a class="detalhe" href="{% url 'series:season_details' serie.id season.id %}">Episódios</a></td>           -->
+            <!-- <td><a class="detalhe" href="{% url 'animes:season_details' anime.id season.id %}">Episódios</a></td>           -->
           
         </tr>
         {% endfor %}
         <tr>
             <td></td>
-            <td><b>{{serie.qtd_total_eps}}</b></td>
+            <td><b>{{anime.qtd_total_eps}}</b></td>
         </tr>
     </table>
 

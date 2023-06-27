@@ -13,7 +13,7 @@
         </tr>
         {% for serie in series %}
         <tr>
-            <td><a class="detalhe" href="{{ serie.get_absolute_url }}">{{serie.title}}</a></td>
+            <td><a class="detalhe" href="{{ serie.get_absolute_url }}">{{serie.pt_title}}</a></td>
             <td>{{serie.qtd_temps}}</td>
             <td>{{serie.situation}}</td>      
             <!-- <td><a class="detalhe" href="{{ serie.get_absolute_url }}">Temporadas</a></td> -->
@@ -23,7 +23,5 @@
     {% else %}
     <p><b>Quantidade de séries cadastradas: {{qtd_series}}</b></p>
     {% endif %}
-
-
   </article>
   {% endblock %}

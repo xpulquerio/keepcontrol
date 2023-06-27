@@ -25,8 +25,6 @@ class User (AbstractBaseUser, PermissionsMixin):
     #Conteúdo
     episodes = models.ManyToManyField(Episode, through='core.UserEpisode', blank=True)
     movies = models.ManyToManyField(Movie, through='core.UserMovie', blank=True)
-    # chapters = models.ManyToManyField(Chapter)
-    # books = models.ManyToManyField(Book)
     
     objects = UserManager()
     

@@ -4,8 +4,6 @@
 <article>
     <h1>Lista de Filmes</h1>
     <p><b>Quantidade de filmes cadastrados: {{qtd_movies}}</b></p>
-    <!-- Aqui começa a lista dos filmes -->
-    {% if user.is_authenticated %}
     <table class="table_c">
         <tr>
             <th>Título</th>
@@ -15,11 +13,11 @@
         </tr>
         {% for movie in movies %}
         <tr>
-            <td>{{movie.title}}</td>
+            <td>{{movie.pt_title}}</td>
             <td>{% if movie.collection %}{{movie.collection}} {% endif %}</td>
             <td>{% if movie.year %}{{movie.year}} {% endif %}</td>
             {% if movie in user.movies.all %}
-                <td><b>Já assistido</b> - {{movie.assist}}</td>
+                <td><b>Já assistido</b> - {{movie.date_watched}}</td>
             {%else%}
             <td>Não assistido - <a href="{% url 'movies:inserir_assistido' movie.id %}">Assistir</a></td>
             {% endif %}
@@ -30,6 +28,5 @@
         </tr>
         {% endfor %}
     </table>
-    {% endif %}
   </article>
   {% endblock %}

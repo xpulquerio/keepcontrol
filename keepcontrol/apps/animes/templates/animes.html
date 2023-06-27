@@ -3,62 +3,25 @@
 {% block principal %}
 <article>
     <h1>Lista de Animes</h1>
-    <ul>
-        Anime 1
-        <ul>
-        Temporada 1
-            
-            <ul>
-                <li>Episódio 1</li>
-                <li>Episódio 2</li>
-            </ul>
-        </ul>
-        <ul>
-            Temporada 2
-               <ul>
-                   <li>Episódio 1</li>
-                   <li>Episódio 2</li>
-            </ul>
-        </ul>
-    </ul>
-    <ul>
-        Anime 2
-        <ul>
-        Temporada 1
-            
-            <ul>
-                <li>Episódio 1</li>
-                <li>Episódio 2</li>
-            </ul>
-        </ul>
-        <ul>
-            Temporada 2
-               <ul>
-                   <li>Episódio 1</li>
-                   <li>Episódio 2</li>
-            </ul>
-        </ul>
-        <ul>
-            Temporada 3
-               <ul>
-                   <li>Episódio 1</li>
-                   <li>Episódio 2</li>
-                   <li>Episódio 3</li>
-                   <li>Episódio 4</li>
-                   <li>Episódio 5</li>
-            </ul>
-        </ul>
-    </ul>
-    <ul>
-        Anime 3
-        <ul>
-        Temporada 1
-            
-            <ul>
-                <li>Episódio 1</li>
-                <li>Episódio 2</li>
-            </ul>
-        </ul>
-    </ul>
+    <!-- Aqui começa a lista dos filmes -->
+    {% if qtd_animes %}
+    <table class="table_c">
+        <tr>
+            <th>Título</th>
+            <th>Temporadas</th>
+            <th>Situação</th>
+        </tr>
+        {% for anime in animes %}
+        <tr>
+            <td><a class="detalhe" href="{{ anime.get_absolute_url }}">{{anime.pt_title}}</a></td>
+            <td>{{anime.qtd_temps}}</td>
+            <td>{{anime.situation}}</td>      
+            <!-- <td><a class="detalhe" href="{{ anime.get_absolute_url }}">Temporadas</a></td> -->
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p><b>Quantidade de séries cadastradas: {{qtd_animes}}</b></p>
+    {% endif %}
   </article>
   {% endblock %}

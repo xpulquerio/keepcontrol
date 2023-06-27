@@ -1,0 +1,10 @@
+accounts - sem os dados de eps e movies
+- Migrate
+animes
+series
+movies
+core
+- Migrate
+accounts - com os dados de eps e movies
+- Migrate
+

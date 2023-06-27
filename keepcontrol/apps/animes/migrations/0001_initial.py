@@ -12,18 +12,18 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Serie',
+            name='Anime',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('pt_title', models.CharField(blank=True, max_length=255, null=True, verbose_name='Título brasileiro')),
                 ('or_title', models.CharField(max_length=255, verbose_name='Título original')),
-                ('director', models.CharField(blank=True, max_length=255, null=True, verbose_name='Diretor')),
+                ('author', models.CharField(blank=True, max_length=255, null=True, verbose_name='Diretor')),
                 ('situation', models.CharField(blank=True, null=True, verbose_name='Situação')),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Cadastrado em')),
             ],
             options={
-                'verbose_name': 'Série',
-                'verbose_name_plural': 'Séries',
+                'verbose_name': 'Anime',
+                'verbose_name_plural': 'Animes',
                 'ordering': ['pt_title'],
             },
         ),
