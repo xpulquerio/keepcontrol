@@ -23,7 +23,6 @@ urlpatterns = [
     path('animes/', include(('apps.animes.urls', 'animes'), namespace='animes')),
     path('filmes/', include(('apps.movies.urls', 'movies'), namespace='movies')),    
     path('series/', include(('apps.series.urls', 'series'), namespace='series')),    
-    path('mangas/', include(('apps.mangas.urls', 'mangas'), namespace='mangas')),   
     path('conta/', include(('apps.accounts.urls','accounts'), namespace='accounts')) ,
     path('admin/', admin.site.urls)
 ]

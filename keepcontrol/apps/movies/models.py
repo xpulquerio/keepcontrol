@@ -19,10 +19,12 @@ class Movie(models.Model):
     objects = MovieManager()
 
     def __str__ (self):
-        return self.pt_title
+        if self.pt_title:
+            return self.pt_title
+        else:
+            return self.or_title
     
     class Meta:
         verbose_name = 'Filme'
         verbose_name_plural = 'Filmes'
         ordering = ['pt_title']
-    

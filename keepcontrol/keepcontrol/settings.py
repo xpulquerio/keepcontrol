@@ -42,7 +42,6 @@ DEFAULT_APPS = [
 MY_APPS = [
     'apps.core',
     'apps.animes',
-    'apps.mangas',
     'apps.series',
     'apps.movies',
     'apps.accounts',

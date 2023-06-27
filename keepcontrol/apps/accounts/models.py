@@ -2,11 +2,11 @@ import re
 from django.db import models
 from django.core import validators
 from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, UserManager)
+from apps.series.models import EpisodeSerie
+from apps.animes.models import EpisodeAnime
 from apps.movies.models import Movie
-from apps.core.models import Episode
-# from books.models import Book
 
-class User (AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
   
     username = models.CharField('Nome de usuário', max_length=30, unique=True,
                                 validators=[
@@ -23,8 +23,9 @@ class User (AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField('Data de entrada', auto_now_add=True)
     
     #Conteúdo
-    episodes = models.ManyToManyField(Episode, through='core.UserEpisode', blank=True)
-    movies = models.ManyToManyField(Movie, through='core.UserMovie', blank=True)
+    episodes_anime = models.ManyToManyField(EpisodeAnime, through='UserEpisodeAnime', blank=True)
+    episodes_serie = models.ManyToManyField(EpisodeSerie, through='UserEpisodeSerie', blank=True)
+    movies = models.ManyToManyField(Movie, through='UserMovie', blank=True)
     
     objects = UserManager()
     
@@ -43,4 +44,41 @@ class User (AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Usuário'
         verbose_name_plural = 'Usuários'
+
+class UserMovie(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    date_watched = models.DateTimeField()
+
+    def __str__(self):
+        return f"Usuário: {self.user.username}, Movie: {self.movie.pt_title}, Assistido em: {self.date_watched}"
+    
+    class Meta:
+        verbose_name = 'Filme do Usuário'
+        verbose_name_plural = 'Filmes do Usuário'
+        
+class UserEpisodeSerie(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    episode = models.ForeignKey(EpisodeSerie, on_delete=models.CASCADE)
+    date_watched = models.DateTimeField()
+
+    def __str__(self):
+        return f"Usuário: {self.user.username}, Episódio: {self.episode.number}, Assistido em: {self.date_watched}"
+
+    class Meta:
+        verbose_name = 'Episódio de série do Usuário'
+        verbose_name_plural = 'Episódios de séries do Usuário'
+
+class UserEpisodeAnime(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    episode = models.ForeignKey(EpisodeAnime, on_delete=models.CASCADE)
+    date_watched = models.DateTimeField()
+
+    def __str__(self):
+        return f"Usuário: {self.user.username}, Episódio: {self.episode.number}, Assistido em: {self.date_watched}"
+
+    class Meta:
+        verbose_name = 'Episódio de anime do Usuário'
+        verbose_name_plural = 'Episódios de animes do Usuário'
+    
     

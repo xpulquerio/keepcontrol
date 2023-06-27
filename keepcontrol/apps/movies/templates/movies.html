@@ -3,16 +3,18 @@
 {% block principal %}
 <article>
     <h1>Lista de Filmes</h1>
-    {% if qtd_series %}
+    {% if qtd_movies %}
     <table class="table_c">
         <tr>
-            <th>Título</th>
+            <th>Título (OR)</th>
+            <th>Título (BR)</th>
             <th>Coleção</th>
             <th>Ano</th>
             <th>Assistido</th>
         </tr>
         {% for movie in movies %}
         <tr>
+            <td>{{movie.or_title}}</td>
             <td>{{movie.pt_title}}</td>
             <td>{% if movie.collection %}{{movie.collection}} {% endif %}</td>
             <td>{% if movie.year %}{{movie.year}} {% endif %}</td>

@@ -15,8 +15,11 @@
         </tr>
         {% for season in seasons %}
         <tr>
-            <td><a class="detalhe" href="{{ season.get_absolute_url }}">{{season.pt_title}}</a></td>
-            <td>{{season.qtd_eps}}</td>
+            {%if season.pt_title%}
+            <td><a class="detalhe" href="{{ season.get_absolute_url }}">Temporada {{season.number}}: {{season.pt_title}}</a></td>
+            {%else%}
+            <td><a class="detalhe" href="{{ season.get_absolute_url }}">Temporada {{season.number}}</a></td>
+            {%endif%}<td>{{season.qtd_eps}}</td>
             <!-- <td><a class="detalhe" href="{% url 'series:season_details' serie.id season.id %}">Episódios</a></td>           -->
           
         </tr>

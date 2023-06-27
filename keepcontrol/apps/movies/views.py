@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Movie
-from apps.core.models import UserMovie
+from apps.accounts.models import UserMovie
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 # Create your models here.

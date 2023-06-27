@@ -18,7 +18,7 @@
             {% else %}
             <td>Episódio {{ep.number}}</td>
             {% endif %}
-                {% if ep in user.episodes.all %}  
+                {% if ep in user.episodes_animes.all %}  
                     <td><b>Já assistido</b> - {{ep.date_watched}} </td>
                 {%else%}
                     <td>Não assistido</td>
