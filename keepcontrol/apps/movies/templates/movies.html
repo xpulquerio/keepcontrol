@@ -21,7 +21,7 @@
             {% if movie in user.movies.all %}
                 <td><b>Já assistido</b> - {{movie.assist}}</td>
             {%else%}
-                <td>Não assistido</td>
+            <td>Não assistido - <a href="{% url 'movies:inserir_assistido' movie.id %}">Assistir</a></td>
             {% endif %}
         </tr>
         {%empty%}
