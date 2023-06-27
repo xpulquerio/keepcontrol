@@ -37,5 +37,5 @@ class Serie(models.Model):
     class Meta:
         verbose_name = 'Série'
         verbose_name_plural = 'Séries'
-        ordering = ['created_at']
+        ordering = ['title']
     

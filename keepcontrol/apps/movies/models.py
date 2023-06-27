@@ -25,5 +25,5 @@ class Movie(models.Model):
     class Meta:
         verbose_name = 'Filme'
         verbose_name_plural = 'Filmes'
-        ordering = ['-created_at']
+        ordering = ['title']
     

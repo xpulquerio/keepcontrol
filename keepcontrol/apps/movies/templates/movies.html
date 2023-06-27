@@ -5,38 +5,31 @@
     <h1>Lista de Filmes</h1>
     <p><b>Quantidade de filmes cadastrados: {{qtd_movies}}</b></p>
     <!-- Aqui começa a lista dos filmes -->
+    {% if user.is_authenticated %}
     <table class="table_c">
         <tr>
             <th>Título</th>
-            <th>Direção</th>
             <th>Coleção</th>
             <th>Ano</th>
-            {% if user.is_authenticated %}
-            <th>Assistido</th> <!-- Colocar se o episódio já foi assistido pelo usuário-->
-            {% else %}
-            {% endif %}
-          </tr>
+            <th>Assistido</th>
+        </tr>
         {% for movie in movies %}
         <tr>
             <td>{{movie.title}}</td>
-            <td>{% if movie.director %}{{movie.director}} {% endif %}</td>
             <td>{% if movie.collection %}{{movie.collection}} {% endif %}</td>
             <td>{% if movie.year %}{{movie.year}} {% endif %}</td>
-            {% if user.is_authenticated %}
             {% if movie in user.movies.all %}
-            <td><b>Já assistido</b> - {{movie.assist}}</td>
+                <td><b>Já assistido</b> - {{movie.assist}}</td>
             {%else%}
-            <td>Não assistido</td>
-            {%endif%}
-            {% else %}
+                <td>Não assistido</td>
             {% endif %}
         </tr>
-        
         {%empty%}
         <tr>
             <td>Nenhum filme encontrado na plataforma</td>
         </tr>
-    {% endfor %}
+        {% endfor %}
     </table>
+    {% endif %}
   </article>
   {% endblock %}
