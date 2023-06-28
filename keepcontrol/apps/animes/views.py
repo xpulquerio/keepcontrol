@@ -1,14 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Anime, SeasonAnime, EpisodeAnime
-
-from django.contrib.auth import get_user_model #Para usar o model do nosso usuário
 from django.contrib.auth.decorators import login_required
 
-User = get_user_model()
 
 # Create your models here.
 
-def animes (request):
+def ListAnime (request):
     context = {}
     animes = Anime.objects.all()
     qtd_animes = len(animes)
@@ -17,32 +14,32 @@ def animes (request):
         temp_count = SeasonAnime.get_qtd_seasons(anime.id)
         anime.qtd_temps = temp_count
     
-    template_name = 'animes.html'
+    template_name = 'ListAnime.html'
     context['animes'] = animes
     context['qtd_animes'] = qtd_animes
 
     return render(request, template_name, context)
 
-def anime_details (request, id):
+def ListSeasonAnime (request, id):
     context = {}
 
     anime = get_object_or_404(Anime, id=id)
     anime.qtd_temps = SeasonAnime.get_qtd_seasons(id) #Incluindo quantidade de temporadas como atributo de anime
     anime.qtd_total_eps = 0
 
-    seasons = SeasonAnime.objects.filter(anime_id=id).order_by('pt_title')
+    seasons = SeasonAnime.objects.filter(anime_id=id).order_by('number')
     for season in seasons:
         season.qtd_eps = EpisodeAnime.get_qtd_episodes(season.id)
         anime.qtd_total_eps += season.qtd_eps
 
     context['seasons'] = seasons
     context['anime'] = anime
-    template_name = 'anime_details.html'
+    template_name = 'ListSeasonAnime.html'
 
     return render(request, template_name, context)
 
 @login_required
-def season_details (request, anime_id, season_id):
+def ListEpisodeAnime (request, anime_id, season_id):
     context = {}
     
     season = SeasonAnime.objects.filter(id=season_id)
@@ -57,8 +54,8 @@ def season_details (request, anime_id, season_id):
             ep.date_watched = user_episode.date_watched
     
     context['eps'] = eps
-    context['season'] = season[0].pt_title
-    context['anime'] = anime[0].pt_title
-    template_name = 'season_details.html'
+    context['season'] = season.first()
+    context['anime'] = anime.first()
+    template_name = 'ListEpisodeAnime.html'
     
     return render(request, template_name, context)

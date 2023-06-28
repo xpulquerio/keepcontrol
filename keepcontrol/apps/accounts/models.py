@@ -46,9 +46,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Usuários'
 
 class UserMovie(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    date_watched = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name='Filme')
+    date_watched = models.DateTimeField('Assistido em')
 
     def __str__(self):
         return f"Usuário: {self.user.username}, Movie: {self.movie.pt_title}, Assistido em: {self.date_watched}"
@@ -58,9 +58,9 @@ class UserMovie(models.Model):
         verbose_name_plural = 'Filmes'
         
 class UserEpisodeSerie(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    episode = models.ForeignKey(EpisodeSerie, on_delete=models.CASCADE)
-    date_watched = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    episode = models.ForeignKey(EpisodeSerie, on_delete=models.CASCADE, verbose_name='Episódio')
+    date_watched = models.DateTimeField('Assistido em')
 
     def __str__(self):
         return f"Usuário: {self.user.username}, Episódio: {self.episode.number}, Assistido em: {self.date_watched}"
@@ -70,9 +70,9 @@ class UserEpisodeSerie(models.Model):
         verbose_name_plural = 'Episódios de séries'
 
 class UserEpisodeAnime(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    episode = models.ForeignKey(EpisodeAnime, on_delete=models.CASCADE)
-    date_watched = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    episode = models.ForeignKey(EpisodeAnime, on_delete=models.CASCADE, verbose_name='Episódio')
+    date_watched = models.DateTimeField('Assistido em')
 
     def __str__(self):
         return f"Usuário: {self.user.username}, Episódio: {self.episode.number}, Assistido em: {self.date_watched}"

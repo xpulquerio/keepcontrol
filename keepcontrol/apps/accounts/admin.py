@@ -14,13 +14,13 @@ admin.site.register(User, UserAdmin)
 # ------------ ADMIN DO CONTEÚDO DO USUÁRIO ---------- #
 
 class UserEpisodeSerieAdmin(admin.ModelAdmin):
-    list_display = ['user','episode', 'date_watched']
+    list_display = ['episode','user', 'date_watched']
     
 class UserEpisodeAnimeAdmin(admin.ModelAdmin):
-    list_display = ['user','episode', 'date_watched']
+    list_display = ['episode', 'user','date_watched']
     
 class UserMovieAdmin(admin.ModelAdmin):
-    list_display = ['user','movie', 'date_watched']
+    list_display = ['movie', 'user', 'date_watched']
 
 admin.site.register(UserEpisodeSerie, UserEpisodeSerieAdmin)
 admin.site.register(UserEpisodeAnime, UserEpisodeAnimeAdmin)

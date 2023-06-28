@@ -1,9 +1,9 @@
-{% extends "anime_details.html" %}
+{% extends "ListSeasonAnime.html" %}
 
 {% block principal %}
 <article>
     {% block ordem %}
-    <h1>{{block.super}} - {{season.pt_title}}</h1>
+    <h1>{{block.super}} - Temporada {{season.number}}</h1>
     {% endblock %}
    
     <table class="table_c">

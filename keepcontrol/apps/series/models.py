@@ -88,7 +88,10 @@ class EpisodeSerie(models.Model):
     season = models.ForeignKey(SeasonSerie, on_delete=models.CASCADE, verbose_name="Temporada")
     
     def __str__ (self):
-        return f"EP:{self.number} - {self.season.pt_title} {self.season.serie.pt_title}"
+        if self.season.pt_title:
+            return f"Episódio {self.number} - {self.season.pt_title} - {self.season.serie}"
+        else:
+            return f"Episódio {self.number} - Temporada {self.season.number} - {self.season.serie}"
     
     def get_qtd_episodes(season_id):
         return EpisodeSerie.objects.filter(season_id=season_id).count()
