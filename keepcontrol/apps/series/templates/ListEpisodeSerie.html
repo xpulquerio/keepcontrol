@@ -1,9 +1,9 @@
-{% extends "serie_details.html" %}
+{% extends "ListSeasonSerie.html" %}
 
 {% block principal %}
 <article>
     {% block ordem %}
-    <h1>{{block.super}} - {{season.pt_title}}</h1>
+    <h1>{{block.super}} - Temporada {{season.number}}</h1>
     {% endblock %}
    
     <table class="table_c">
@@ -13,19 +13,19 @@
         </tr>
         {% for ep in eps %}
         <tr>
-            {% if ep.pt_title %}
-            <td>Episódio {{ep.number}}: {{ep.pt_title}}</td>
+            {% if ep.or_title %}
+            <td>Episódio {{ep.number}}: {{ep.or_title}}</td>
             {% else %}
             <td>Episódio {{ep.number}}</td>
             {% endif %}
-                {% if ep in user.episodes.all %}  
+                {% if ep in user.episodes_serie.all %}  
                     <td><b>Já assistido</b> - {{ep.date_watched}} </td>
                 {%else%}
-                    <td>Não assistido</td>
+                    <td>Não assistido - <a href="{% url 'series:InserirAssistido' ep.id %}">Assistir</a></td>
                 {%endif%}
         </tr>
         {% endfor %}
     </table>
 
-  </article>
-  {% endblock %}
+</article>
+{% endblock %}

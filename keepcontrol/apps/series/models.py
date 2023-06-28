@@ -51,11 +51,11 @@ class SeasonSerie(models.Model):
         else:
             return f"Temporada {self.number} - {self.serie.or_title}"
     
-    def get_qtd_seasons(id_da_serie):
-        return SeasonSerie.objects.filter(serie_id=id_da_serie).count() #Número de temporadas da série com este ID
+    def get_qtd_seasons(serie_id):
+        return SeasonSerie.objects.filter(serie_id=serie_id).count() #Número de temporadas da série com este ID
         
-    def get_seasons(id_da_serie):
-        return SeasonSerie.objects.filter(serie_id=id_da_serie) #As temporaas da série com este ID
+    def get_seasons(serie_id):
+        return SeasonSerie.objects.filter(serie_id=serie_id) #As temporaas da série com este ID
     
     def get_absolute_url(self):
         return '/series/'+ str(self.serie_id)+'/'+ str(self.id)
@@ -81,7 +81,6 @@ class SeasonSerie(models.Model):
         verbose_name = 'Temporada'
         verbose_name_plural = 'Temporadas'
             
-
 class EpisodeSerie(models.Model):
     pt_title = models.CharField('Título brasileiro', max_length=255, blank=True, null=True)
     or_title = models.CharField('Título original', max_length=255, blank=True, null=True)
@@ -91,28 +90,12 @@ class EpisodeSerie(models.Model):
     def __str__ (self):
         return f"EP:{self.number} - {self.season.pt_title} {self.season.serie.pt_title}"
     
-    def get_qtd_episodes(id):
-        return EpisodeSerie.objects.filter(season_id=id).count()
+    def get_qtd_episodes(season_id):
+        return EpisodeSerie.objects.filter(season_id=season_id).count()
     
-    def get_episodes(self, id_da_season):
-        return EpisodeSerie.objects.filter(season_id=id_da_season)
-    
-    def insert_eps(self, qtd_eps, season_id):
-        cont = 0
-        for i in range(qtd_eps):
-            number_of_ep = i+1
-            title_of_episode_for_insert = 'Episódio '+str(number_of_ep) 
-            temp = EpisodeSerie(number=number_of_ep, season_id=season_id)
-            if EpisodeSerie.objects.filter(number=temp.number, season_id=temp.season_id).exists():
-                print(title_of_episode_for_insert+' já existe')
-                #Se o episódio existir, não fazer nada.
-            else:
-                #Se o episódio não existir, inserir no banco.
-                temp.save()
-                print('EP: '+str(temp.number)+' inserido!')
-                cont = cont+1
-        return 'Número de episódios adicionados: '+str(cont)
-    
+    def get_episodes(self, season_id):
+        return EpisodeSerie.objects.filter(season_id=season_id)
+        
     class Meta:
         verbose_name = 'Episódio'
         verbose_name_plural = 'Episódios'

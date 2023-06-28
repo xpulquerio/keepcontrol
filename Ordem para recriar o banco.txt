@@ -3,7 +3,7 @@ accounts - sem os dados de eps e movies
 animes
 series
 movies
-core
+animes
 - Migrate
 accounts - com os dados de eps e movies
 - Migrate

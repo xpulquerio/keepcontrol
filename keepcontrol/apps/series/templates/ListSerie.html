@@ -13,11 +13,7 @@
         </tr>
         {% for serie in series %}
         <tr>
-            {%if serie.pt_title%}
-            <td><a class="detalhe" href="{{ serie.get_absolute_url }}">{{serie.pt_title}}</a></td>
-            {%else%}
             <td><a class="detalhe" href="{{ serie.get_absolute_url }}">{{serie.or_title}}</a></td>
-            {%endif%}
             <td>{{serie.qtd_temps}}</td>
             <td>{{serie.situation}}</td>      
             <!-- <td><a class="detalhe" href="{{ serie.get_absolute_url }}">Temporadas</a></td> -->

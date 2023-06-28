@@ -1,13 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Serie, SeasonSerie, EpisodeSerie
-from django.contrib.auth import get_user_model #Para usar o model do nosso usuário
+from apps.accounts.models import UserEpisodeSerie
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
-User = get_user_model()
-
-# Create your models here.
-
-def series (request):
+def ListSerie (request):
     context = {}
     series = Serie.objects.all()
     qtd_series = len(series)
@@ -16,32 +13,31 @@ def series (request):
         temp_count = SeasonSerie.get_qtd_seasons(serie.id)
         serie.qtd_temps = temp_count
     
-    template_name = 'series.html'
+    template_name = 'ListSerie.html'
     context['series'] = series
     context['qtd_series'] = qtd_series
 
     return render(request, template_name, context)
 
-def serie_details (request, id):
+def ListSeasonSerie (request, id):
     context = {}
 
     serie = get_object_or_404(Serie, id=id)
     serie.qtd_temps = SeasonSerie.get_qtd_seasons(id) #Incluindo quantidade de temporadas como atributo de serie
     serie.qtd_total_eps = 0
 
-    seasons = SeasonSerie.objects.filter(serie_id=id).order_by('pt_title')
+    seasons = SeasonSerie.objects.filter(serie_id=id).order_by('number')
     for season in seasons:
         season.qtd_eps = EpisodeSerie.get_qtd_episodes(season.id)
         serie.qtd_total_eps += season.qtd_eps
 
     context['seasons'] = seasons
     context['serie'] = serie
-    template_name = 'serie_details.html'
+    template_name = 'ListSeasonSerie.html'
 
     return render(request, template_name, context)
 
-@login_required
-def season_details (request, serie_id, season_id):
+def ListEpisodeSerie (request, serie_id, season_id):
     context = {}
     
     season = SeasonSerie.objects.filter(id=season_id)
@@ -56,8 +52,25 @@ def season_details (request, serie_id, season_id):
             ep.date_watched = user_episode.date_watched
     
     context['eps'] = eps
-    context['season'] = season[0].pt_title
-    context['serie'] = serie[0].pt_title
-    template_name = 'season_details.html'
+    context['season'] = season[0]
+    context['serie'] = serie[0]
+    template_name = 'ListEpisodeSerie.html'
     
     return render(request, template_name, context)
+
+@login_required
+def InserirAssistido(request, episodeserie_id):
+    episodio_serie = EpisodeSerie.objects.filter(id=episodeserie_id).first()
+    season_id = episodio_serie.season.id
+    serie_id = episodio_serie.season.serie_id
+    
+    usuario = request.user
+    episodeserie_user = UserEpisodeSerie.objects.filter(user=usuario.id, episode=episodeserie_id)
+    if episodeserie_user:
+        print (str(episodeserie_user)+" já foi assistido pelo usuário")
+        return redirect('series:ListEpisodeSerie', serie_id=serie_id, season_id=season_id )
+    else:
+        x = UserEpisodeSerie(episode=episodio_serie, user=usuario, date_watched=timezone.now()) #Depois alterar o banco para inserir a data automaticamente
+        #x.save()
+        print (str(x)+" inserido!")
+        return redirect('series:ListEpisodeSerie', serie_id=serie_id, season_id=season_id )

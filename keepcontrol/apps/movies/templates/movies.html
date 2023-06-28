@@ -8,7 +8,6 @@
         <tr>
             <th>Título (OR)</th>
             <th>Título (BR)</th>
-            <th>Coleção</th>
             <th>Ano</th>
             <th>Assistido</th>
         </tr>
@@ -16,8 +15,7 @@
         <tr>
             <td>{{movie.or_title}}</td>
             <td>{{movie.pt_title}}</td>
-            <td>{% if movie.collection %}{{movie.collection}} {% endif %}</td>
-            <td>{% if movie.year %}{{movie.year}} {% endif %}</td>
+            <td>{{movie.year}}</td>
             {% if movie in user.movies.all %}
                 <td><b>Já assistido</b> - {{movie.date_watched}}</td>
             {%else%}

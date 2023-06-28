@@ -4,7 +4,7 @@
 <article>
     <h1>
         {% block ordem %}
-            {{serie.pt_title}}
+            {{serie.or_title}}
         {% endblock %}
     </h1>
     <p>Status da série: <b>{{serie.situation}}</b></p>
@@ -20,8 +20,6 @@
             {%else%}
             <td><a class="detalhe" href="{{ season.get_absolute_url }}">Temporada {{season.number}}</a></td>
             {%endif%}<td>{{season.qtd_eps}}</td>
-            <!-- <td><a class="detalhe" href="{% url 'series:season_details' serie.id season.id %}">Episódios</a></td>           -->
-          
         </tr>
         {% endfor %}
         <tr>
