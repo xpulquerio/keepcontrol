@@ -71,6 +71,6 @@ def InserirAssistido(request, episodeserie_id):
         return redirect('series:ListEpisodeSerie', serie_id=serie_id, season_id=season_id )
     else:
         x = UserEpisodeSerie(episode=episodio_serie, user=usuario, date_watched=timezone.now()) #Depois alterar o banco para inserir a data automaticamente
-        #x.save()
-        print (str(x)+" inserido!")
+        x.save()
+        print (str(episodeserie_user)+" inserido!")
         return redirect('series:ListEpisodeSerie', serie_id=serie_id, season_id=season_id )
