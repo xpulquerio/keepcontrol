@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Anime, SeasonAnime, EpisodeAnime
-from django.contrib.auth.decorators import login_required
 
 
 # Create your models here.
@@ -38,7 +37,6 @@ def ListSeasonAnime (request, id):
 
     return render(request, template_name, context)
 
-@login_required
 def ListEpisodeAnime (request, anime_id, season_id):
     context = {}
     

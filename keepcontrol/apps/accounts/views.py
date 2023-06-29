@@ -4,12 +4,39 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.conf import settings
 from .forms import RegisterForm, EditAccountForm
+from apps.movies.models import Movie
+from apps.series.models import EpisodeSerie
+from apps.animes.models import EpisodeAnime
 
 # Create your views here.
 @login_required
 def dashboard(request):
+    context = {}
+    movies = (
+        Movie.objects
+        .filter(usermovie__user_id=request.user.id)
+        .order_by('-usermovie__date_watched')
+        .values('pt_title', 'usermovie__date_watched')[:10]
+    )
+    epseries = (
+        EpisodeSerie.objects
+        .filter(userepisodeserie__user_id=request.user.id)
+        .order_by('-userepisodeserie__date_watched')
+        .values('pt_title', 'number', 'userepisodeserie__date_watched', 'season__number', 'season__serie__or_title')[:10]
+    )
+    epanimes = (
+        EpisodeAnime.objects
+        .filter(userepisodeanime__user_id=request.user.id)
+        .order_by('-userepisodeanime__date_watched')
+        .values('pt_title', 'number', 'userepisodeanime__date_watched', 'season__number', 'season__anime__or_title')[:10]
+    )
+    context = {
+        'movies': movies,
+        'epseries': epseries,
+        'epanimes': epanimes,
+    }
     template_name = 'dashboard.html'
-    return render(request, template_name)
+    return render(request, template_name, context)
 
 def register(request):
     template_name = 'register.html'
