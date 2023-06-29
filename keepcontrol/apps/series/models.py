@@ -20,17 +20,16 @@ class Serie(models.Model):
     def insert_temps(self, qtd_temps):
             cont = 0
             for i in range(qtd_temps):
-                nummber_of_season = i+1
-                title_of_season_for_insert = 'Temporada '+str(nummber_of_season) 
-                id_of_serie = self.id
-                temp = SeasonSerie(pt_title=title_of_season_for_insert, serie_id=id_of_serie)
-                if SeasonSerie.objects.filter(pt_title=temp.pt_title, serie_id=temp.serie_id).exists():
-                    print(title_of_season_for_insert+' já existe')
+                number_of_season = i+1
+            
+                temp = SeasonSerie(number=number_of_season, serie_id=self.id)
+                if SeasonSerie.objects.filter(number=temp.number, serie_id=temp.serie_id).exists():
+                    print('Temporada '+str(number_of_season)+' já existe')
                     #Se a temporada existe, não fazer nada.
                 else:
                     #Se a temporada não existe, inserir no banco.
                     temp.save()
-                    print(temp.pt_title+' inserida!')
+                    print('Temporada '+str(temp.number)+' inserida!')
                     cont = cont+1
             return 'Número de temporadas adicionadas: '+str(cont)
         

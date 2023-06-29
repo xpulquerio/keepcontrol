@@ -56,6 +56,7 @@ class UserMovie(models.Model):
     class Meta:
         verbose_name = 'Filme do Usuário'
         verbose_name_plural = 'Filmes'
+        unique_together = ('user', 'movie')
         
 class UserEpisodeSerie(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
@@ -68,6 +69,7 @@ class UserEpisodeSerie(models.Model):
     class Meta:
         verbose_name = 'Episódio de série'
         verbose_name_plural = 'Episódios de séries'
+        unique_together = ('user', 'episode')
 
 class UserEpisodeAnime(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
@@ -80,5 +82,6 @@ class UserEpisodeAnime(models.Model):
     class Meta:
         verbose_name = 'Episódio de anime'
         verbose_name_plural = 'Episódios de animes'
+        unique_together = ('user', 'episode')
     
     
