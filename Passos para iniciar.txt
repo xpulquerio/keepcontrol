@@ -17,4 +17,10 @@ Comando interessantes:
 - manage.py shell
 - manage.py 
 - manage.py createsuperuser
--
+
+
+related_name='x' substitui o user.movie_set
+
+user.objects.get(id=1) retorna diretamente 1 objeto
+
+python -m pip freeze > requirements.txt - criar o arquivo
