@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load bootstrap4 %}
 {% block principal %}
 <article>
     <div>
@@ -18,81 +17,86 @@
             </ul>
         </div>
         <div>
+           
+            {% block dashboard_content %}
             <div>
-                {% block dashboard_content %}
                 <p><strong>Nome</strong>: {{ user.name }}</p>
                 <p><strong>Usuário</strong>: {{ user.username }}</p>
                 <p><strong>E-mail</strong>: {{ user.email }}</p>
-                {% endblock %}
             </div>
+            
+            <div class="container">
+                <div style="font-size: 1.2rem;   font-weight: bold;
+                text-align: center;
+                margin-bottom: 0.5rem;">Últimos 10 filmes assistidos</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Assistido em</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for movie in movies %}
+                        <tr>
+                            <td>{{ movie.pt_title }}</td>
+                            <td>{{ movie.usermovie__date_watched }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        
+            <div class="container">
+                <div style="font-size: 1.2rem;   font-weight: bold;
+                text-align: center;
+                margin-bottom: 0.5rem;">Últimos 10 séries assistidos</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Assistido em</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ep in epseries %}
+                        <tr>
+                            <td>Episódio {{ ep.number }} - Temporada {{ep.season__number}} - {{ep.season__serie__or_title}}</td>
+                            <td>{{ ep.userepisodeserie__date_watched }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        
+            <div class="container">
+                <div style="font-size: 1.2rem;   font-weight: bold;
+                text-align: center;
+                margin-bottom: 0.5rem;">Últimos 10 animes assistidos</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Assistido em</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ep in epanimes %}
+                        <tr>
+                            <td>Episódio {{ ep.number }} - Temporada {{ep.season__number}} - {{ep.season__anime__or_title}}</td>
+                            <td>{{ ep.userepisodeanime__date_watched }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+            {% endblock %}
         </div>
     </div>
         
-    <div class="container">
-        <div style="font-size: 1.2rem;   font-weight: bold;
-        text-align: center;
-        margin-bottom: 0.5rem;">Últimos 10 filmes assistidos</div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Título</th>
-                    <th>Assistido em</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for movie in movies %}
-                <tr>
-                    <td>{{ movie.pt_title }}</td>
-                    <td>{{ movie.usermovie__date_watched }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <div class="container">
-        <div style="font-size: 1.2rem;   font-weight: bold;
-        text-align: center;
-        margin-bottom: 0.5rem;">Últimos 10 séries assistidos</div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Título</th>
-                    <th>Assistido em</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ep in epseries %}
-                <tr>
-                    <td>Episódio {{ ep.number }} - Temporada {{ep.season__number}} - {{ep.season__serie__or_title}}</td>
-                    <td>{{ ep.userepisodeserie__date_watched }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <div class="container">
-        <div style="font-size: 1.2rem;   font-weight: bold;
-        text-align: center;
-        margin-bottom: 0.5rem;">Últimos 10 animes assistidos</div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Título</th>
-                    <th>Assistido em</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ep in epanimes %}
-                <tr>
-                    <td>Episódio {{ ep.number }} - Temporada {{ep.season__number}} - {{ep.season__anime__or_title}}</td>
-                    <td>{{ ep.userepisodeanime__date_watched }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    
     
     </article>
-{%endblock%}
+    {%endblock%}

@@ -17,20 +17,17 @@ class Anime(models.Model):
         return '/animes/'+ str(self.id) #retorna a URL do curso
         
     def insert_temps(self, qtd_temps):
-            from apps.core.models import Season #Importando dentro da função para evitar importação circular
             cont = 0
             for i in range(qtd_temps):
-                nummber_of_season = i+1
-                title_of_season_for_insert = 'Temporada '+str(nummber_of_season) 
-                id_of_anime = self.id
-                temp = Season(pt_title=title_of_season_for_insert, anime_id=id_of_anime)
-                if Season.objects.filter(pt_title=temp.pt_title, anime_id=temp.anime_id).exists():
-                    print(title_of_season_for_insert+' já existe')
+                number_of_season = i+1
+                temp = SeasonAnime(number=number_of_season, anime_id=self.id)
+                if SeasonAnime.objects.filter(number=number_of_season, anime_id=self.id).exists():
+                    print('Temporada '+str(number_of_season)+' já existe')
                     #Se a temporada existe, não fazer nada.
                 else:
                     #Se a temporada não existe, inserir no banco.
                     temp.save()
-                    print(temp.pt_title+' inserida!')
+                    print('Temporada '+str(temp.number)+' inserida!')
                     cont = cont+1
             return 'Número de temporadas adicionadas: '+str(cont)
         
@@ -60,21 +57,21 @@ class SeasonAnime(models.Model):
     def get_absolute_url(self):
         return '/animes/'+ str(self.anime_id)+'/'+ str(self.id)
     
-    def insert_eps(self, qtd_eps):
+    def insert_eps(self, qtd_eps, number_ep):
         cont = 0
         for i in range(qtd_eps):
-            number_of_ep = i+1
-            title_of_episode_for_insert = 'Episódio '+str(number_of_ep) 
-            id_of_season = self.id
-            temp = EpisodeAnime(number=number_of_ep, season_id=id_of_season)
+            x = i+number_ep
+            
+            temp = EpisodeAnime(number=x, season_id=self.id)
             if EpisodeAnime.objects.filter(number=temp.number, season_id=temp.season_id).exists():
-                print(title_of_episode_for_insert+' já existe')
+                print('Episódio '+str(x)+' já existe')
                 #Se o episódio existir, não fazer nada.
             else:
                 #Se o episódio não existir, inserir no banco.
                 temp.save()
-                print('EP: '+str(temp.number)+' inserido!')
+                print('Episódio '+str(temp.number)+' inserido!')
                 cont = cont+1
+            
         return 'Número de episódios adicionados: '+str(cont)
     
     class Meta:

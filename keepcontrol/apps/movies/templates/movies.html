@@ -6,16 +6,14 @@
     {% if qtd_movies %}
     <table class="table_c">
         <tr>
-            <th>Título (OR)</th>
-            <th>Título (BR)</th>
+            <th>Título</th>
             <th>Ano</th>
             <th>Assistido</th>
         </tr>
         {% for movie in movies %}
         <tr>
-            <td>{{movie.or_title}}</td>
-            <td>{{movie.pt_title}}</td>
-            <td>{{movie.year}}</td>
+            <td>{{movie.or_title}} - ({{movie.pt_title}})</td>
+            <td>{{movie.year}} {{movie.collection}}</td>
             {% if movie in user.movies.all %}
                 <td><b>Já assistido</b> - {{movie.date_watched}}</td>
             {%else%}

@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 def movies (request):
     
-    movies = Movie.objects.all().order_by('-year')
+    movies = Movie.objects.all().order_by('collection', '-year')
     
     qtd_movies = len(movies)
 

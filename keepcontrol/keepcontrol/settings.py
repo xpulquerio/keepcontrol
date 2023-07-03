@@ -40,7 +40,6 @@ DEFAULT_APPS = [
 ]
 
 MY_APPS = [
-    'bootstrap4',
     'apps.core',
     'apps.animes',
     'apps.series',

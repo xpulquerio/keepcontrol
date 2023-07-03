@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class MovieManager(models.Manager): #Custom Manager para fazer pesquisas... Movies.objects.search('nome')
 
     def search(self, query):
