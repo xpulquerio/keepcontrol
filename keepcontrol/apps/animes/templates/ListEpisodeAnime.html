@@ -21,7 +21,7 @@
                 {% if ep in user.episodes_anime.all %}  
                     <td><b>Já assistido</b> - {{ep.date_watched}} </td>
                 {%else%}
-                    <td>Não assistido</td>
+                <td>Não assistido - <a href="{% url 'animes:InserirAssistido' ep.id %}">Assistir</a></td>
                 {%endif%}
         </tr>
         {% endfor %}

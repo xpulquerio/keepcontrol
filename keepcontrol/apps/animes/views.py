@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Anime, SeasonAnime, EpisodeAnime
-
-
-# Create your models here.
+from apps.accounts.models import UserEpisodeAnime
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 def ListAnime (request):
     context = {}
@@ -57,3 +57,20 @@ def ListEpisodeAnime (request, anime_id, season_id):
     template_name = 'ListEpisodeAnime.html'
     
     return render(request, template_name, context)
+
+@login_required
+def InserirAssistido(request, episodeanime_id):
+    episodio_anime = EpisodeAnime.objects.filter(id=episodeanime_id).first()
+    season_id = episodio_anime.season.id
+    anime_id = episodio_anime.season.anime_id
+    
+    usuario = request.user
+    episodeanime_user = UserEpisodeAnime.objects.filter(user=usuario.id, episode=episodeanime_id)
+    if episodeanime_user:
+        print (str(episodeanime_user)+" já foi assistido pelo usuário")
+        return redirect('animes:ListEpisodeAnime', anime_id=anime_id, season_id=season_id )
+    else:
+        x = UserEpisodeAnime(episode=episodio_anime, user=usuario, date_watched=timezone.now()) #Depois alterar o banco para inserir a data automaticamente
+        x.save()
+        print (str(episodeanime_user)+" inserido!")
+        return redirect('animes:ListEpisodeAnime', anime_id=anime_id, season_id=season_id )

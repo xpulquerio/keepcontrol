@@ -24,7 +24,7 @@
         <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><a href="{% url 'core:home' %}">Home</a></li>
         <li class="{% if request.resolver_match.url_name == 'series' %}active{% endif %}"><a href="{% url 'series:ListSerie' %}">Séries</a></li>
         <li class="{% if request.resolver_match.url_name == 'movies' %}active{% endif %}"><a href="{% url 'movies:movies' %}">Filmes</a></li>
-        <li class="{% if request.resolver_match.url_name == 'animes' %}active{% endif %}"><a href="{% url 'animes:animes' %}">Animes</a></li>
+        <li class="{% if request.resolver_match.url_name == 'animes' %}active{% endif %}"><a href="{% url 'animes:ListAnime' %}">Animes</a></li>
         {% if user.is_authenticated %} <!-- Se há algum usuário autenticado, -->
         <li class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><a href="{%url 'accounts:dashboard'%}">Painel</a></li>
         <li><a href="{%url 'accounts:logout'%}">Sair</a></li>
