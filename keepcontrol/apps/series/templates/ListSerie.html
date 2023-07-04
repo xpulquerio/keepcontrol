@@ -2,8 +2,8 @@
 
 {% block principal %}
 <article>
-    <h1>Lista de Séries</h1>
-    <!-- Aqui começa a lista dos filmes -->
+    <h3>Lista de Séries</h3>
+    
     {% if qtd_series %}
     <table class="table_c">
         <tr>
@@ -16,7 +16,7 @@
             <td><a class="detalhe" href="{{ serie.get_absolute_url }}">{{serie.or_title}}</a></td>
             <td>{{serie.qtd_temps}}</td>
             <td>{{serie.situation}}</td>      
-            <!-- <td><a class="detalhe" href="{{ serie.get_absolute_url }}">Temporadas</a></td> -->
+           
         </tr>
         {% endfor %}
     </table>

@@ -11,6 +11,7 @@ class SeasonAnimeAdmin(admin.ModelAdmin):
     display_number.short_description = "Temporada" #Cria a descrição curta para exibir no cabeçalho da tabela
     
 class EpisodeAnimeAdmin(admin.ModelAdmin):
+    search_fields = ['number','or_title', 'season__or_title', 'season__anime__or_title']
     list_display = ['display_number', 'pt_title', 'or_title', 'season']
     def display_number(self, obj): #Substitui a exibição do campo number pelo método abaixo e utiliza esse método no list_display para exibir
         return f"Episódio {obj.number}"
