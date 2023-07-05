@@ -15,7 +15,7 @@
             <td>{{movie.pt_title}}</td>
             <td>{{movie.year}}</td>
             {% if movie in user.movies.all %}
-                <td><b>Já assistido</b> - {{movie.date_watched}}</td>
+                <td><b>Já assistido</b> - {{movie.date_watched|date:"d/m/Y"}}</td>
             {%else%}
             <td>Não assistido - <a href="{% url 'movies:inserir_assistido' movie.id %}">Assistir</a></td>
             {% endif %}

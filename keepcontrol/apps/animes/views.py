@@ -66,18 +66,31 @@ def ListEpisodeAnime (request, anime_id, season_id):
     return render(request, template_name, context)
 
 @login_required
-def InserirAssistido(request, episodeanime_id):
-    episodio_anime = EpisodeAnime.objects.filter(id=episodeanime_id).first()
+def InserirAssistidoEpisodeAnime(request, episode_id):
+    episodio_anime = EpisodeAnime.objects.filter(id=episode_id).first()
     season_id = episodio_anime.season.id
     anime_id = episodio_anime.season.anime_id
     
     usuario = request.user
-    episodeanime_user = UserEpisodeAnime.objects.filter(user=usuario.id, episode=episodeanime_id)
+    episodeanime_user = UserEpisodeAnime.objects.filter(user=usuario.id, episode=episode_id)
+    
     if episodeanime_user:
         print (str(episodeanime_user)+" já foi assistido pelo usuário")
-        return redirect('animes:ListEpisodeAnime', anime_id=anime_id, season_id=season_id )
+        return redirect('animes:ListEpisodeAnime', anime_id=anime_id, season_id=season_id)
     else:
         x = UserEpisodeAnime(episode=episodio_anime, user=usuario, date_watched=timezone.now()) #Depois alterar o banco para inserir a data automaticamente
         x.save()
-        print (str(episodeanime_user)+" inserido!")
-        return redirect('animes:ListEpisodeAnime', anime_id=anime_id, season_id=season_id )
+        print (str(episodio_anime)+" inserido!")
+        return redirect('animes:ListEpisodeAnime', anime_id=anime_id, season_id=season_id)
+
+@login_required
+def InserirAssistidoSeasonAnime(request, season_id, anime_id):
+    episodes_anime = EpisodeAnime.objects.filter(season=season_id)
+    
+    for ep in episodes_anime:
+        x = ep.id
+        print(x)
+        InserirAssistidoEpisodeAnime(request=request,episode_id=x)
+        
+    return redirect('animes:ListSeasonAnime', id=anime_id)
+        

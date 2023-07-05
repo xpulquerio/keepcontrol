@@ -6,6 +6,7 @@ class Anime(models.Model):
     author = models.CharField('Author', null=True, max_length=255, blank=True)
     situation = models.CharField('Situação', null=True, blank=True)
     created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
+    modified_at = models.DateField('Modificado em', auto_now=True)
     
     def __str__ (self):
         if self.pt_title:

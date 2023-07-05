@@ -28,8 +28,9 @@
             <div class="container">
                 <div style="font-size: 1.2rem;   font-weight: bold;
                 text-align: center;
-                margin-bottom: 0.5rem;">Últimos 10 filmes assistidos</div>
-                <table class="table">
+                margin-bottom: 0.5rem;
+                margin-top: 1.5rem;">Últimos 10 filmes assistidos</div>
+                <table class="table_c">
                     <thead>
                         <tr>
                             <th>Título</th>
@@ -40,7 +41,7 @@
                         {% for movie in movies %}
                         <tr>
                             <td>{{ movie.pt_title }}</td>
-                            <td>{{ movie.usermovie__date_watched }}</td>
+                            <td>{{ movie.usermovie__date_watched|date:"d/m/Y" }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -50,8 +51,9 @@
             <div class="container">
                 <div style="font-size: 1.2rem;   font-weight: bold;
                 text-align: center;
-                margin-bottom: 0.5rem;">Últimas 10 séries assistidas</div>
-                <table class="table">
+                margin-bottom: 0.5rem;
+                margin-top: 1.5rem;">Últimas 10 séries assistidas</div>
+                <table class="table_c">
                     <thead>
                         <tr>
                             <th>Título</th>
@@ -62,7 +64,7 @@
                         {% for ep in epseries %}
                         <tr>
                             <td>Episódio {{ ep.number }} - Temporada {{ep.season__number}} - {{ep.season__serie__or_title}}</td>
-                            <td>{{ ep.userepisodeserie__date_watched }}</td>
+                            <td>{{ ep.userepisodeserie__date_watched|date:"d/m/Y" }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -72,8 +74,9 @@
             <div class="container">
                 <div style="font-size: 1.2rem;   font-weight: bold;
                 text-align: center;
-                margin-bottom: 0.5rem;">Últimos 10 animes assistidos</div>
-                <table class="table">
+                margin-bottom: 0.5rem;
+                margin-top: 1.5rem;">Últimos 10 animes assistidos</div>
+                <table class="table_c">
                     <thead>
                         <tr>
                             <th>Título</th>
@@ -84,7 +87,7 @@
                         {% for ep in epanimes %}
                         <tr>
                             <td>Episódio {{ ep.number }} - Temporada {{ep.season__number}} - {{ep.season__anime__or_title}}</td>
-                            <td>{{ ep.userepisodeanime__date_watched }}</td>
+                            <td>{{ ep.userepisodeanime__date_watched|date:"d/m/Y" }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -2,12 +2,15 @@
 
 {% block principal %}
 <article>
-    <h1>
-        {% block ordem %}
+    <h3>
+        {% block title %}
             {{serie.or_title}}
         {% endblock %}
-    </h1>
-    <p>Status da série: <b>{{serie.situation}}</b></p>
+    </h3>
+    {%block infor %}
+        Status do série: <b>{{serie.situation}}</b> | Atualizado em: <b>{{serie.modified_at}}</b>
+    {%endblock%}
+    | Quantidade de episódios: <b>{{serie.qtd_total_eps}}</b>
     <table class="table_c">
         <tr>
             <th>Temporada</th>
@@ -22,10 +25,6 @@
             {%endif%}<td>{{season.qtd_eps}}</td>
         </tr>
         {% endfor %}
-        <tr>
-            <td></td>
-            <td><b>{{serie.qtd_total_eps}}</b></td>
-        </tr>
     </table>
 
   </article>

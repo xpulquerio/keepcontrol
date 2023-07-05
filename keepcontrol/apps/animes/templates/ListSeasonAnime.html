@@ -3,11 +3,14 @@
 {% block principal %}
 <article>
     <h3>
-        {% block ordem %}
-            {{anime.pt_title}}
+        {% block title %}
+            {{anime.or_title}}
         {% endblock %}
     </h3>
-    <p>Status do anime: <b>{{anime.situation}}</b> | Quantidade de episódios: <b>{{anime.qtd_total_eps}}</b></p>
+    {%block infor %}
+        Status do série: <b>{{anime.situation}}</b> | Atualizado em: <b>{{anime.modified_at}}</b>
+    {%endblock%}
+    | Quantidade de episódios: <b>{{anime.qtd_total_eps}}</b>
     <table class="table_c">
         <tr>
             <th>Temporada</th>
@@ -20,7 +23,7 @@
             {%else%}
             <td><a class="detalhe" href="{{ season.get_absolute_url }}">Temporada {{season.number}}</a></td>
             {%endif%}
-            <td>Assistido {{season.qtd_assistido}} de {{season.qtd_eps}}</td>   
+            <td>Assistido {{season.qtd_assistido}} de {{season.qtd_eps}}{%if season.qtd_assistido is season.qtd_eps%}{%else%} - <a href="{% url 'animes:InserirAssistidoSeasonAnime' season.id season.anime_id %}">Marcar como assistido</a>{%endif%}</td>   
         </tr>
         {% endfor %}
     </table>

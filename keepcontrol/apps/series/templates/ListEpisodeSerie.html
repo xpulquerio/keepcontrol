@@ -2,9 +2,14 @@
 
 {% block principal %}
 <article>
-    {% block ordem %}
-    <h1>{{block.super}} - Temporada {{season.number}}</h1>
-    {% endblock %}
+    <h3>
+        {% block title %}
+            {{block.super}} - Temporada {{season.number}}
+        {% endblock %}
+    </h3>
+    {%block infor%}
+        {{block.super}}
+    {%endblock%}
    
     <table class="table_c">
         <tr>

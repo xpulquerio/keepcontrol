@@ -2,9 +2,14 @@
 
 {% block principal %}
 <article>
-    {% block ordem %}
-    <h3>{{block.super}} - Temporada {{season.number}}</h3>
-    {% endblock %}
+    <h3>
+        {% block title %}
+            {{block.super}} - Temporada {{season.number}}{%if season.pt_title%}: {{season.pt_title}}{%endif%}
+        {% endblock %}
+    </h3>
+    {%block infor%}
+        {{block.super}}
+    {%endblock%}
    
     <table class="table_c">
         <tr>
@@ -19,9 +24,9 @@
             <td>Episódio {{ep.number}}</td>
             {% endif %}
                 {% if ep in user.episodes_anime.all %}  
-                    <td><b>Já assistido</b> - {{ep.date_watched}} </td>
+                    <td><b>Já assistido</b> - {{ep.date_watched|date:"d/m/Y"}} </td>
                 {%else%}
-                <td>Não assistido - <a href="{% url 'animes:InserirAssistido' ep.id %}">Assistir</a></td>
+                <td>Não assistido - <a href="{% url 'animes:InserirAssistidoEpisodeAnime' ep.id %}">Assistir</a></td>
                 {%endif%}
         </tr>
         {% endfor %}
