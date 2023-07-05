@@ -12,8 +12,8 @@
         </tr>
         {% for movie in movies %}
         <tr>
-            <td>{{movie.or_title}} - ({{movie.pt_title}})</td>
-            <td>{{movie.year}} {{movie.collection}}</td>
+            <td>{{movie.pt_title}}</td>
+            <td>{{movie.year}}</td>
             {% if movie in user.movies.all %}
                 <td><b>Já assistido</b> - {{movie.date_watched}}</td>
             {%else%}

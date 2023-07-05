@@ -14,7 +14,7 @@ class SeasonSerieAdmin(admin.ModelAdmin):
     
 class EpisodeSerieAdmin(admin.ModelAdmin):
     list_display = ['display_number', 'pt_title', 'or_title', 'season']
-    
+    search_fields = ['number','or_title', 'season__or_title', 'season__serie__or_title']
     def display_number(self, obj): #Substitui a exibição do campo number pelo método abaixo e utiliza esse método no list_display para exibir
         return f"Episódio {obj.number}"
     display_number.short_description = "Episódio" #Cria a descrição curta para exibir no cabeçalho da tabela

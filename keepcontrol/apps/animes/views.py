@@ -27,10 +27,17 @@ def ListSeasonAnime (request, id):
     anime.qtd_total_eps = 0
 
     seasons = SeasonAnime.objects.filter(anime_id=id).order_by('number')
+        
     for season in seasons:
+        season.qtd_assistido = 0
         season.qtd_eps = EpisodeAnime.get_qtd_episodes(season.id)
         anime.qtd_total_eps += season.qtd_eps
-
+        if request.user.is_authenticated:
+            epsisodes = EpisodeAnime.objects.filter(season=season.id)
+            for ep in epsisodes:
+                if ep in request.user.episodes_anime.all():
+                    season.qtd_assistido += 1
+        
     context['seasons'] = seasons
     context['anime'] = anime
     template_name = 'ListSeasonAnime.html'

@@ -2,12 +2,12 @@
 
 {% block principal %}
 <article>
-    <h1>
+    <h3>
         {% block ordem %}
             {{anime.pt_title}}
         {% endblock %}
-    </h1>
-    <p>Status da série: <b>{{anime.situation}}</b></p>
+    </h3>
+    <p>Status do anime: <b>{{anime.situation}}</b> | Quantidade de episódios: <b>{{anime.qtd_total_eps}}</b></p>
     <table class="table_c">
         <tr>
             <th>Temporada</th>
@@ -20,13 +20,9 @@
             {%else%}
             <td><a class="detalhe" href="{{ season.get_absolute_url }}">Temporada {{season.number}}</a></td>
             {%endif%}
-            <td>{{season.qtd_eps}}</td>   
+            <td>Assistido {{season.qtd_assistido}} de {{season.qtd_eps}}</td>   
         </tr>
         {% endfor %}
-        <tr>
-            <td></td>
-            <td><b>{{anime.qtd_total_eps}}</b></td>
-        </tr>
     </table>
 
   </article>
