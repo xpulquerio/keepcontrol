@@ -22,9 +22,16 @@
 
 .left-side-menu li{
     list-style-type: none;
-    /* background-color: blue; */
+    background-color: lightgray;
     text-align: left;
+    padding: 10px;
 }
+
+.left-side-menu a:link, .left-side-menu a:visited {
+    text-decoration: none;
+    color: black;
+  }
+
 
 /* RIGHT */
 .right-side-body {
@@ -35,4 +42,5 @@
     margin: 0%;
     padding: 5px;
     border-radius: 5px;
+    text-align: left;
 }
