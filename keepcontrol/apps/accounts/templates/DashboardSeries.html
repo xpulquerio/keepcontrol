@@ -1,0 +1,32 @@
+{% extends "dashboard.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>|</li>
+    <li><a href="{% url 'accounts:DashboardSeries' %}">Séries</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<div>
+    <div>
+        <div>Últimas 10 séries assistidas</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Assistido em</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ep in epseries %}
+                <tr>
+                    <td>Episódio {{ ep.number }} - Temporada {{ep.season__number}} - {{ep.season__serie__or_title}}</td>
+                    <td>{{ ep.userepisodeserie__date_watched|date:"d/m/Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+{% endblock %}

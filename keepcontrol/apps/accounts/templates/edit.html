@@ -7,35 +7,29 @@
 {% endblock %}
 
 {% block dashboard_content %}
+<div>
+    <form class="pure-form pure-form-stacked" method='POST'>
+        {% csrf_token %}
+        {% if success %}
+        <p>Os dados foram alterados com sucesso</p>
+        {% endif %}
+        <fieldset>
+            {{ form.errors }}
+            {{ form.non_field_errors }} <!-- Erros que não estão associados aos campos -->
+            {% for field in form %}
+            <div class="pure-control-group">
+                {{field.label_tag}}
+                {{field}}
+                {{field.errors}} <!-- Erros de cada campo -->
+            </div>
+            {% endfor %}
 
-<div class="content">
-    <div class="pure-u-2-3">
-        <div class="inner">
-            <form class="pure-form pure-form-stacked" method='POST'>
-                {% csrf_token %}
-                {% if success %}
-                <p>Os dados foram alterados com sucesso</p>
-                {% endif %}
-                <fieldset>
-                    {{ form.errors }}
-                    {{ form.non_field_errors }} <!-- Erros que não estão associados aos campos -->
-                    {% for field in form %}
-                    <div class="pure-control-group">
-                        {{field.label_tag}}
-                        {{field}}
-                        {{field.errors}} <!-- Erros de cada campo -->
-                    </div>
-                    {% endfor %}
-
-                    <div class="pure-controls">
-                        <button type="submit" class="pure-button pure-button-primary">Enviar</button>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-    </div>
+            <div class="pure-controls">
+                <button type="submit" class="pure-button pure-button-primary">Enviar</button>
+            </div>
+        </fieldset>
+    </form>
 </div>
-
 {% endblock %}
 
   

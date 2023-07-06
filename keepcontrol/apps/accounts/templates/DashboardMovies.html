@@ -1,0 +1,30 @@
+{% extends "dashboard.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>|</li>
+    <li><a href="{% url 'accounts:DashboardMovies' %}">Filmes</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<div>
+    <div>Últimos 10 filmes assistidos</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Assistido em</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movie in movies %}
+            <tr>
+                <td>{{ movie.pt_title }}</td>
+                <td>{{ movie.usermovie__date_watched|date:"d/m/Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div>
+{% endblock %}

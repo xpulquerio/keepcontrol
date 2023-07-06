@@ -1,0 +1,15 @@
+.breadcrumb {
+    background: rgb(194, 194, 194);
+    border-radius: 5px;
+    padding: 10px 10px 10px 20px;
+  }
+
+.breadcrumb li {
+    display: inline-block;
+    padding: 5px 2px 5px 2px;
+  }
+
+.breadcrumb a:visited, a:link {
+    text-decoration: none;
+    color: black;
+  }

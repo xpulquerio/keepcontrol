@@ -1,0 +1,30 @@
+{% extends "dashboard.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>|</li>
+    <li><a href="{% url 'accounts:DashboardAnimes' %}">Animes</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<div>
+    <div>Últimos 10 animes assistidos</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Assistido em</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ep in epanimes %}
+            <tr>
+                <td>Episódio {{ ep.number }} - Temporada {{ep.season__number}} - {{ep.season__anime__or_title}}</td>
+                <td>{{ ep.userepisodeanime__date_watched|date:"d/m/Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

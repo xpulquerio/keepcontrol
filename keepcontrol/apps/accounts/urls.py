@@ -11,4 +11,11 @@ urlpatterns = [
     path('cadastrar/', views.register, name='register'),
     path('editar/', views.edit, name='edit'),
     path('editar_senha/', views.edit_password, name='edit_password'),
+    
+    path('cadastrar/', views.register, name='resume'),
+    path('series/', views.DashboardSeries, name='DashboardSeries'),
+    path('animes/', views.DashboardAnimes, name='DashboardAnimes'),
+    path('mangas/', views.DashboardSeries, name='DashboardMangas'),
+    path('filmes/', views.DashboardMovies, name='DashboardMovies'),
+    path('livros/', views.DashboardSeries, name='DashboardBooks'),
 ]
