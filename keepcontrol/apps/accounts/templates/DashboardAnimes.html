@@ -8,18 +8,22 @@
 
 {% block dashboard_content %}
 <div>
-    <div>Últimos 10 animes assistidos</div>
-    <table>
+    <div class="pure-menu-li">Últimos 10 animes assistidos</div>
+    <table class="table_c">
         <thead>
             <tr>
                 <th>Título</th>
+                <th>Temporada</th>
+                <th>Anime</th>
                 <th>Assistido em</th>
             </tr>
         </thead>
         <tbody>
             {% for ep in epanimes %}
             <tr>
-                <td>Episódio {{ ep.number }} - Temporada {{ep.season__number}} - {{ep.season__anime__or_title}}</td>
+                <td>Episódio {{ ep.number }}</td>
+                <td>Temporada {{ep.season__number}}</td>
+                <td>{{ep.season__anime__or_title}}</td>
                 <td>{{ ep.userepisodeanime__date_watched|date:"d/m/Y" }}</td>
             </tr>
             {% endfor %}

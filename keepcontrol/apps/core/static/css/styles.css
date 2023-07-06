@@ -9,7 +9,7 @@
 
 body {
   margin: 0px;
-  
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* --------------- Barra de navegação*/
@@ -23,6 +23,7 @@ nav {
   padding: 0;
   background-color: red; /*Não sei como tirar essa barra*/
   /* box-shadow: 0px 1px 5px; */
+  
 }
 
 nav ul {
@@ -64,13 +65,14 @@ header h3 {
 }
 
 /* --------------- Article */
+a {
+  color: black;
+  text-decoration: none;
+}
 
 article{
-  /* background-color: red; */
-  /* margin: 0px 2%; */
   padding: 2% 4%;
   text-align: justify;
-  /* background-color: gray; */
 }
 
 /* --------------- Footer */

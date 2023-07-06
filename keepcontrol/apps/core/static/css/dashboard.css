@@ -9,7 +9,7 @@
     padding: 5px 2px 5px 2px;
   }
 
-.breadcrumb a:visited, a:link {
+.breadcrumb a:visited, .breadcrumb a:link {
     text-decoration: none;
     color: black;
   }
