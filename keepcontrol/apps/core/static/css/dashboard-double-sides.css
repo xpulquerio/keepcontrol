@@ -1,12 +1,9 @@
 .principal-group {
     margin: 0;
     text-align: justify;
-    /* background-color: yellow; */
 }
-
 /* LEFT */
 .left-side-menu {
-    /* background-color: red; */
     display: inline-grid;
     width: 20%;
     height: auto;
@@ -14,25 +11,31 @@
     padding: 5px;
     border-radius: 5px;
 }
-
 .left-side-menu ul {
     padding: 0;
     margin: 0;
 }
-
-.left-side-menu li{
+.pure-menu-li {
+    padding: 10px;
+    background-color: rgb(160, 160, 160);
+}
+.left-side-menu li {
     list-style-type: none;
+}
+.left-side-menu a {
+    display: block;
     background-color: lightgray;
     text-align: left;
     padding: 10px;
 }
-
 .left-side-menu a:link, .left-side-menu a:visited {
     text-decoration: none;
     color: black;
-  }
-
-
+}
+.left-side-menu a:hover {
+    background-color: white;
+    color: black;
+}
 /* RIGHT */
 .right-side-body {
     /* background-color: red; */
