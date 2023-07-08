@@ -19,10 +19,11 @@
         {% for season in seasons %}
         <tr>
             {%if season.pt_title%}
-            <td><a class="detalhe" href="{{ season.get_absolute_url }}">Temporada {{season.number}}: {{season.pt_title}}</a></td>
+                <td><a class="detalhe" href="{{ season.get_absolute_url }}">Temporada {{season.number}}: {{season.pt_title}}</a></td>
             {%else%}
-            <td><a class="detalhe" href="{{ season.get_absolute_url }}">Temporada {{season.number}}</a></td>
-            {%endif%}<td>{{season.qtd_eps}}</td>
+                <td><a class="detalhe" href="{{ season.get_absolute_url }}">Temporada {{season.number}}</a></td>
+            {%endif%}
+                <td>Assistido {{season.qtd_assistido}} de {{season.qtd_eps}}{%if season.qtd_assistido is season.qtd_eps%}{%else%} - <a href="{% url 'series:InserirAssistidoSeasonSerie' season.id season.serie_id %}">Marcar como assistido</a>{%endif%}</td>
         </tr>
         {% endfor %}
     </table>

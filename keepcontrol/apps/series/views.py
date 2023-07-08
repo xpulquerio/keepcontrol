@@ -28,8 +28,14 @@ def ListSeasonSerie (request, id):
 
     seasons = SeasonSerie.objects.filter(serie_id=id).order_by('number')
     for season in seasons:
+        season.qtd_assistido = 0
         season.qtd_eps = EpisodeSerie.get_qtd_episodes(season.id)
         serie.qtd_total_eps += season.qtd_eps
+        if request.user.is_authenticated:
+            epsisodes = EpisodeSerie.objects.filter(season=season.id)
+            for ep in epsisodes:
+                if ep in request.user.episodes_serie.all():
+                    season.qtd_assistido += 1
 
     context['seasons'] = seasons
     context['serie'] = serie
@@ -59,7 +65,7 @@ def ListEpisodeSerie (request, serie_id, season_id):
     return render(request, template_name, context)
 
 @login_required
-def InserirAssistido(request, episodeserie_id):
+def InserirAssistidoEpisodeSerie(request, episodeserie_id):
     episodio_serie = EpisodeSerie.objects.filter(id=episodeserie_id).first()
     season_id = episodio_serie.season.id
     serie_id = episodio_serie.season.serie_id
@@ -72,5 +78,16 @@ def InserirAssistido(request, episodeserie_id):
     else:
         x = UserEpisodeSerie(episode=episodio_serie, user=usuario, date_watched=timezone.now()) #Depois alterar o banco para inserir a data automaticamente
         x.save()
-        print (str(episodeserie_user)+" inserido!")
+        print (str(episodio_serie)+" inserido!")
         return redirect('series:ListEpisodeSerie', serie_id=serie_id, season_id=season_id )
+    
+@login_required
+def InserirAssistidoSeasonSerie(request, season_id, serie_id):
+    episodes_serie = EpisodeSerie.objects.filter(season=season_id)
+    
+    for ep in episodes_serie:
+        x = ep.id
+        print(x)
+        InserirAssistidoEpisodeSerie(request=request,episodeserie_id=x)
+        
+    return redirect('series:ListSeasonSerie', id=serie_id)

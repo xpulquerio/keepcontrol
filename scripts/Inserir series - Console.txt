@@ -1,0 +1,13 @@
+
+
+from apps.series.models import Serie
+from apps.series.models import SeasonSerie
+serie_name = 'Friends'
+
+s = Serie.objects.filter(or_title=serie_name)
+s
+s[0].insert_temps()
+
+x = SeasonSerie.objects.filter(serie__or_title=serie_name)
+x
+x[0].insert_eps()

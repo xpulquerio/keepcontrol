@@ -5,7 +5,8 @@ urlpatterns = [
     path('', views.ListSerie, name='ListSerie'),
     path('<int:id>/', views.ListSeasonSerie, name='ListSeasonSerie'),
     path('<int:serie_id>/<int:season_id>/', views.ListEpisodeSerie, name='ListEpisodeSerie'),
-    path('inserir_assistido/<int:episodeserie_id>/', views.InserirAssistido, name='InserirAssistido'),
+    path('inserirepisodeanime/<int:episodeserie_id>/', views.InserirAssistidoEpisodeSerie, name='InserirAssistidoEpisodeSerie'),
+    path('inserirseasonserie/<int:season_id>/<int:serie_id>/', views.InserirAssistidoSeasonSerie, name='InserirAssistidoSeasonSerie'),
 
 
 ]
