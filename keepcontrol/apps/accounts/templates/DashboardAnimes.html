@@ -24,7 +24,7 @@
                 <td>Episódio {{ ep.number }}</td>
                 <td>Temporada {{ep.season__number}}</td>
                 <td>{{ep.season__anime__or_title}}</td>
-                <td>{{ ep.userepisodeanime__date_watched|date:"d/m/Y" }}</td>
+                <td>{{ ep.userepisodeanime__date_watched }}</td>
             </tr>
             {% endfor %}
         </tbody>
