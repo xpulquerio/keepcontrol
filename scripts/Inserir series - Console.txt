@@ -1,8 +1,6 @@
-
-
 from apps.series.models import Serie
 from apps.series.models import SeasonSerie
-serie_name = 'Friends'
+serie_name = 'Blue Period'
 
 s = Serie.objects.filter(or_title=serie_name)
 s

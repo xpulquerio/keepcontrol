@@ -7,6 +7,7 @@ from .forms import RegisterForm, EditAccountForm
 from apps.movies.models import Movie
 from apps.series.models import EpisodeSerie
 from apps.animes.models import EpisodeAnime
+from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie
 
 # Create your views here.
 @login_required
@@ -65,28 +66,18 @@ def edit_password(request):
 @login_required
 def DashboardSeries(request):
     context = {}
-    movies = (
-        Movie.objects
-        .filter(usermovie__user_id=request.user.id)
-        .order_by('-usermovie__date_watched')
-        .values('pt_title', 'usermovie__date_watched')[:10]
-    )
+    qtd_assistidos = UserEpisodeSerie.objects.filter(user=request.user).count()
     epseries = (
         EpisodeSerie.objects
         .filter(userepisodeserie__user_id=request.user.id)
         .order_by('-userepisodeserie__date_watched')
         .values('pt_title', 'number', 'userepisodeserie__date_watched', 'season__number', 'season__serie__or_title')[:10]
     )
-    epanimes = (
-        EpisodeAnime.objects
-        .filter(userepisodeanime__user_id=request.user.id)
-        .order_by('-userepisodeanime__date_watched')
-        .values('pt_title', 'number', 'userepisodeanime__date_watched', 'season__number', 'season__anime__or_title')[:10]
-    )
+    
     context = {
-        'movies': movies,
+        'qtd_assistidos': qtd_assistidos,
         'epseries': epseries,
-        'epanimes': epanimes,
+        
     }
     template_name = 'DashboardSeries.html'
     return render(request, template_name, context)
@@ -94,6 +85,7 @@ def DashboardSeries(request):
 @login_required
 def DashboardAnimes(request):
     context = {}
+    qtd_assistidos = UserEpisodeAnime.objects.filter(user=request.user).count()
     epanimes = (
         EpisodeAnime.objects
         .filter(userepisodeanime__user_id=request.user.id)
@@ -102,6 +94,7 @@ def DashboardAnimes(request):
     )
     context = {
         'epanimes': epanimes,
+        'qtd_assistidos': qtd_assistidos,
     }
     template_name = 'DashboardAnimes.html'
     return render(request, template_name, context)
@@ -109,6 +102,7 @@ def DashboardAnimes(request):
 @login_required
 def DashboardMovies(request):
     context = {}
+    qtd_assistidos = UserMovie.objects.filter(user=request.user).count()
     movies = (
         Movie.objects
         .filter(usermovie__user_id=request.user.id)
@@ -117,6 +111,7 @@ def DashboardMovies(request):
     )
 
     context = {
+        'qtd_assistidos': qtd_assistidos,
         'movies': movies,
     }
     template_name = 'DashboardMovies.html'

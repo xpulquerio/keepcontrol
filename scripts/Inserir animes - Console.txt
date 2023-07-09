@@ -1,0 +1,13 @@
+from apps.animes.models import Anime
+from apps.animes.models import SeasonAnime
+anime_name = 'Dr. Stone'
+
+s = Anime.objects.filter(or_title=anime_name)
+s
+s[0].insert_temps(2)
+
+x = SeasonAnime.objects.filter(anime__or_title=anime_name)
+x
+x[0].insert_eps(24, 1)
+x[1].insert_eps(11, 1)
+x[2].insert_eps(11, 1)
