@@ -83,5 +83,3 @@ class UserEpisodeAnime(models.Model):
         verbose_name = 'Episódio de anime'
         verbose_name_plural = 'Episódios de animes'
         unique_together = ('user', 'episode')
-    
-    
