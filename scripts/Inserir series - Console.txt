@@ -1,11 +1,29 @@
 from apps.series.models import Serie
 from apps.series.models import SeasonSerie
-serie_name = 'Blue Period'
+serie_name = 'A Anatomia de Grey'
 
-s = Serie.objects.filter(or_title=serie_name)
+s = Serie.objects.filter(pt_title=serie_name)
 s
-s[0].insert_temps()
+s[0].insert_temps(19)
 
-x = SeasonSerie.objects.filter(serie__or_title=serie_name)
+x = SeasonSerie.objects.filter(serie__pt_title=serie_name)
 x
-x[0].insert_eps()
+x[0].insert_eps(9)
+x[1].insert_eps(27)
+x[2].insert_eps(25)
+x[3].insert_eps(17)
+x[4].insert_eps(24)
+x[5].insert_eps(24)
+x[6].insert_eps(22)
+x[7].insert_eps(24)
+x[8].insert_eps(24)
+x[9].insert_eps(24)
+x[10].insert_eps(25)
+x[11].insert_eps(24)
+x[12].insert_eps(24)
+x[13].insert_eps(24)
+x[14].insert_eps(25)
+x[15].insert_eps(21)
+x[16].insert_eps(17)
+x[17].insert_eps(20)
+x[18].insert_eps(20)
