@@ -1,15 +1,15 @@
 from apps.series.models import Serie
 from apps.series.models import SeasonSerie
-serie_name = 'A Anatomia de Grey'
+serie_name = 'The Witcher'
 
 s = Serie.objects.filter(pt_title=serie_name)
 s
-s[0].insert_temps(19)
+s[0].insert_temps(3)
 
 x = SeasonSerie.objects.filter(serie__pt_title=serie_name)
 x
-x[0].insert_eps(9)
-x[1].insert_eps(27)
+x[0].insert_eps(8)
+x[1].insert_eps(8)
 x[2].insert_eps(25)
 x[3].insert_eps(17)
 x[4].insert_eps(24)
