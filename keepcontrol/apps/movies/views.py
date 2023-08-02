@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 # Create your models here.
 
-def movies (request):
+def ListMovie(request):
     
     movies = Movie.objects.all().order_by('collection', '-year')
     
@@ -32,10 +32,10 @@ def inserir_assistido(request, filme_id):
     movie_user = UserMovie.objects.filter(user=usuario.id, movie=filme_id)
     if movie_user:
         print (str(movie_user)+" já foi assistido pelo usuário")
-        return redirect('movies:movies')
+        return redirect('movies:ListMovie')
     else:
         m = Movie.objects.filter(id=filme_id).first()
         x = UserMovie(movie=m, user=usuario, date_watched=timezone.now()) #Depois alterar o banco para inserir a data automaticamente
         x.save()
         print (str(x)+" inserido!")
-        return redirect('movies:movies')
+        return redirect('movies:ListMovie')

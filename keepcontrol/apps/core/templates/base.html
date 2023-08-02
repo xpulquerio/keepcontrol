@@ -22,7 +22,7 @@
     <ul>
         <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}"><a href="{% url 'core:home' %}">Home</a></li>
         <li class="{% if request.resolver_match.url_name == 'ListSerie' %}active{% endif %}"><a href="{% url 'series:ListSerie' %}">Séries</a></li>
-        <li class="{% if request.resolver_match.url_name == 'movies' %}active{% endif %}"><a href="{% url 'movies:movies' %}">Filmes</a></li>
+        <li class="{% if request.resolver_match.url_name == 'ListMovie' %}active{% endif %}"><a href="{% url 'movies:ListMovie' %}">Filmes</a></li>
         <li class="{% if request.resolver_match.url_name == 'ListAnime' %}active{% endif %}"><a href="{% url 'animes:ListAnime' %}">Animes</a></li>
         {% if user.is_authenticated %} <!-- Se há algum usuário autenticado, -->
         <li class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><a href="{%url 'accounts:dashboard'%}">Painel</a></li>

@@ -5,5 +5,21 @@
 <article>
     <h3 style="text-align: center;">keepcontrol - O melhor site de controle de conteúdo assistido da internet!</h3>
     
+    <h4>Últimos adicionados</h4>
+    
+    <table class='table_c'>
+        {% for x in all %}
+        <tr>
+            <td><a class="detalhe" href="{{ anime.get_absolute_url }}">{{x.pt_title}}</a></td>
+            <td>{%if x.situation%}
+                {{x.situation}}
+                {%else%}
+                {{x.year}}
+                {%endif%}
+            </td>
+            <td>{{x.type}}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </article>
 {% endblock %}
