@@ -3,12 +3,7 @@
 {% block principal %}
 <article>
     <h3>Lista de Filmes</h3>
-    <!-- Pesquisa -->
-    <form method="GET" id="search-form">
-        <input type="text" name="search" placeholder="Digite o título do filme...">
-        <button type="submit">Buscar</button>
-    </form>
-
+    <b>Quantidade de filmes cadastrados: {{qtd_movies}}</b></br>
     {% if qtd_movies %}
     <table class="table_c">
         <tr>
@@ -36,15 +31,15 @@
         <ul>
             {% if page.has_previous %}
                 {% if page.previous_page_number > 1 %}
-                    <li><a href="{% url 'movies:ListMovie'%}?page=1{% if search_query %}&search={{ search_query }}{% endif %}"><<</a></li> 
+                    <li><a href="{% url 'movies:ListMovie'%}?page=1"><<</a></li> 
                 {% endif %}
-                <li><a href="{% url 'movies:ListMovie'%}?page={{page.previous_page_number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.previous_page_number }}</a></li>
+                <li><a href="{% url 'movies:ListMovie'%}?page={{page.previous_page_number}}">{{ page.previous_page_number }}</a></li>
             {% endif %}
-            <li class="activated"><a href="{% url 'movies:ListMovie'%}?page={{page.number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.number }}</a></li>
+            <li class="activated"><a href="{% url 'movies:ListMovie'%}?page={{page.number}}">{{ page.number }}</a></li>
             {% if page.has_next %}
-                <li><a href="{% url 'movies:ListMovie'%}?page={{page.next_page_number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.next_page_number }}</a></li>
+                <li><a href="{% url 'movies:ListMovie'%}?page={{page.next_page_number}}">{{ page.next_page_number }}</a></li>
                 {% if page.next_page_number < qtd_pages %}
-                <li><a href="{% url 'movies:ListMovie'%}?page={{qtd_pages}}{% if search_query %}&search={{ search_query }}{% endif %}">>></a></li>
+                <li><a href="{% url 'movies:ListMovie'%}?page={{qtd_pages}}">>></a></li>
                 {% endif %}
             {% endif %}
         </ul>

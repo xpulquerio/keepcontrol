@@ -4,11 +4,20 @@ from apps.accounts.models import UserMovie
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Q
 # Create your models here.
 
 def ListMovie(request):
     
-    movies = Movie.objects.all().order_by('collection', '-year')
+    search_query = request.GET.get('search')
+    
+    if search_query:
+        movies = Movie.objects.filter(
+            Q(pt_title__icontains=search_query) |  # Busca por título em português (case-insensitive)
+            Q(or_title__icontains=search_query)    # Busca por título em inglês (case-insensitive)
+        ).order_by('collection', '-year')
+    else:
+        movies = Movie.objects.all().order_by('collection', '-year')
     
     usuario = request.user
     
@@ -28,7 +37,8 @@ def ListMovie(request):
         'page': page,
         #'qtd_movies': movies.count()
         'qtd_movies': movies_paginator.count,
-        'qtd_pages': movies_paginator.num_pages
+        'qtd_pages': movies_paginator.num_pages,
+        'search_query': search_query  # Passar o valor de busca para o template
     }
 
     return render(request, template_name, context)
