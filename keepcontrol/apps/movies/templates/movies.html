@@ -3,6 +3,7 @@
 {% block principal %}
 <article>
     <h3>Lista de Filmes</h3>
+    <b>Quantidade de filmes cadastrados: {{qtd_movies}}</b></br>
     {% if qtd_movies %}
     <table class="table_c">
         <tr>
@@ -10,14 +11,14 @@
             <th>Ano</th>
             <th>Assistido</th>
         </tr>
-        {% for movie in movies %}
+        {% for movie in page %}
         <tr>
             <td>{{movie.pt_title}}</td>
             <td>{{movie.year}}</td>
             {% if movie in user.movies.all %}
                 <td><b>Já assistido</b> - {{movie.date_watched|date:"d/m/Y"}}</td>
             {%else%}
-            <td>Não assistido - <a href="{% url 'movies:inserir_assistido' movie.id %}">Assistir</a></td>
+            <td>Não assistido<a href="{% url 'movies:inserir_assistido' movie.id %}"> - Assistir</a></td>
             {% endif %}
         </tr>
         {% endfor %}
@@ -25,5 +26,24 @@
     {% else %}
     <p><b>Quantidade de filmes cadastrados: {{qtd_movies}}</b></p>
     {% endif %}
+    
+    <div class="pagination-div">
+        <ul>
+            {% if page.has_previous %}
+                {% if page.previous_page_number > 1 %}
+                    <li><a href="{% url 'movies:ListMovie'%}?page=1"><<</a></li> 
+                {% endif %}
+                <li><a href="{% url 'movies:ListMovie'%}?page={{page.previous_page_number}}">{{ page.previous_page_number }}</a></li>
+            {% endif %}
+            <li class="activated"><a href="{% url 'movies:ListMovie'%}?page={{page.number}}">{{ page.number }}</a></li>
+            {% if page.has_next %}
+                <li><a href="{% url 'movies:ListMovie'%}?page={{page.next_page_number}}">{{ page.next_page_number }}</a></li>
+                {% if page.next_page_number < qtd_pages %}
+                <li><a href="{% url 'movies:ListMovie'%}?page={{qtd_pages}}">>></a></li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+
   </article>
   {% endblock %}

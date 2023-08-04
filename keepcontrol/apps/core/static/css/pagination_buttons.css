@@ -1,0 +1,35 @@
+/* LEFT */
+.pagination-div {
+    background-color: white;
+    height: auto; 
+    margin: 0; 
+    padding: 15px;
+    text-align: center;
+}
+.pagination-div ul {
+    padding: 0;
+    margin: 0;
+}
+.pagination-div li {
+    list-style-type: none;
+    display: inline-block;
+}
+.pagination-div a {
+    background-color: lightgray;
+    text-align: left;
+    padding: 10px;
+    border-radius: 3px;
+}
+.activated a {
+    color: white;
+    background-color: #837f7f;
+    
+}
+.pagination-div a:link, .pagination-div a:visited {
+    text-decoration: none;
+    color: black;
+}
+.pagination-div a:hover {
+    background-color: white;
+    color: black;
+}
