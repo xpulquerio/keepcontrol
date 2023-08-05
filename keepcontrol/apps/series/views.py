@@ -3,20 +3,38 @@ from .models import Serie, SeasonSerie, EpisodeSerie
 from apps.accounts.models import UserEpisodeSerie
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 def ListSerie (request):
-    context = {}
-    series = Serie.objects.all()
-    qtd_series = len(series)
+    
+    search_query = request.GET.get('search') #Link com o form-serch no html
+    
+    if search_query:
+        series = Serie.objects.filter(
+            Q(pt_title__icontains=search_query) |  # Busca por título em português (case-insensitive)
+            Q(or_title__icontains=search_query)    # Busca por título em inglês (case-insensitive)
+        ).order_by('or_title')
+    else:
+        series = Serie.objects.all().order_by('-created_at')    
 
     for serie in series:
         temp_count = SeasonSerie.get_qtd_seasons(serie.id)
         serie.qtd_temps = temp_count
     
+    movies_paginator = Paginator(series, 20) #Filtra apenas 20 de todos os animes
+    
+    page_num = request.GET.get('page')
+   
+    page = movies_paginator.get_page(page_num)
+    
+    
     template_name = 'ListSerie.html'
-    context['series'] = series
-    context['qtd_series'] = qtd_series
-
+    context = {
+        'page' : page,
+        'qtd_series' : series.count
+    }
+    
     return render(request, template_name, context)
 
 def ListSeasonSerie (request, id):

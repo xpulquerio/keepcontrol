@@ -15,7 +15,7 @@ def ListMovie(request):
         movies = Movie.objects.filter(
             Q(pt_title__icontains=search_query) |  # Busca por título em português (case-insensitive)
             Q(or_title__icontains=search_query)    # Busca por título em inglês (case-insensitive)
-        ).order_by('collection', '-year')
+        ).order_by('pt_title')
     else:
         movies = Movie.objects.all().order_by('collection', '-year')
     

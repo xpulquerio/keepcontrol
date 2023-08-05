@@ -3,7 +3,12 @@
 {% block principal %}
 <article>
     <h3>Lista de Animes</h3>
-    
+     <!-- Pesquisa -->
+     <form method="GET" id="search-form">
+        <input type="text" name="search" placeholder="Digite o título do anime...">
+        <button type="submit">Buscar</button>
+    </form>
+    <!-- Pesquisa -->
     {% if qtd_animes %}
     <table class="table_c">
         <tr>
@@ -11,9 +16,9 @@
             <th>Temporadas</th>
             <th>Situação</th>
         </tr>
-        {% for anime in animes %}
+        {% for anime in page %}
         <tr>
-            <td><a class="detalhe" href="{{ anime.get_absolute_url }}">{{anime.pt_title}}</a></td>
+            <td><a class="detalhe" href="{{ anime.get_absolute_url }}">{{anime.or_title}}</a></td>
             <td>{{anime.qtd_temps}}</td>
             <td>{{anime.situation}}</td>
         </tr>
@@ -22,5 +27,24 @@
     {% else %}
     <p><b>Quantidade de animes cadastrados: {{qtd_animes}}</b></p>
     {% endif %}
+
+    <div class="pagination-div">
+        <ul>
+            {% if page.has_previous %}
+                {% if page.previous_page_number > 1 %}
+                    <li title="{{1}}"><a href="{% url 'animes:ListAnime'%}?page=1{% if search_query %}&search={{ search_query }}{% endif %}"><<</a></li> 
+                {% endif %}
+                <li title="{{page.previous_page_number}}"><a href="{% url 'animes:ListAnime'%}?page={{page.previous_page_number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.previous_page_number }}</a></li>
+            {% endif %}
+            <li title="{{page.number}}" class="activated"><a href="{% url 'animes:ListAnime'%}?page={{page.number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.number }}</a></li>
+            {% if page.has_next %}
+                <li title="{{page.next_page_number}}"><a href="{% url 'animes:ListAnime'%}?page={{page.next_page_number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.next_page_number }}</a></li>
+                {% if page.next_page_number < qtd_pages %}
+                <li title="{{qtd_pages}}"><a href="{% url 'animes:ListAnime'%}?page={{qtd_pages}}{% if search_query %}&search={{ search_query }}{% endif %}">>></a></li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+
   </article>
   {% endblock %}

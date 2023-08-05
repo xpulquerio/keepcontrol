@@ -3,19 +3,38 @@ from .models import Anime, SeasonAnime, EpisodeAnime
 from apps.accounts.models import UserEpisodeAnime
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 def ListAnime (request):
-    context = {}
-    animes = Anime.objects.all()
-    qtd_animes = len(animes)
+    
+    search_query = request.GET.get('search') #Link com o form-serch no html
+    
+    if search_query:
+        animes = Anime.objects.filter(
+            Q(pt_title__icontains=search_query) |  # Busca por título em português (case-insensitive)
+            Q(or_title__icontains=search_query)    # Busca por título em inglês (case-insensitive)
+        ).order_by('or_title')
+    else:
+        animes = Anime.objects.all().order_by('-created_at')    
 
     for anime in animes:
         temp_count = SeasonAnime.get_qtd_seasons(anime.id)
         anime.qtd_temps = temp_count
     
+    movies_paginator = Paginator(animes, 20) #Filtra apenas 20 de todos os animes
+    
+    page_num = request.GET.get('page')
+   
+    page = movies_paginator.get_page(page_num)
+    
     template_name = 'ListAnime.html'
-    context['animes'] = animes
-    context['qtd_animes'] = qtd_animes
+    context = {
+        'page': page,
+        'qtd_animes' : animes.count,
+        'qtd_pages': movies_paginator.num_pages,
+        'search_query': search_query  # Passar o valor de busca para o template
+    }
 
     return render(request, template_name, context)
 
@@ -37,10 +56,12 @@ def ListSeasonAnime (request, id):
             for ep in epsisodes:
                 if ep in request.user.episodes_anime.all():
                     season.qtd_assistido += 1
-        
-    context['seasons'] = seasons
-    context['anime'] = anime
+    
     template_name = 'ListSeasonAnime.html'
+    context = {
+        'seasons': seasons,
+        'anime': anime
+    }    
 
     return render(request, template_name, context)
 

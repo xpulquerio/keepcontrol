@@ -3,6 +3,12 @@
 {% block principal %}
 <article>
     <h3>Lista de Séries</h3>
+    <!-- Pesquisa -->
+    <form method="GET" id="search-form">
+        <input type="text" name="search" placeholder="Digite o título da série...">
+        <button type="submit">Buscar</button>
+    </form>
+    <!-- Pesquisa -->
     {% if qtd_series %}
     <table class="table_c">
         <tr>
@@ -10,7 +16,7 @@
             <th>Temporadas</th>
             <th>Situação</th>
         </tr>
-        {% for serie in series %}
+        {% for serie in page %}
         <tr>
             <td><a class="detalhe" href="{{ serie.get_absolute_url }}">{{serie.or_title}}</a></td>
             <td>{{serie.qtd_temps}}</td>
@@ -22,5 +28,25 @@
     {% else %}
     <p><b>Quantidade de séries cadastradas: {{qtd_series}}</b></p>
     {% endif %}
+    <!-- Paginação -->
+    <div class="pagination-div">
+        <ul>
+            {% if page.has_previous %}
+                {% if page.previous_page_number > 1 %}
+                    <li><a  href="{% url 'series:ListSerie'%}?page=1{% if search_query %}&search={{ search_query }}{% endif %}"><<</a></li> 
+                {% endif %}
+                <li title="{{page.previous_page_number}}"><a href="{% url 'series:ListSerie'%}?page={{page.previous_page_number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.previous_page_number }}</a></li>
+            {% endif %}
+            <li title="{{page.number}}" class="activated"><a href="{% url 'series:ListSerie'%}?page={{page.number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.number }}</a></li>
+            {% if page.has_next %}
+                <li title="{{page.next_page_number}}"><a href="{% url 'series:ListSerie'%}?page={{page.next_page_number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.next_page_number }}</a></li>
+                {% if page.next_page_number < qtd_pages %}
+                <li title="{{qtd_pages}}"><a href="{% url 'series:ListSerie'%}?page={{qtd_pages}}{% if search_query %}&search={{ search_query }}{% endif %}">>></a></li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+    <!-- Paginação -->
+
   </article>
   {% endblock %}

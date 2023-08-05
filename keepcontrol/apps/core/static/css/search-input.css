@@ -1,0 +1,9 @@
+#search-form input[type=text] {
+    padding: 5px 5px 5px 5px;
+    width: 85%;
+  }
+
+#search-form button {
+    padding: 5px;
+    width: 13%;
+}

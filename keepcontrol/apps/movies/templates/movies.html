@@ -8,18 +8,21 @@
         <input type="text" name="search" placeholder="Digite o título do filme...">
         <button type="submit">Buscar</button>
     </form>
-
+    <!-- Pesquisa -->
     {% if qtd_movies %}
     <table class="table_c">
         <tr>
             <th>Título</th>
             <th>Ano</th>
+            <th>Coleção</th>
             <th>Assistido</th>
+
         </tr>
         {% for movie in page %}
         <tr>
             <td>{{movie.pt_title}}</td>
             <td>{{movie.year}}</td>
+            <td>{{movie.collection}}</td>
             {% if movie in user.movies.all %}
                 <td><b>Já assistido</b> - {{movie.date_watched|date:"d/m/Y"}}</td>
             {%else%}
@@ -36,15 +39,15 @@
         <ul>
             {% if page.has_previous %}
                 {% if page.previous_page_number > 1 %}
-                    <li><a href="{% url 'movies:ListMovie'%}?page=1{% if search_query %}&search={{ search_query }}{% endif %}"><<</a></li> 
+                    <li title="{{1}}"><a href="{% url 'movies:ListMovie'%}?page=1{% if search_query %}&search={{ search_query }}{% endif %}"><<</a></li> 
                 {% endif %}
-                <li><a href="{% url 'movies:ListMovie'%}?page={{page.previous_page_number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.previous_page_number }}</a></li>
+                <li title="{{page.previous_page_number}}"><a href="{% url 'movies:ListMovie'%}?page={{page.previous_page_number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.previous_page_number }}</a></li>
             {% endif %}
-            <li class="activated"><a href="{% url 'movies:ListMovie'%}?page={{page.number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.number }}</a></li>
+            <li title="{{page.number}}" class="activated"><a href="{% url 'movies:ListMovie'%}?page={{page.number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.number }}</a></li>
             {% if page.has_next %}
-                <li><a href="{% url 'movies:ListMovie'%}?page={{page.next_page_number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.next_page_number }}</a></li>
+                <li title="{{page.next_page_number}}"><a href="{% url 'movies:ListMovie'%}?page={{page.next_page_number}}{% if search_query %}&search={{ search_query }}{% endif %}">{{ page.next_page_number }}</a></li>
                 {% if page.next_page_number < qtd_pages %}
-                <li><a href="{% url 'movies:ListMovie'%}?page={{qtd_pages}}{% if search_query %}&search={{ search_query }}{% endif %}">>></a></li>
+                <li title="{{qtd_pages}}"><a href="{% url 'movies:ListMovie'%}?page={{qtd_pages}}{% if search_query %}&search={{ search_query }}{% endif %}">>></a></li>
                 {% endif %}
             {% endif %}
         </ul>
