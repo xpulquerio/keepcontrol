@@ -1,3 +1,0 @@
-& c:/Users/pulqu/OneDrive/Documentos/GitHub/keepcontrol/venv/Scripts/Activate.ps1
-cd keepcontrol
-python manage.py runserver

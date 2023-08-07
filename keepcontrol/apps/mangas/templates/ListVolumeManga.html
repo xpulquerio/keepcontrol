@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block principal %}
+<article>
+    <h3>
+        {% block title %}
+            {{manga.or_title}}
+        {% endblock %}
+    </h3>
+    {%block infor %}
+        Status do mangá: <b>{{manga.situation}}</b> | Atualizado em: <b>{{manga.modified_at}}</b>
+    {%endblock%}
+    | Quantidade de capítulos: <b>{{manga.qtd_total_caps}}</b>
+    <table class="table_c">
+        <tr>
+            <th>Volumes</th>
+            <th>Capítulos</th>
+        </tr>
+        {% for x in volumes %}
+        <tr>
+            {%if x.pt_title%}
+            <td><a class="detalhe" href="{{ x.get_absolute_url }}">Volume {{x.number}}: {{x.pt_title}}</a></td>
+            {%else%}
+            <td><a class="detalhe" href="{{ x.get_absolute_url }}">Volume {{x.number}}</a></td>
+            {%endif%}
+            <td>Lido {{x.qtd_lido}} de {{x.qtd_caps}}{%if x.qtd_lido is x.qtd_eps%}{%else%} - <a href="{% url 'mangas:InserirLidoVolumeManga' x.id x.manga_id %}">Marcar como lido</a>{%endif%}</td>   
+        </tr>
+        {% endfor %}
+    </table>
+
+  </article>
+  {% endblock %}

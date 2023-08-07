@@ -45,6 +45,8 @@ MY_APPS = [
     'apps.series',
     'apps.movies',
     'apps.accounts',
+    'apps.books',
+    'apps.mangas',
 ]
 
 THIRD_APPS = [

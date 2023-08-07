@@ -5,6 +5,8 @@ from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, User
 from apps.series.models import EpisodeSerie
 from apps.animes.models import EpisodeAnime
 from apps.movies.models import Movie
+from apps.books.models import Book
+from apps.mangas.models import ChapterManga
 
 class User(AbstractBaseUser, PermissionsMixin):
   
@@ -26,6 +28,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     episodes_anime = models.ManyToManyField(EpisodeAnime, through='UserEpisodeAnime', blank=True)
     episodes_serie = models.ManyToManyField(EpisodeSerie, through='UserEpisodeSerie', blank=True)
     movies = models.ManyToManyField(Movie, through='UserMovie', blank=True)
+    chapters_manga = models.ManyToManyField(ChapterManga, through='UserChapterManga', blank=True)
+    books = models.ManyToManyField(Book, through='UserBook', blank=True)
     
     objects = UserManager()
     
@@ -83,3 +87,29 @@ class UserEpisodeAnime(models.Model):
         verbose_name = 'Episódio de anime'
         verbose_name_plural = 'Episódios de animes'
         unique_together = ('user', 'episode')
+        
+class UserChapterManga(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    chapter = models.ForeignKey(ChapterManga, on_delete=models.CASCADE, verbose_name='Capítulo')
+    date_watched = models.DateTimeField('Lido em')
+
+    def __str__(self):
+        return f"Usuário: {self.user.username}, Capítulo: {self.chapter.number}, Lido em: {self.date_watched}"
+
+    class Meta:
+        verbose_name = 'Capítulo de mangá'
+        verbose_name_plural = 'Capítulos de mangás'
+        unique_together = ('user', 'chapter')
+
+class UserBook(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='Livro')
+    date_watched = models.DateTimeField('Lido em')
+
+    def __str__(self):
+        return f"Usuário: {self.user.username}, Livro: {self.book.pt_title}, Lido em: {self.date_watched}"
+    
+    class Meta:
+        verbose_name = 'Livro do usuário'
+        verbose_name_plural = 'Livros'
+        unique_together = ('user', 'book')

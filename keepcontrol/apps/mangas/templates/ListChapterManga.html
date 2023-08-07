@@ -1,0 +1,36 @@
+{% extends "ListVolumeManga.html" %}
+
+{% block principal %}
+<article>
+    <h3>
+        {% block title %}
+            {{block.super}} - Volume {{volume.number}}{%if volume.pt_title%}: {{volume.pt_title}}{%endif%}
+        {% endblock %}
+    </h3>
+    {%block infor%}
+        {{block.super}}
+    {%endblock%}
+   
+    <table class="table_c">
+        <tr>
+            <th>Capítulos</th>
+            <th>Lido</th>      
+        </tr>
+        {% for cap in caps %}
+        <tr>
+            {% if cap.pt_title %}
+            <td>Capítulo {{cap.number}}: {{cap.pt_title}}</td>
+            {% else %}
+            <td>Capítulo {{cap.number}}</td>
+            {% endif %}
+                {% if cap in user.chapters_manga.all %}  
+                    <td><b>Já lido</b> - {{cap.date_watched|date:"d/m/Y"}} </td>
+                {%else%}
+                <td>Não lido - <a href="{% url 'mangas:InserirLidoChapterManga' cap.id %}">Ler</a></td>
+                {%endif%}
+        </tr>
+        {% endfor %}
+    </table>
+
+  </article>
+  {% endblock %}

@@ -26,6 +26,8 @@
         <li class="{% if request.resolver_match.url_name == 'ListSerie' %}active{% endif %}"><a href="{% url 'series:ListSerie' %}">Séries</a></li>
         <li class="{% if request.resolver_match.url_name == 'ListMovie' %}active{% endif %}"><a href="{% url 'movies:ListMovie' %}">Filmes</a></li>
         <li class="{% if request.resolver_match.url_name == 'ListAnime' %}active{% endif %}"><a href="{% url 'animes:ListAnime' %}">Animes</a></li>
+        <li class="{% if request.resolver_match.url_name == 'ListBook' %}active{% endif %}"><a href="{% url 'books:ListBook' %}">Livros</a></li>
+        <li class="{% if request.resolver_match.url_name == 'ListManga' %}active{% endif %}"><a href="{% url 'mangas:ListManga' %}">Mangás</a></li>
         {% if user.is_authenticated %} <!-- Se há algum usuário autenticado, -->
         <li class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><a href="{%url 'accounts:dashboard'%}">Painel</a></li>
         <li><a href="{%url 'accounts:logout'%}">Sair</a></li>

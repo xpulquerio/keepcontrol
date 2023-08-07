@@ -12,6 +12,7 @@ def ListMovie(request):
     search_query = request.GET.get('search')
     
     if search_query:
+        movies = Movie.objects.search(search_query)
         movies = Movie.objects.filter(
             Q(pt_title__icontains=search_query) |  # Busca por título em português (case-insensitive)
             Q(or_title__icontains=search_query)    # Busca por título em inglês (case-insensitive)

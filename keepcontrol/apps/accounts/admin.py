@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model #Para usar o model do nosso usuário
-from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie
+from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserBook, UserChapterManga
 
 User = get_user_model()
 
@@ -21,9 +21,17 @@ class UserEpisodeAnimeAdmin(admin.ModelAdmin):
     
 class UserMovieAdmin(admin.ModelAdmin):
     list_display = ['movie', 'user', 'date_watched']
+    
+class UserChapterMangaAdmin(admin.ModelAdmin):
+    list_display = ['chapter', 'user', 'date_watched']
+    
+class UserBookAdmin(admin.ModelAdmin):
+    list_display = ['book', 'user', 'date_watched']
 
 admin.site.register(UserEpisodeSerie, UserEpisodeSerieAdmin)
 admin.site.register(UserEpisodeAnime, UserEpisodeAnimeAdmin)
 admin.site.register(UserMovie, UserMovieAdmin)
+admin.site.register(UserChapterManga, UserChapterMangaAdmin)
+admin.site.register(UserBook, UserBookAdmin)
 
 # Register your models here.
