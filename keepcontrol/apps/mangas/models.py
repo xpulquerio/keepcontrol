@@ -17,7 +17,7 @@ class Manga(models.Model):
     def get_absolute_url(self):
         return '/mangas/'+ str(self.id) #retorna a URL do curso
         
-    def insert_volume(self, qtd_vol):
+    def insert_vols(self, qtd_vol):
             cont = 0
             for i in range(qtd_vol):
                 number_of_volume = i+1
@@ -83,7 +83,7 @@ class VolumeManga(models.Model):
 class ChapterManga(models.Model):
     pt_title = models.CharField('Título brasileiro', max_length=255, blank=True, null=True)
     or_title = models.CharField('Título original', max_length=255, blank=True, null=True)
-    number = models.BigIntegerField('Capítulo')
+    number = models.FloatField('Capítulo')
     volume = models.ForeignKey(VolumeManga, on_delete=models.CASCADE, verbose_name="Volume")
     
     def __str__ (self):

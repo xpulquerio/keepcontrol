@@ -1,0 +1,14 @@
+from apps.mangas.models import Manga
+from apps.mangas.models import VolumeManga
+name = 'One Punch'
+
+s = Manga.objects.filter(or_title=name)
+s
+s[0].insert_vols(3)
+
+x = VolumeManga.objects.filter(manga__or_title=name)
+x
+x[0].insert_caps(9, 1)
+x[1].insert_caps(8, 9)
+x[2].insert_caps(7, 16)
+x[3].insert_caps(22, 1)

@@ -24,7 +24,7 @@
             <td>Episódio {{ep.number}}</td>
             {% endif %}
                 {% if ep in user.episodes_serie.all %}  
-                    <td><b>Já assistido</b> - {{ep.date_watched}} </td>
+                    <td><b>Já assistido</b> - {{ep.date_watched|date:"d/m/Y"}} </td>
                 {%else%}
                     <td>Não assistido - <a href="{% url 'series:InserirAssistidoEpisodeSerie' ep.id %}">Assistir</a></td>
                 {%endif%}

@@ -98,7 +98,7 @@ def InserirLidoChapterManga(request, chapter_id):
     chaptermanga_user = UserChapterManga.objects.filter(user=usuario.id, chapter=chapter_id)
     
     if chaptermanga_user:
-        print (str(chaptermanga_user)+" já foi lido pelo usuário")
+        print (str(chapter_manga)+" já foi lido pelo usuário")
         return redirect('mangas:ListChapterManga', manga_id=manga_id, volume_id=volume_id)
     else:
         x = UserChapterManga(chapter=chapter_manga, user=usuario, date_watched=timezone.now()) #Depois alterar o banco para inserir a data automaticamente

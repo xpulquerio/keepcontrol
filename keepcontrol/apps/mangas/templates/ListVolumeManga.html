@@ -23,7 +23,7 @@
             {%else%}
             <td><a class="detalhe" href="{{ x.get_absolute_url }}">Volume {{x.number}}</a></td>
             {%endif%}
-            <td>Lido {{x.qtd_lido}} de {{x.qtd_caps}}{%if x.qtd_lido is x.qtd_eps%}{%else%} - <a href="{% url 'mangas:InserirLidoVolumeManga' x.id x.manga_id %}">Marcar como lido</a>{%endif%}</td>   
+            <td>Lido {{x.qtd_lido}} de {{x.qtd_caps}}{%if x.qtd_lido is x.qtd_caps%}{%else%} - <a href="{% url 'mangas:InserirLidoVolumeManga' x.id x.manga_id %}">Marcar como lido</a>{%endif%}</td>   
         </tr>
         {% endfor %}
     </table>
