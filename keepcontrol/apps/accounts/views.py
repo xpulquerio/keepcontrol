@@ -5,16 +5,54 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.conf import settings
 from .forms import RegisterForm, EditAccountForm
 from apps.movies.models import Movie
-from apps.series.models import EpisodeSerie
-from apps.animes.models import EpisodeAnime
-from apps.mangas.models import ChapterManga
+from apps.series.models import EpisodeSerie, Serie
+from apps.animes.models import EpisodeAnime, Anime
+from apps.mangas.models import ChapterManga, Manga
 from apps.books.models import Book
 from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook
-
+from itertools import chain
 # Create your views here.
 @login_required
 def dashboard(request):
-    context = {}
+    
+    epanimes = (
+        EpisodeAnime.objects
+        .filter(userepisodeanime__user_id=request.user.id)
+        .order_by('-userepisodeanime__date_watched')
+        .values('pt_title', 'number', 'userepisodeanime__date_watched', 'season__number', 'season__anime__or_title')[:10]
+    )
+    movies = (
+        Movie.objects
+        .filter(usermovie__user_id=request.user.id)
+        .order_by('-usermovie__date_watched')
+        .values('pt_title','year', 'usermovie__date_watched')[:10]
+    )
+    epseries = (
+        EpisodeSerie.objects
+        .filter(userepisodeserie__user_id=request.user.id)
+        .order_by('-userepisodeserie__date_watched')
+        .values('pt_title', 'number', 'userepisodeserie__date_watched', 'season__number', 'season__serie__or_title')[:5]
+    )
+    books = (
+        Book.objects
+        .filter(userbook__user_id=request.user.id)
+        .order_by('-userbook__date_watched')
+        .values('pt_title', 'year', 'userbook__date_watched')[:10]
+    )
+    capmangas = (
+        ChapterManga.objects
+        .filter(userchaptermanga__user_id=request.user.id)
+        .order_by('-userchaptermanga__date_watched')
+        .values('pt_title', 'number', 'userchaptermanga__date_watched', 'volume__number', 'volume__manga__or_title')[:10]
+    )
+    
+    todos = list(chain(epanimes,movies,epseries,books,capmangas))
+        
+    #preciso ordernar pela data assistida
+                
+    context = {
+        'all': todos
+    }
     template_name = 'dashboard.html'
     return render(request, template_name, context)
 

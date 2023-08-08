@@ -37,7 +37,50 @@
                     <p><strong>E-mail</strong>: {{ user.email }}</p>
                 </div>
                 <div>
-                    
+                    <h4>Últimos adicionados</h4>
+    
+                    <table class="table_c">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for x in all %}
+                                {% if x.season__serie__or_title %}
+                                <tr>
+                                    <td>Episódio {{x.number}} - Temporada {{x.season__number}} - {{x.season__serie__or_title}}</td>
+                                    <td>{{x.userepisodeserie__date_watched}}</td>
+                                </tr>
+                                {% endif %}
+                                {% if x.season__anime__or_title %}
+                                <tr>
+                                    <td>Episódio {{x.number}} - Temporada {{x.season__number}} - {{x.season__anime__or_title}}</td>
+                                    <td>{{x.userepisodeanime__date_watched}}</td>
+                                </tr>
+                                {% endif %}
+                                {% if x.volume__manga__or_title %}
+                                <tr>
+                                    <td>Capítulo {{x.number}} - Volume {{x.volume__number}} - {{x.volume__manga__or_title}}</td>
+                                    <td>{{x.userchaptermanga__date_watched}}</td>
+                                </tr>
+                                {% endif %}
+                                {% if x.userbook__date_watched %}
+                                <tr>
+                                    <td>{{x.pt_title}} ({{x.year}})</td>
+                                    <td>{{x.userbook__date_watched}}</td>
+                                </tr>
+                                {% endif %}
+                                {% if x.usermovie__date_watched %}
+                                <tr>
+                                    <td>{{x.pt_title}} ({{x.year}})</td>
+                                    <td>{{x.usermovie__date_watched}}</td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             {% endblock %} 
         </div>
