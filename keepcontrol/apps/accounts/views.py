@@ -115,8 +115,9 @@ def DashboardSeries(request):
     )
     
     context = {
-        'qtd_assistidos': qtd_assistidos,
+        'total_assistidos': qtd_assistidos,
         'epseries': epseries,
+        'qtd_assistidos': epseries.count
         
     }
     template_name = 'DashboardSeries.html'
