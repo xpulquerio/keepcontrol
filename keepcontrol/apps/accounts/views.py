@@ -7,7 +7,9 @@ from .forms import RegisterForm, EditAccountForm
 from apps.movies.models import Movie
 from apps.series.models import EpisodeSerie
 from apps.animes.models import EpisodeAnime
-from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie
+from apps.mangas.models import ChapterManga
+from apps.books.models import Book
+from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook
 
 # Create your views here.
 @login_required
@@ -111,8 +113,47 @@ def DashboardMovies(request):
     )
 
     context = {
-        'qtd_assistidos': qtd_assistidos,
+        'total_assistidos': qtd_assistidos,
         'movies': movies,
+        'qtd_assistidos': movies.count
     }
     template_name = 'DashboardMovies.html'
+    return render(request, template_name, context)
+
+@login_required
+def DashboardMangas(request):
+    context = {}
+    qtd_lidos = UserChapterManga.objects.filter(user=request.user).count()
+    capmangas = (
+        ChapterManga.objects
+        .filter(userchaptermanga__user_id=request.user.id)
+        .order_by('-userchaptermanga__date_watched')
+        .values('pt_title', 'number', 'userchaptermanga__date_watched', 'volume__number', 'volume__manga__or_title')[:10]
+    )
+    context = {
+        'total_lidos': qtd_lidos,
+        'capmangas': capmangas,
+        'qtd_lidos': capmangas.count
+    }
+    template_name = 'DashboardMangas.html'
+    return render(request, template_name, context)
+
+@login_required
+def DashboardBooks(request):
+    context = {}
+    qtd_lidos = UserBook.objects.filter(user=request.user).count()
+    books = (
+        Book.objects
+        .filter(userbook__user_id=request.user.id)
+        .order_by('-userbook__date_watched')
+        .values('pt_title', 'userbook__date_watched')[:10]
+    )
+
+    context = {
+        'total_lidos': qtd_lidos,
+        'qtd_lidos': books.count,
+        'books': books,
+        
+    }
+    template_name = 'DashboardBooks.html'
     return render(request, template_name, context)

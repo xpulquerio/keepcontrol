@@ -15,7 +15,7 @@ urlpatterns = [
     path('cadastrar/', views.register, name='resume'),
     path('series/', views.DashboardSeries, name='DashboardSeries'),
     path('animes/', views.DashboardAnimes, name='DashboardAnimes'),
-    path('mangas/', views.DashboardSeries, name='DashboardMangas'),
+    path('mangas/', views.DashboardMangas, name='DashboardMangas'),
     path('filmes/', views.DashboardMovies, name='DashboardMovies'),
-    path('livros/', views.DashboardSeries, name='DashboardBooks'),
+    path('livros/', views.DashboardBooks, name='DashboardBooks'),
 ]

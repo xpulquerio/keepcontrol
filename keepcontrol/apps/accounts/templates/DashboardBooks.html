@@ -3,24 +3,24 @@
 {% block breadcrumb %}
     {{block.super}}
     <li>|</li>
-    <li><a href="{% url 'accounts:DashboardMovies' %}">Filmes</a></li>
+    <li><a href="{% url 'accounts:DashboardBooks' %}">Livros</a></li>
 {% endblock %}
 
 {% block dashboard_content %}
 <div>
-    <div class="pure-menu-li">Últimos {{qtd_assistidos}} de {{total_assistidos}} filmes assistidos</div>
+    <div class="pure-menu-li">Últimos {{qtd_lidos}} de {{total_lidos}} livros lidos</div>
     <table class="table_c">
         <thead>
             <tr>
                 <th>Título</th>
-                <th>Assistido em</th>
+                <th>Lido em</th>
             </tr>
         </thead>
         <tbody>
-            {% for movie in movies %}
+            {% for book in books %}
             <tr>
-                <td>{{ movie.pt_title }}</td>
-                <td>{{ movie.usermovie__date_watched|date:"d/m/Y" }}</td>
+                <td>{{ book.pt_title }}</td>
+                <td>{{ book.userbook__date_watched|date:"d/m/Y" }}</td>
             </tr>
             {% endfor %}
         </tbody>
