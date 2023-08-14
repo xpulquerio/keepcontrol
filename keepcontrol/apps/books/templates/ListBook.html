@@ -19,8 +19,11 @@
 
         </tr>
         {% for book in page %}
-        <tr>
+        <tr>{%if book.pt_title%}
             <td>{{book.pt_title}}</td>
+            {%else%}
+            <td>{{book.or_title}}</td>
+            {%endif%}
             <td>{{book.year}}</td>
             <td>{{book.collection}}</td>
             {% if book in user.books.all %}
