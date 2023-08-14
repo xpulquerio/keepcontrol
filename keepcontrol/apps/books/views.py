@@ -18,7 +18,7 @@ def ListBook(request):
             Q(or_title__icontains=search_query)    # Busca por título em inglês (case-insensitive)
         ).order_by('pt_title')
     else:
-        books = Book.objects.all().order_by('collection', '-year')
+        books = Book.objects.all().order_by('collection', '-created_at')
     
     usuario = request.user
     

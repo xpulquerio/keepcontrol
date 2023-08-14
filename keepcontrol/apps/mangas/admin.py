@@ -3,6 +3,7 @@ from .models import Manga, VolumeManga, ChapterManga
 
 class MangaAdmin(admin.ModelAdmin):
     list_display = ['or_title','pt_title', 'author', 'situation', 'created_at']
+    ordering = ['-created_at']
 
 class VolumeMangaAdmin(admin.ModelAdmin):
     list_display = ['display_number', 'pt_title', 'or_title', 'manga']

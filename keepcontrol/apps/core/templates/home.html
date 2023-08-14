@@ -10,7 +10,11 @@
     <table class='table_c'>
         {% for x in all %}
         <tr>
+            {%if x.pt_title %}
             <td><a class="detalhe" href="{{ x.get_absolute_url }}">{{x.pt_title}}</a></td>
+            {%else%}
+            <td><a class="detalhe" href="{{ x.get_absolute_url }}">{{x.or_title}}</a></td>
+            {%endif%}
             <td>{%if x.situation%}
                 {{x.situation}}
                 {%else%}
