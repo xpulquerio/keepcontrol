@@ -75,11 +75,14 @@ def ListEpisodeSerie (request, serie_id, season_id):
         if user_episode and user_episode.date_watched:
             ep.date_watched = user_episode.date_watched
     
-    context['eps'] = eps
-    context['season'] = season[0]
-    context['serie'] = serie[0]
     template_name = 'ListEpisodeSerie.html'
-    
+
+    context = {
+        'eps': eps,
+        'season': season.first(),
+        'serie': serie.first()
+    }
+
     return render(request, template_name, context)
 
 @login_required
@@ -94,8 +97,8 @@ def InserirAssistidoEpisodeSerie(request, episodeserie_id):
         print (str(episodeserie_user)+" já foi assistido pelo usuário")
         return redirect('series:ListEpisodeSerie', serie_id=serie_id, season_id=season_id )
     else:
-        x = UserEpisodeSerie(episode=episodio_serie, user=usuario, date_watched=timezone.now()) #Depois alterar o banco para inserir a data automaticamente
-        x.save()
+        episodeserie_user = UserEpisodeSerie(episode=episodio_serie, user=usuario, date_watched=timezone.now()) #Depois alterar o banco para inserir a data automaticamente
+        episodeserie_user.save()
         print (str(episodio_serie)+" inserido!")
         return redirect('series:ListEpisodeSerie', serie_id=serie_id, season_id=season_id )
     
@@ -104,8 +107,8 @@ def InserirAssistidoSeasonSerie(request, season_id, serie_id):
     episodes_serie = EpisodeSerie.objects.filter(season=season_id)
     
     for ep in episodes_serie:
-        x = ep.id
-        print(x)
-        InserirAssistidoEpisodeSerie(request=request,episodeserie_id=x)
+        ep_id = ep.id
+        print(ep_id)
+        InserirAssistidoEpisodeSerie(request=request,episodeserie_id=ep_id)
         
     return redirect('series:ListSeasonSerie', id=serie_id)

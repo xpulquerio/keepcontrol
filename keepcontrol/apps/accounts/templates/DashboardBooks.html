@@ -19,7 +19,11 @@
         <tbody>
             {% for book in books %}
             <tr>
+                {%if book.pt_title %}
                 <td>{{ book.pt_title }}</td>
+                {%else%}
+                <td>{{ book.or_title }}</td>
+                {%endif%}
                 <td>{{ book.userbook__date_watched|date:"d/m/Y" }}</td>
             </tr>
             {% endfor %}

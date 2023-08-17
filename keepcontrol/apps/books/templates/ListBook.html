@@ -24,8 +24,16 @@
             {%else%}
             <td>{{book.or_title}}</td>
             {%endif%}
-            <td>{{book.year}}</td>
-            <td>{{book.collection}}</td>
+            <td>
+                {%if book.year %}
+                    {{book.year}}
+                {%endif%}
+            </td>
+            <td>
+                {%if book.collection%}
+                    {{book.collection}}
+                {%endif%}
+            </td>
             {% if book in user.books.all %}
                 <td><b>Já lido</b> - {{book.date_watched|date:"d/m/Y"}}</td>
             {%else%}
