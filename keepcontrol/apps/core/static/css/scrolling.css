@@ -1,0 +1,40 @@
+/* Add your CSS styles here */
+.movie-list {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.movie {
+    display: inline-block;
+    text-align: center;
+    width: 160px;
+    /*background-color: red;*/
+    margin: 2px;
+    border: 1px solid black;
+    padding: 2px;
+}
+
+.movie img {
+    max-height: 200px;
+}
+
+/* Adicione esses estilos para as setas */
+.arrow { 
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #000;
+    transition: background-color 0.3s ease;
+    background-color: red;
+}
+
+.movie-list-container {
+    
+    position: relative;
+    overflow: hidden;
+    background-color: blue;
+}
