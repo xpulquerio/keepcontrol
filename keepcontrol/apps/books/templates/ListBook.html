@@ -12,6 +12,7 @@
     {% if qtd_books %}
     <table class="table_c">
         <tr>
+            <th>#</th>
             <th>Título</th>
             <th>Ano</th>
             <th>Coleção</th>
@@ -19,7 +20,8 @@
 
         </tr>
         {% for book in page %}
-        <tr>{%if book.pt_title%}
+        <tr><td>{{ forloop.counter }}</td>
+            {%if book.pt_title%}
             <td>{{book.pt_title}}</td>
             {%else%}
             <td>{{book.or_title}}</td>

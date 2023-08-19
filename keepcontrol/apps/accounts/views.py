@@ -19,7 +19,7 @@ def dashboard(request):
         EpisodeAnime.objects
         .filter(userepisodeanime__user_id=request.user.id)
         .order_by('-userepisodeanime__date_watched')
-        .values('pt_title', 'number', 'userepisodeanime__date_watched', 'season__number', 'season__anime__or_title')[:10]
+        .values('season__anime__id','pt_title', 'number', 'userepisodeanime__date_watched', 'season__number', 'season__anime__or_title')[:10]
     )
     movies = (
         Movie.objects
@@ -31,7 +31,7 @@ def dashboard(request):
         EpisodeSerie.objects
         .filter(userepisodeserie__user_id=request.user.id)
         .order_by('-userepisodeserie__date_watched')
-        .values('pt_title', 'number', 'userepisodeserie__date_watched', 'season__number', 'season__serie__or_title')[:5]
+        .values('season__serie__id','pt_title', 'number', 'userepisodeserie__date_watched', 'season__number', 'season__serie__or_title')[:5]
     )
     books = (
         Book.objects
@@ -43,15 +43,35 @@ def dashboard(request):
         ChapterManga.objects
         .filter(userchaptermanga__user_id=request.user.id)
         .order_by('-userchaptermanga__date_watched')
-        .values('pt_title', 'number', 'userchaptermanga__date_watched', 'volume__number', 'volume__manga__or_title')[:10]
+        .values('volume__manga__id','pt_title', 'number', 'userchaptermanga__date_watched', 'volume__number', 'volume__manga__or_title')[:10]
     )
-    
-    todos = list(chain(epanimes,movies,epseries,books,capmangas))
-        
     #preciso ordernar pela data assistida
-                
+    for x in books:
+        x['date_watched'] = x.pop('userbook__date_watched')
+        x['type'] = 'Livro'
+    for x in epanimes:
+        x['date_watched'] = x.pop('userepisodeanime__date_watched')
+        x['type'] = 'Anime'
+    for x in movies:
+        x['date_watched'] = x.pop('usermovie__date_watched')
+        x['type'] = 'Filme'
+    for x in epseries:
+        x['date_watched'] = x.pop('userepisodeserie__date_watched')
+        x['type'] = 'Série'
+    for x in capmangas:
+        x['date_watched'] = x.pop('userchaptermanga__date_watched')
+        x['type'] = 'Mangá'
+    
+    todos = list(chain(epanimes, movies, epseries, books, capmangas))
+
+    # Define uma função para obter a data assistida de um dicionário
+    def get_date_watched(item):
+        return item.get('date_watched', None)  # Retorna None se a chave não existir
+
+    sorted_todos = sorted(todos, key=get_date_watched, reverse=True)
+    
     context = {
-        'all': todos
+        'all': sorted_todos
     }
     template_name = 'dashboard.html'
     return render(request, template_name, context)

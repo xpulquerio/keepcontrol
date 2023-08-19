@@ -6,19 +6,17 @@
     <h3 style="text-align: center;">keepcontrol - O melhor site de controle de conteúdo assistido da internet!</h3>
     
     <h4>Últimos adicionados</h4>
-    <div class="movie-list-container">
-        <div class="arrow left-arrow" id="left-arrow">&lt;</div>
-            <div class="movie-list">
-            {%for x in all %}
-                <div class="movie">
-                    <a href="{{ x.get_absolute_url }}">
-                        {{x.pt_title}}
-                        <!-- <img src="http://placehold.it/150x280" alt="{{x.pt_title}}"> -->
-                    </a>
-                </div>
-            {%endfor%}
-            <div class="arrow right-arrow" id="right-arrow">&gt;</div>
-        </div>  
+    
+    <div class="movie-list">
+        {%for x in all %}
+            <a href="{{ x.get_absolute_url }}">
+            <div class="movie">
+                
+                    {{x.pt_title}}<br>
+                    <img src="http://placehold.it/150x280" alt="{{x.pt_title}}">
+            </div>
+        </a>
+        {%endfor%}
     </div>
     
     <table class='table_c'>
