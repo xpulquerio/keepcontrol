@@ -1,17 +1,27 @@
 from apps.mangas.models import Manga
 from apps.mangas.models import VolumeManga
-name = 'One Punch'
+name = 'Boruto: Naruto next generations'
 
 s = Manga.objects.filter(or_title=name)
 s
-s[0].insert_vols(29)
+s[0].insert_vols(20)
 
 x = VolumeManga.objects.filter(manga__or_title=name)
 x
 
-x[3].insert_caps(4, 21)
-x[4].insert_caps(5, 25)
-x[5].insert_caps(5, 30)
-x[6].insert_caps(3, 35)
-x[7].insert_caps(3, 38)
-x[28].insert_caps(100,144)
+x[5].insert_caps(4,20)
+x[6].insert_caps(4,24)
+x[7].insert_caps(4,28)
+x[8].insert_caps(4,32)
+x[9].insert_caps(4,36)
+x[10].insert_caps(4,40)
+x[11].insert_caps(4,44)
+x[12].insert_caps(4,48)
+x[13].insert_caps(4,52)
+x[14].insert_caps(4,56)
+x[15].insert_caps(4,60)
+x[16].insert_caps(4,64)
+x[17].insert_caps(4,68)
+x[18].insert_caps(4,72)
+x[19].insert_caps(5,76)
+
