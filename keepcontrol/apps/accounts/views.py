@@ -19,31 +19,31 @@ def dashboard(request):
         EpisodeAnime.objects
         .filter(userepisodeanime__user_id=request.user.id)
         .order_by('-userepisodeanime__date_watched')
-        .values('season__anime__id','pt_title', 'number', 'userepisodeanime__date_watched', 'season__number', 'season__anime__or_title')[:10]
+        .values('season__anime__id','pt_title', 'number', 'userepisodeanime__date_watched', 'season__number', 'season__anime__or_title')
     )
     movies = (
         Movie.objects
         .filter(usermovie__user_id=request.user.id)
         .order_by('-usermovie__date_watched')
-        .values('pt_title','year', 'usermovie__date_watched')[:10]
+        .values('pt_title','year', 'usermovie__date_watched')
     )
     epseries = (
         EpisodeSerie.objects
         .filter(userepisodeserie__user_id=request.user.id)
         .order_by('-userepisodeserie__date_watched')
-        .values('season__serie__id','pt_title', 'number', 'userepisodeserie__date_watched', 'season__number', 'season__serie__or_title')[:5]
+        .values('season__serie__id','pt_title', 'number', 'userepisodeserie__date_watched', 'season__number', 'season__serie__or_title')
     )
     books = (
         Book.objects
         .filter(userbook__user_id=request.user.id)
         .order_by('-userbook__date_watched')
-        .values('pt_title', 'year', 'userbook__date_watched')[:10]
+        .values('pt_title', 'year', 'userbook__date_watched')
     )
     capmangas = (
         ChapterManga.objects
         .filter(userchaptermanga__user_id=request.user.id)
         .order_by('-userchaptermanga__date_watched')
-        .values('volume__manga__id','pt_title', 'number', 'userchaptermanga__date_watched', 'volume__number', 'volume__manga__or_title')[:10]
+        .values('volume__manga__id','pt_title', 'number', 'userchaptermanga__date_watched', 'volume__number', 'volume__manga__or_title')
     )
     #preciso ordernar pela data assistida
     for x in books:
@@ -68,7 +68,7 @@ def dashboard(request):
     def get_date_watched(item):
         return item.get('date_watched', None)  # Retorna None se a chave não existir
 
-    sorted_todos = sorted(todos, key=get_date_watched, reverse=True)
+    sorted_todos = sorted(todos, key=get_date_watched, reverse=True)[:25]
     
     context = {
         'all': sorted_todos
