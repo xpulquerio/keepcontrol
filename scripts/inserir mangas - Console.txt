@@ -4,11 +4,14 @@ name = 'One Punch'
 
 s = Manga.objects.filter(or_title=name)
 s
-s[0].insert_vols(3)
+s[0].insert_vols(29)
 
 x = VolumeManga.objects.filter(manga__or_title=name)
 x
-x[0].insert_caps(9, 1)
-x[1].insert_caps(8, 9)
-x[2].insert_caps(7, 16)
-x[3].insert_caps(22, 1)
+
+x[3].insert_caps(4, 21)
+x[4].insert_caps(5, 25)
+x[5].insert_caps(5, 30)
+x[6].insert_caps(3, 35)
+x[7].insert_caps(3, 38)
+x[28].insert_caps(100,144)
