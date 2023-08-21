@@ -154,8 +154,9 @@ def DashboardAnimes(request):
         .values('pt_title', 'number', 'userepisodeanime__date_watched', 'season__number', 'season__anime__or_title')[:10]
     )
     context = {
+        'qtd_assistidos': epanimes.count,
         'epanimes': epanimes,
-        'qtd_assistidos': qtd_assistidos,
+        'qtd_total': qtd_assistidos
     }
     template_name = 'DashboardAnimes.html'
     return render(request, template_name, context)
