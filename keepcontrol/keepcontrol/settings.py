@@ -96,7 +96,7 @@ DATABASES = {
     # },
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_conteudo',
+        'NAME': 'db_conteudo_reformulado',
         'USER': 'postgres',
         'PASSWORD': '123456', #123456 #i1o05s
         'HOST': 'localhost',

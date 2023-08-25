@@ -31,6 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     chapters_manga = models.ManyToManyField(ChapterManga, through='UserChapterManga', blank=True)
     books = models.ManyToManyField(Book, through='UserBook', blank=True)
     
+    
     objects = UserManager()
     
     USERNAME_FIELD = 'username'

@@ -11,6 +11,8 @@ from apps.mangas.models import ChapterManga, Manga, VolumeManga
 from apps.books.models import Book
 from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook
 from itertools import chain
+from apps.core.models import Conteudo
+from django.db.models import Q
 # Create your views here.
 @login_required
 def dashboard(request):
@@ -70,6 +72,7 @@ def dashboard(request):
 
     sorted_todos = sorted(todos, key=get_date_watched, reverse=True)[:25]
     
+  
     context = {
         'all': sorted_todos
     }

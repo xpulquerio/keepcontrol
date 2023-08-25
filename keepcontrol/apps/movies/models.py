@@ -1,4 +1,5 @@
 from django.db import models
+from apps.core.models import Conteudo
 
 class MovieManager(models.Manager): #Custom Manager para fazer pesquisas... Movies.objects.search('nome')
 
@@ -8,13 +9,10 @@ class MovieManager(models.Manager): #Custom Manager para fazer pesquisas... Movi
             models.Q(or_title__icontains=query)
             ).order_by('pt_title')
    
-class Movie(models.Model):
-    pt_title = models.CharField('Título brasileiro', max_length=255, blank=True, null=True)
-    or_title = models.CharField('Título original', max_length=255)
+class Movie(Conteudo):
     director = models.CharField('Diretor', null=True, max_length=255, blank=True)
     collection = models.CharField('Coleção', null=True, max_length=255, blank=True)
     year = models.IntegerField('Ano', null=True, blank=True)
-    created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
 
     objects = MovieManager()
 

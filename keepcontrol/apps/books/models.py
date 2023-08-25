@@ -1,4 +1,5 @@
 from django.db import models
+from apps.core.models import Conteudo
 
 class BookManager(models.Manager): #Custom Manager para fazer pesquisas... Movies.objects.search('nome')
 
@@ -8,14 +9,11 @@ class BookManager(models.Manager): #Custom Manager para fazer pesquisas... Movie
             models.Q(or_title__icontains=query)
             )
    
-class Book(models.Model):
-    pt_title = models.CharField('Título brasileiro', max_length=255, blank=True, null=True)
-    or_title = models.CharField('Título original', max_length=255)
+class Book(Conteudo):
     resume = models.TextField('Resumo', max_length=2500, blank=True, null=True)
     author = models.CharField('Autor', null=True, max_length=255, blank=True)
     collection = models.CharField('Coleção', null=True, max_length=255, blank=True)
     year = models.IntegerField('Ano', null=True, blank=True)
-    created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
 
     objects = BookManager()
 
