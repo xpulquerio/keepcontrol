@@ -5,9 +5,9 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.conf import settings
 from .forms import RegisterForm, EditAccountForm
 from apps.movies.models import Movie
-from apps.series.models import EpisodeSerie, Serie
-from apps.animes.models import EpisodeAnime, Anime
-from apps.mangas.models import ChapterManga, Manga
+from apps.series.models import EpisodeSerie, Serie, SeasonSerie
+from apps.animes.models import EpisodeAnime, Anime, SeasonAnime
+from apps.mangas.models import ChapterManga, Manga, VolumeManga
 from apps.books.models import Book
 from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook
 from itertools import chain
@@ -217,3 +217,34 @@ def DashboardBooks(request):
     }
     template_name = 'DashboardBooks.html'
     return render(request, template_name, context)
+
+@login_required
+def DashboardFavorites(request):
+    context = {}
+    
+    mangas = Manga.objects.all()
+    
+    for favorite in mangas:
+        favorite.percentual = percentual_lido(request=request, manga=favorite)
+    
+    context = {
+        'qtd_favorites': mangas.count,
+        'favorites': mangas,
+    }
+    
+    template_name = 'DashboardFavorites.html'
+    return render(request, template_name, context)
+
+@login_required
+def percentual_lido(request, manga):
+    qtd_chapters = 0
+    qtd_chapters_watched = 0
+    mangasvolume = VolumeManga.objects.filter(manga_id=manga.id)
+    for volume in mangasvolume:
+        volumechapters = ChapterManga.objects.filter(volume_id = volume.id)
+        volumechapters_watched = UserChapterManga.objects.filter(chapter__volume_id = volume.id, user=request.user)
+        qtd_chapters += volumechapters.count()
+        qtd_chapters_watched += volumechapters_watched.count()
+    #print(f"Mangá: {manga.or_title}\nQuantidade: {qtd_chapters_watched}/{qtd_chapters} = {qtd_chapters_watched/qtd_chapters*100:.2f}%")
+    percentual = (qtd_chapters_watched/qtd_chapters*100)
+    return percentual

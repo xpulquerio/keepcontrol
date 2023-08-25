@@ -1,0 +1,34 @@
+{% extends "dashboard.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>|</li>
+    <li><a href="{% url 'accounts:DashboardFavorites' %}">Favoritos</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<div>
+    <div class="pure-menu-li"></div>
+    <table class="table_c">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Percentual assistido</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for favorito in favorites %}
+            <tr>
+                {% if favorito.pt_title%}
+                    <td>{{ favorito.pt_title }}</td>
+                {%else%}
+                    <td>{{ favorito.or_title }}</td>
+                {%endif%}
+                    <td>{{ favorito.percentual|floatformat:2 }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

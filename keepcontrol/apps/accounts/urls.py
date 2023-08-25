@@ -18,4 +18,6 @@ urlpatterns = [
     path('mangas/', views.DashboardMangas, name='DashboardMangas'),
     path('filmes/', views.DashboardMovies, name='DashboardMovies'),
     path('livros/', views.DashboardBooks, name='DashboardBooks'),
+    
+    path('favoritos/', views.DashboardFavorites, name='DashboardFavorites'),
 ]

@@ -117,3 +117,5 @@ class ChapterManga(models.Model):
     class Meta:
         verbose_name = 'Capítulo'
         verbose_name_plural = 'Capítulos'
+
+    
