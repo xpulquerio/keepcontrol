@@ -20,9 +20,9 @@
             {% for favorito in favorites %}
             <tr>
                 {% if favorito.pt_title%}
-                    <td>{{ favorito.pt_title }}</td>
+                    <td><a class="detalhe" href="{{ favorito.get_absolute_url }}">{{ favorito.pt_title }}</a></td>
                 {%else%}
-                    <td>{{ favorito.or_title }}</td>
+                    <td><a class="detalhe" href="{{ favorito.get_absolute_url }}">{{ favorito.or_title }}</a></td>
                 {%endif%}
                     <td>{{ favorito.percentual|floatformat:2 }}%</td>
             </tr>

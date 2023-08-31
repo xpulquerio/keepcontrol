@@ -9,7 +9,7 @@ from apps.series.models import EpisodeSerie, Serie, SeasonSerie
 from apps.animes.models import EpisodeAnime, Anime, SeasonAnime
 from apps.mangas.models import ChapterManga, Manga, VolumeManga
 from apps.books.models import Book
-from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook, FavoriteManga
+from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook, FavoriteManga, FavoriteAnime, FavoriteBook, FavoriteMovie, FavoriteSerie
 from itertools import chain
 # Create your views here.
 @login_required
@@ -221,19 +221,69 @@ def DashboardBooks(request):
 @login_required
 def DashboardFavorites(request):
     context = {}
-    mangas = {}
+    mangas = []
+    animes = []
+    series = []
+    books = []
+    movies = []
+    all = []
     
-    favorite_mangas = FavoriteManga.objects.all()
+    favorites_mangas = FavoriteManga.objects.filter(user=request.user.id)
+    favorites_animes = FavoriteAnime.objects.filter(user=request.user.id)
+    favorites_series = FavoriteSerie.objects.filter(user=request.user.id)
+    favorites_books = FavoriteBook.objects.filter(user=request.user.id)
+    favorites_movies = FavoriteMovie.objects.filter(user=request.user.id)
     
-    for manga_favorito in favorite_mangas:
-        mangas.append(manga_favorito.manga)
+    # ------ Tratamento Mangás ----- #
+    for item in favorites_mangas:
+        print(item)
+        mangas.append(item.manga)
     
     for favorite in mangas:
         favorite.percentual = percentual_lido(request=request, manga=favorite)
+        
+    for item in mangas:
+        all.append(item)
+    # -------- Tratamento Animes ------------------#
     
+    for item in favorites_animes:
+        print(item)
+        animes.append(item.anime)
+    
+    for item in animes:
+        all.append(item)
+    
+     # -------- Tratamento series ------------------#
+    
+    for item in favorites_series:
+        print(item)
+        series.append(item.serie)
+    
+    for item in series:
+        all.append(item)
+        
+    # -------- Tratamento Livros ------------------#
+    
+    for item in favorites_books:
+        print(item)
+        books.append(item.book)
+    
+    for item in books:
+        all.append(item)
+        
+    # -------- Tratamento Filmes ------------------#
+    
+    for item in favorites_movies:
+        print(item)
+        movies.append(item.movie)
+    
+    for item in movies:
+        all.append(item)
+    
+    # -----------------------------------------------#
     context = {
         'qtd_favorites': mangas.count,
-        'favorites': mangas,
+        'favorites': all,
     }
     
     template_name = 'DashboardFavorites.html'

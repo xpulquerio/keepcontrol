@@ -134,7 +134,7 @@ class FavoriteManga(models.Model):
     created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
 
     def __str__(self):
-        return f"Usuário: {self.user.username}, Livro: {self.manga.or_title}, Cadastrado em: {self.created_at}"
+        return f"Usuário: {self.user.username}, Mangá: {self.manga.or_title}, Cadastrado em: {self.created_at}"
     
     class Meta:
         verbose_name = 'Mangá favorito'
@@ -147,7 +147,7 @@ class FavoriteSerie(models.Model):
     created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
 
     def __str__(self):
-        return f"Usuário: {self.user.username}, Livro: {self.serie.or_title}, Cadastrado em: {self.created_at}"
+        return f"Usuário: {self.user.username}, Série: {self.serie.or_title}, Cadastrado em: {self.created_at}"
     
     class Meta:
         verbose_name = 'Série favorita'
@@ -160,7 +160,7 @@ class FavoriteAnime(models.Model):
     created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
 
     def __str__(self):
-        return f"Usuário: {self.user.username}, Livro: {self.anime.or_title}, Cadastrado em: {self.created_at}"
+        return f"Usuário: {self.user.username}, Anime: {self.anime.or_title}, Cadastrado em: {self.created_at}"
     
     class Meta:
         verbose_name = 'Anime favorito'
@@ -173,7 +173,7 @@ class FavoriteMovie(models.Model):
     created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
 
     def __str__(self):
-        return f"Usuário: {self.user.username}, Livro: {self.movie.or_title}, Cadastrado em: {self.created_at}"
+        return f"Usuário: {self.user.username}, Filme: {self.movie.or_title}, Cadastrado em: {self.created_at}"
     
     class Meta:
         verbose_name = 'Filme favorito'
