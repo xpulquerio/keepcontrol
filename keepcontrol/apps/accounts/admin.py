@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model #Para usar o model do nosso usuário
-from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserBook, UserChapterManga
+from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserBook, UserChapterManga, FavoriteAnime, FavoriteBook, FavoriteManga, FavoriteMovie, FavoriteSerie
 
 User = get_user_model()
 
@@ -34,4 +34,26 @@ admin.site.register(UserMovie, UserMovieAdmin)
 admin.site.register(UserChapterManga, UserChapterMangaAdmin)
 admin.site.register(UserBook, UserBookAdmin)
 
+# --------------- ADMIN DOS FAVORITOS -------------- #
+
+class FavoriteSerieAdmin(admin.ModelAdmin):
+    list_display = ['serie','user', 'created_at']
+    
+class FavoriteAnimeAdmin(admin.ModelAdmin):
+    list_display = ['anime', 'user','created_at']
+    
+class FavoriteMovieAdmin(admin.ModelAdmin):
+    list_display = ['movie', 'user', 'created_at']
+    
+class FavoriteMangaAdmin(admin.ModelAdmin):
+    list_display = ['manga', 'user', 'created_at']
+    
+class FavoriteBookAdmin(admin.ModelAdmin):
+    list_display = ['book', 'user', 'created_at']
+
+admin.site.register(FavoriteSerie, FavoriteSerieAdmin)
+admin.site.register(FavoriteAnime, FavoriteAnimeAdmin)
+admin.site.register(FavoriteMovie, FavoriteMovieAdmin)
+admin.site.register(FavoriteManga, FavoriteMangaAdmin)
+admin.site.register(FavoriteBook, FavoriteBookAdmin)
 # Register your models here.

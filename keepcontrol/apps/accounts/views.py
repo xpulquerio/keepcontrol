@@ -9,7 +9,7 @@ from apps.series.models import EpisodeSerie, Serie, SeasonSerie
 from apps.animes.models import EpisodeAnime, Anime, SeasonAnime
 from apps.mangas.models import ChapterManga, Manga, VolumeManga
 from apps.books.models import Book
-from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook
+from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook, FavoriteManga
 from itertools import chain
 # Create your views here.
 @login_required
@@ -221,8 +221,12 @@ def DashboardBooks(request):
 @login_required
 def DashboardFavorites(request):
     context = {}
+    mangas = {}
     
-    mangas = Manga.objects.all()
+    favorite_mangas = FavoriteManga.objects.all()
+    
+    for manga_favorito in favorite_mangas:
+        mangas.append(manga_favorito.manga)
     
     for favorite in mangas:
         favorite.percentual = percentual_lido(request=request, manga=favorite)

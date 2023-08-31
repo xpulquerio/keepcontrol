@@ -2,11 +2,11 @@ import re
 from django.db import models
 from django.core import validators
 from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, UserManager)
-from apps.series.models import EpisodeSerie
-from apps.animes.models import EpisodeAnime
+from apps.series.models import EpisodeSerie, Serie
+from apps.animes.models import EpisodeAnime, Anime
 from apps.movies.models import Movie
 from apps.books.models import Book
-from apps.mangas.models import ChapterManga
+from apps.mangas.models import ChapterManga, Manga
 
 class User(AbstractBaseUser, PermissionsMixin):
   
@@ -113,3 +113,70 @@ class UserBook(models.Model):
         verbose_name = 'Livro do usuário'
         verbose_name_plural = 'Livros'
         unique_together = ('user', 'book')
+        
+
+class FavoriteBook(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='Livro')
+    created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
+
+    def __str__(self):
+        return f"Usuário: {self.user.username}, Livro: {self.book.pt_title}, Cadastrado em: {self.created_at}"
+    
+    class Meta:
+        verbose_name = 'Livro favorito'
+        verbose_name_plural = 'Livros favoritos'
+        unique_together = ('user', 'book')
+    
+class FavoriteManga(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    manga = models.ForeignKey(Manga, on_delete=models.CASCADE, verbose_name='Mangá')
+    created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
+
+    def __str__(self):
+        return f"Usuário: {self.user.username}, Livro: {self.manga.or_title}, Cadastrado em: {self.created_at}"
+    
+    class Meta:
+        verbose_name = 'Mangá favorito'
+        verbose_name_plural = 'Mangás favoritos'
+        unique_together = ('user', 'manga')
+    
+class FavoriteSerie(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    serie = models.ForeignKey(Serie, on_delete=models.CASCADE, verbose_name='Série')
+    created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
+
+    def __str__(self):
+        return f"Usuário: {self.user.username}, Livro: {self.serie.or_title}, Cadastrado em: {self.created_at}"
+    
+    class Meta:
+        verbose_name = 'Série favorita'
+        verbose_name_plural = 'Séries favoritas'
+        unique_together = ('user', 'serie')
+    
+class FavoriteAnime(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name='Anime')
+    created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
+
+    def __str__(self):
+        return f"Usuário: {self.user.username}, Livro: {self.anime.or_title}, Cadastrado em: {self.created_at}"
+    
+    class Meta:
+        verbose_name = 'Anime favorito'
+        verbose_name_plural = 'Animes favoritos'
+        unique_together = ('user', 'anime')
+    
+class FavoriteMovie(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, verbose_name='Filme')
+    created_at = models.DateTimeField('Cadastrado em', auto_now_add=True)
+
+    def __str__(self):
+        return f"Usuário: {self.user.username}, Livro: {self.movie.or_title}, Cadastrado em: {self.created_at}"
+    
+    class Meta:
+        verbose_name = 'Filme favorito'
+        verbose_name_plural = 'Filmes favoritos'
+        unique_together = ('user', 'movie')   
+    
