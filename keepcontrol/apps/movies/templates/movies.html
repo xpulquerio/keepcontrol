@@ -12,6 +12,7 @@
     {% if qtd_movies %}
     <table class="table_c">
         <tr>
+            <th>#</th>
             <th>Título</th>
             <th>Ano</th>
             <th>Coleção</th>
@@ -20,6 +21,7 @@
         </tr>
         {% for movie in page %}
         <tr>
+            <td>{{ forloop.counter }}</td>
             <td>{{movie.pt_title}}</td>
             <td>{{movie.year}}</td>
             <td>{{movie.collection}}</td>

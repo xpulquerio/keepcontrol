@@ -12,6 +12,7 @@
     <table class="table_c">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Título</th>
                 <th>Percentual assistido</th>
                 <th>#</th>
@@ -20,6 +21,7 @@
         <tbody>
             {% for favorito in favorites %}
             <tr>
+                    <td>{{favorito.type}}</td>
                 {% if favorito.pt_title%}
                     <td><a class="detalhe" href="{{ favorito.get_absolute_url }}">{{ favorito.pt_title }}</a></td>
                 {%else%}

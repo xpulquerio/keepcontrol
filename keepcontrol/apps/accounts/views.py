@@ -228,22 +228,27 @@ def DashboardFavorites(request):
         if x.type == 'Anime':
             b = FavoriteAnime.objects.filter(anime_id = x.conteudo_id).first().anime
             b.percentual = percentual_lido_anime(request=request, anime=b)
+            b.type = x.type
             todos_objetos.append(b)
         elif x.type == 'Mangá':
             b = FavoriteManga.objects.filter(manga_id = x.conteudo_id).first().manga
             b.percentual = percentual_lido_manga(request=request, manga=b)
+            b.type = x.type
             todos_objetos.append(b)
         elif x.type == 'Série':
             b = FavoriteSerie.objects.filter(serie_id = x.conteudo_id).first().serie
             b.percentual = percentual_lido_serie(request=request, serie=b)
+            b.type = x.type
             todos_objetos.append(b)
         elif x.type == 'Livro':
             b = FavoriteBook.objects.filter(book_id = x.conteudo_id).first().book
             b.percentual = 100
+            b.type = x.type
             todos_objetos.append(b)
         elif x.type == 'Filme':
             b = FavoriteMovie.objects.filter(movie_id = x.conteudo_id).first().movie
             b.percentual = 100
+            b.type = x.type
             todos_objetos.append(b)
    
     context = {
