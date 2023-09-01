@@ -180,3 +180,15 @@ class FavoriteMovie(models.Model):
         verbose_name_plural = 'Filmes favoritos'
         unique_together = ('user', 'movie')   
     
+class FavoritesView(models.Model):
+    conteudo_id = models.BigIntegerField(blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuário')
+    created_at = models.DateTimeField(blank=True, null=True)
+    type = models.TextField(blank=True, null=True)
+    
+    def __str__(self):
+        return f"{self.type}: ID - {self.conteudo_id}, {self.user.name}"
+    
+    class Meta:
+        managed = False
+        db_table = 'favorites_view'

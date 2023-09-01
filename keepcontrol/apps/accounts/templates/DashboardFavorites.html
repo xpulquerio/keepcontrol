@@ -8,12 +8,13 @@
 
 {% block dashboard_content %}
 <div>
-    <div class="pure-menu-li"></div>
+    <div class="pure-menu-li">Favoritos</div>
     <table class="table_c">
         <thead>
             <tr>
                 <th>Título</th>
                 <th>Percentual assistido</th>
+                <th>#</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,7 @@
                     <td><a class="detalhe" href="{{ favorito.get_absolute_url }}">{{ favorito.or_title }}</a></td>
                 {%endif%}
                     <td>{{ favorito.percentual|floatformat:2 }}%</td>
+                    <td><a class="detalhe" href="#">Remover</a></td>
             </tr>
             {% endfor %}
         </tbody>

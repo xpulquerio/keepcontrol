@@ -9,7 +9,7 @@ from apps.series.models import EpisodeSerie, Serie, SeasonSerie
 from apps.animes.models import EpisodeAnime, Anime, SeasonAnime
 from apps.mangas.models import ChapterManga, Manga, VolumeManga
 from apps.books.models import Book
-from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook, FavoriteManga, FavoriteAnime, FavoriteBook, FavoriteMovie, FavoriteSerie
+from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook, FavoriteManga, FavoriteAnime, FavoriteBook, FavoriteMovie, FavoriteSerie, FavoritesView
 from itertools import chain
 # Create your views here.
 @login_required
@@ -221,76 +221,41 @@ def DashboardBooks(request):
 @login_required
 def DashboardFavorites(request):
     context = {}
-    mangas = []
-    animes = []
-    series = []
-    books = []
-    movies = []
-    all = []
-    
-    favorites_mangas = FavoriteManga.objects.filter(user=request.user.id)
-    favorites_animes = FavoriteAnime.objects.filter(user=request.user.id)
-    favorites_series = FavoriteSerie.objects.filter(user=request.user.id)
-    favorites_books = FavoriteBook.objects.filter(user=request.user.id)
-    favorites_movies = FavoriteMovie.objects.filter(user=request.user.id)
-    
-    # ------ Tratamento Mangás ----- #
-    for item in favorites_mangas:
-        print(item)
-        mangas.append(item.manga)
-    
-    for favorite in mangas:
-        favorite.percentual = percentual_lido(request=request, manga=favorite)
-        
-    for item in mangas:
-        all.append(item)
-    # -------- Tratamento Animes ------------------#
-    
-    for item in favorites_animes:
-        print(item)
-        animes.append(item.anime)
-    
-    for item in animes:
-        all.append(item)
-    
-     # -------- Tratamento series ------------------#
-    
-    for item in favorites_series:
-        print(item)
-        series.append(item.serie)
-    
-    for item in series:
-        all.append(item)
-        
-    # -------- Tratamento Livros ------------------#
-    
-    for item in favorites_books:
-        print(item)
-        books.append(item.book)
-    
-    for item in books:
-        all.append(item)
-        
-    # -------- Tratamento Filmes ------------------#
-    
-    for item in favorites_movies:
-        print(item)
-        movies.append(item.movie)
-    
-    for item in movies:
-        all.append(item)
-    
-    # -----------------------------------------------#
+      
+    todos = FavoritesView.objects.filter(user=request.user.id)
+    todos_objetos = []
+    for x in todos:
+        if x.type == 'Anime':
+            b = FavoriteAnime.objects.filter(anime_id = x.conteudo_id).first().anime
+            b.percentual = percentual_lido_anime(request=request, anime=b)
+            todos_objetos.append(b)
+        elif x.type == 'Mangá':
+            b = FavoriteManga.objects.filter(manga_id = x.conteudo_id).first().manga
+            b.percentual = percentual_lido_manga(request=request, manga=b)
+            todos_objetos.append(b)
+        elif x.type == 'Série':
+            b = FavoriteSerie.objects.filter(serie_id = x.conteudo_id).first().serie
+            b.percentual = percentual_lido_serie(request=request, serie=b)
+            todos_objetos.append(b)
+        elif x.type == 'Livro':
+            b = FavoriteBook.objects.filter(book_id = x.conteudo_id).first().book
+            b.percentual = 100
+            todos_objetos.append(b)
+        elif x.type == 'Filme':
+            b = FavoriteMovie.objects.filter(movie_id = x.conteudo_id).first().movie
+            b.percentual = 100
+            todos_objetos.append(b)
+   
     context = {
-        'qtd_favorites': mangas.count,
-        'favorites': all,
+        'qtd_favorites': todos_objetos.count,
+        'favorites': todos_objetos,
     }
     
     template_name = 'DashboardFavorites.html'
     return render(request, template_name, context)
 
 @login_required
-def percentual_lido(request, manga):
+def percentual_lido_manga(request, manga):
     qtd_chapters = 0
     qtd_chapters_watched = 0
     mangasvolume = VolumeManga.objects.filter(manga_id=manga.id)
@@ -301,4 +266,32 @@ def percentual_lido(request, manga):
         qtd_chapters_watched += volumechapters_watched.count()
     #print(f"Mangá: {manga.or_title}\nQuantidade: {qtd_chapters_watched}/{qtd_chapters} = {qtd_chapters_watched/qtd_chapters*100:.2f}%")
     percentual = (qtd_chapters_watched/qtd_chapters*100)
+    return percentual
+
+@login_required
+def percentual_lido_anime(request, anime):
+    qtd_episodesanime = 0
+    qtd_episodes_anime_watched = 0
+    animesseason = SeasonAnime.objects.filter(anime_id=anime.id)
+    for season in animesseason:
+        seasonepisodes = EpisodeAnime.objects.filter(season_id = season.id)
+        seasonepisodes_watched = UserEpisodeAnime.objects.filter(episode__season_id = season.id, user=request.user)
+        qtd_episodesanime += seasonepisodes.count()
+        qtd_episodes_anime_watched += seasonepisodes_watched.count()
+    #print(f"Mangá: {manga.or_title}\nQuantidade: {qtd_chapters_watched}/{qtd_chapters} = {qtd_chapters_watched/qtd_chapters*100:.2f}%")
+    percentual = (qtd_episodes_anime_watched/qtd_episodesanime*100)
+    return percentual
+
+@login_required
+def percentual_lido_serie(request, serie):
+    qtd_episodesserie = 0
+    qtd_episodes_serie_watched = 0
+    seriesseason = SeasonSerie.objects.filter(serie_id=serie.id)
+    for season in seriesseason:
+        seasonepisodes = EpisodeSerie.objects.filter(season_id = season.id)
+        seasonepisodes_watched = UserEpisodeSerie.objects.filter(episode__season_id = season.id, user=request.user)
+        qtd_episodesserie += seasonepisodes.count()
+        qtd_episodes_serie_watched += seasonepisodes_watched.count()
+    #print(f"Mangá: {manga.or_title}\nQuantidade: {qtd_chapters_watched}/{qtd_chapters} = {qtd_chapters_watched/qtd_chapters*100:.2f}%")
+    percentual = (qtd_episodes_serie_watched/qtd_episodesserie*100)
     return percentual
