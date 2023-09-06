@@ -15,12 +15,18 @@
             <th>Título</th>
             <th>Temporadas</th>
             <th>Situação</th>
+            <th>#</th>
         </tr>
         {% for anime in page %}
         <tr>
             <td><a class="detalhe" href="{{ anime.get_absolute_url }}">{{anime.or_title}}</a></td>
             <td>{{anime.qtd_temps}}</td>
             <td>{{anime.situation}}</td>
+            {%if anime.watched %}
+            <td>Salvo</td>
+            {%else%}
+            <td><a href="{% url 'animes:InserirAnimeFavorito' anime.id %}">Favoritar</a></td>
+            {%endif%}
         </tr>
         {% endfor %}
     </table>

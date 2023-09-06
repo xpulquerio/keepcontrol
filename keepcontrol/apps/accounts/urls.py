@@ -20,4 +20,5 @@ urlpatterns = [
     path('livros/', views.DashboardBooks, name='DashboardBooks'),
     
     path('favoritos/', views.DashboardFavorites, name='DashboardFavorites'),
+    path('removerfavorito/<int:id>/<str:type>/', views.RemoverFavorito, name='RemoverFavorito'),
 ]

@@ -300,3 +300,21 @@ def percentual_lido_serie(request, serie):
     #print(f"Mangá: {manga.or_title}\nQuantidade: {qtd_chapters_watched}/{qtd_chapters} = {qtd_chapters_watched/qtd_chapters*100:.2f}%")
     percentual = (qtd_episodes_serie_watched/qtd_episodesserie*100)
     return percentual
+
+def RemoverFavorito(request, id, type):
+    if type == 'Anime':
+        temp = FavoriteAnime.objects.get(anime_id=id)
+    if type == 'Livro':
+        temp = FavoriteBook.objects.get(book_id=id)
+    if type == 'Mangá':
+        temp = FavoriteManga.objects.get(manga_id=id)
+    if type == 'Filme':
+        temp = FavoriteMovie.objects.get(movie_id=id)
+    if type == 'Série':
+        temp = FavoriteSerie.objects.get(serie_id=id)
+        
+    if (temp):
+        temp.delete()
+        return redirect('accounts:DashboardFavorites')
+    else:
+        return redirect('accounts:DashboardFavorites')

@@ -28,7 +28,7 @@
                     <td><a class="detalhe" href="{{ favorito.get_absolute_url }}">{{ favorito.or_title }}</a></td>
                 {%endif%}
                     <td>{{ favorito.percentual|floatformat:2 }}%</td>
-                    <td><a class="detalhe" href="#">Remover</a></td>
+                    <td><a class="detalhe" href="{% url 'accounts:RemoverFavorito' favorito.id favorito.type %}">Remover</a></td>
             </tr>
             {% endfor %}
         </tbody>

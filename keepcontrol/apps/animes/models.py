@@ -98,21 +98,21 @@ class EpisodeAnime(models.Model):
     def get_episodes(self, id_da_season):
         return EpisodeAnime.objects.filter(season_id=id_da_season)
     
-    def insert_eps(self, qtd_eps, season_id):
-        cont = 0
-        for i in range(qtd_eps):
-            number_of_ep = i+1
-            title_of_episode_for_insert = 'Episódio '+str(number_of_ep) 
-            temp = EpisodeAnime(number=number_of_ep, season_id=season_id)
-            if EpisodeAnime.objects.filter(number=temp.number, season_id=temp.season_id).exists():
-                print(title_of_episode_for_insert+' já existe')
-                #Se o episódio existir, não fazer nada.
-            else:
-                #Se o episódio não existir, inserir no banco.
-                temp.save()
-                print('EP: '+str(temp.number)+' inserido!')
-                cont = cont+1
-        return 'Número de episódios adicionados: '+str(cont)
+    # def insert_eps(self, qtd_eps, season_id):
+    #     cont = 0
+    #     for i in range(qtd_eps):
+    #         number_of_ep = i+1
+    #         title_of_episode_for_insert = 'Episódio '+str(number_of_ep) 
+    #         temp = EpisodeAnime(number=number_of_ep, season_id=season_id)
+    #         if EpisodeAnime.objects.filter(number=temp.number, season_id=temp.season_id).exists():
+    #             print(title_of_episode_for_insert+' já existe')
+    #             #Se o episódio existir, não fazer nada.
+    #         else:
+    #             #Se o episódio não existir, inserir no banco.
+    #             temp.save()
+    #             print('EP: '+str(temp.number)+' inserido!')
+    #             cont = cont+1
+    #     return 'Número de episódios adicionados: '+str(cont)
     
     class Meta:
         verbose_name = 'Episódio'
