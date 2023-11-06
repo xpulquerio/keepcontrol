@@ -104,7 +104,7 @@ def InserirAssistidoEpisodeAnime(request, episode_id):
     anime_id = episodio_anime.season.anime_id
     
     if (False):
-        date = '2021-11-23 00:00:00'
+        date = '2021-01-14 00:00:00'
     else:
         date = timezone.now()
 
