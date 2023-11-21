@@ -42,12 +42,13 @@ class SeasonAnime(models.Model):
     or_title = models.CharField('Título original', max_length=255, blank=True, null=True)
     number = models.BigIntegerField('Temporada')
     anime = models.ForeignKey(Anime, on_delete=models.CASCADE, verbose_name="Anime")
-
+       
     def __str__ (self):
-        if self.anime.pt_title:
-            return f"Temporada {self.number} - {self.anime.pt_title}"
-        else:
-            return f"Temporada {self.number} - {self.anime.or_title}"
+        return f"Temporada {self.number} - {self.anime.or_title}"
+        # if self.anime.pt_title:
+        #     return f"Temporada {self.number} - {self.anime.pt_title}"
+        # else:
+        #     return f"Temporada {self.number} - {self.anime.or_title}"
     
     def get_qtd_seasons(anime_id):
         return SeasonAnime.objects.filter(anime_id=anime_id).count() #Número de temporadas da série com este ID
@@ -78,8 +79,8 @@ class SeasonAnime(models.Model):
     class Meta:
         verbose_name = 'Temporada'
         verbose_name_plural = 'Temporadas'
-            
-
+        ordering = ['anime__or_title', 'number']
+        
 class EpisodeAnime(models.Model):
     pt_title = models.CharField('Título brasileiro', max_length=255, blank=True, null=True)
     or_title = models.CharField('Título original', max_length=255, blank=True, null=True)
