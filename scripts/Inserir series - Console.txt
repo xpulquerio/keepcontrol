@@ -1,0 +1,32 @@
+from apps.series.models import Serie
+from apps.series.models import SeasonSerie
+
+a = Serie(or_title='Suits')
+
+a.save()
+
+a.insert_temps(9)
+
+serie_name = a.or_title
+
+x = SeasonSerie.objects.filter(serie__or_title=serie_name)
+x
+x[0].insert_eps(12)
+x[1].insert_eps(16)
+x[2].insert_eps(16)
+x[3].insert_eps(16)
+x[4].insert_eps(16)
+x[5].insert_eps(16)
+x[6].insert_eps(16)
+x[7].insert_eps(16)
+x[8].insert_eps(10)
+x[9].insert_eps(24)
+x[10].insert_eps(24)
+x[11].insert_eps(24)
+x[12].insert_eps(24)
+x[13].insert_eps(24)
+x[14].insert_eps(25)
+x[15].insert_eps(21)
+x[16].insert_eps(17)
+x[17].insert_eps(20)
+x[18].insert_eps(20)

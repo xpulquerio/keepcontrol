@@ -1,0 +1,28 @@
+Passos para começar um projeto Python (Usando terminal do VS Code no Win10)
+
+1. Instalar o Python (fazendo o Download pelo site oficial)
+    1.1 "python -V" para ver a versão do python instalada
+2. Instalar o Pip (Normalmente quando instalar o Python, o pip é instalado junto)
+    2.1 "pip --version" no cmd para verificar se está instalado 
+3. Instalar o Virtualenv (pip install virtualenv)
+4. Criar o virtualenv (virtualenv <nome_da_virtual_env> ou py -m venv venv)
+5. Ativar o ambiente (...\Scripts\Activate)
+5.5 Atualizar o pip (python -m pip install -upgrade pip)
+5.5 pip install -r requirements.txt (na pasta onde está o arquivo depois de ativar a venv)
+6. Instalar o Django (pip install django)
+7. Iniciar o projeto (django-admin startproject <nome_do_projeto>)
+8. Entrar na pasta do projeto e criar os app (django-admin startapp <nome_da_aplicação>)
+
+Comando interessantes:
+- manage.py makemigrations
+- manage.py migrate
+- manage.py shell 
+- manage.py 
+- manage.py createsuperuser
+
+
+related_name='x' substitui o user.movie_set
+
+user.objects.get(id=1) retorna diretamente 1 objeto
+
+python -m pip freeze > requirements.txt - criar o arquivo

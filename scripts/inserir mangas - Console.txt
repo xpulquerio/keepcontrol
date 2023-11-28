@@ -1,0 +1,47 @@
+from apps.mangas.models import Manga
+from apps.mangas.models import VolumeManga
+name = 'Shingeki No Kyojin'
+
+s = Manga.objects.filter(or_title=name)
+s
+s[0].insert_vols(34)
+
+x = VolumeManga.objects.filter(manga__or_title=name)
+x
+
+x[0].insert_caps(4,1) 
+x[1].insert_caps(5,5)
+x[2].insert_caps(4,10)
+x[3].insert_caps(5,14)
+x[4].insert_caps(4,19)
+x[5].insert_caps(4,23)
+x[6].insert_caps(4,27)
+x[7].insert_caps(4,31)
+x[8].insert_caps(4,35)
+x[9].insert_caps(4,39)
+x[10].insert_caps(4,43)
+x[11].insert_caps(4,47)
+x[12].insert_caps(4,51)
+x[13].insert_caps(4,55)
+x[14].insert_caps(4,59)
+x[15].insert_caps(4,63)
+x[16].insert_caps(4,67)
+x[17].insert_caps(4,71)
+x[18].insert_caps(4,75)
+x[19].insert_caps(4,79)
+x[20].insert_caps(5,83)
+x[21].insert_caps(4,87)
+x[22].insert_caps(4,91)
+x[23].insert_caps(4,95)
+x[24].insert_caps(4,99)
+x[25].insert_caps(4,103)
+x[26].insert_caps(4,107)
+x[27].insert_caps(4,111)
+x[28].insert_caps(4,115)
+x[29].insert_caps(4,119)
+x[30].insert_caps(4,123)
+x[31].insert_caps(4,127)
+x[32].insert_caps(4,131)
+x[33].insert_caps(5,135)
+
+
