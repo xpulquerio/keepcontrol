@@ -7,18 +7,6 @@
     
     <h4>Últimos adicionados</h4>
     
-    <div class="movie-list">
-        {%for x in all %}
-            <a href="{{ x.get_absolute_url }}">
-            <div class="movie">
-                
-                    {{x.pt_title}}<br>
-                    <img src="http://placehold.it/150x280" alt="{{x.pt_title}}">
-            </div>
-        </a>
-        {%endfor%}
-    </div>
-    
     <table class='table_c'>
         {% for x in all %}
         <tr>
