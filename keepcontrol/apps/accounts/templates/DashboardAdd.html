@@ -1,0 +1,38 @@
+{% extends "dashboard.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>|</li>
+    <li><a href="{% url 'accounts:DashboardAdd' %}">Adicionar</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<div>
+    <div class="pure-menu-li">Favoritos</div>
+    <table class="table_c">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Título</th>
+                <th>Percentual assistido</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for favorito in favorites %}
+            <tr>
+                    <td>{{favorito.type}}</td>
+                {% if favorito.pt_title%}
+                    <td><a class="detalhe" href="{{ favorito.get_absolute_url }}">{{ favorito.pt_title }}</a></td>
+                {%else%}
+                    <td><a class="detalhe" href="{{ favorito.get_absolute_url }}">{{ favorito.or_title }}</a></td>
+                {%endif%}
+                    <td>{{ favorito.percentual|floatformat:2 }}%</td>
+                    <td><a class="detalhe" href="{% url 'accounts:RemoverFavorito' favorito.id favorito.type %}">Remover</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

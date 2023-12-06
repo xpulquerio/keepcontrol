@@ -11,6 +11,7 @@ from apps.mangas.models import ChapterManga, Manga, VolumeManga
 from apps.books.models import Book
 from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook, FavoriteManga, FavoriteAnime, FavoriteBook, FavoriteMovie, FavoriteSerie, FavoritesView
 from itertools import chain
+from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
 @login_required
 def dashboard(request):
@@ -318,3 +319,11 @@ def RemoverFavorito(request, id, type):
         return redirect('accounts:DashboardFavorites')
     else:
         return redirect('accounts:DashboardFavorites')
+    
+@user_passes_test(lambda u: u.is_staff)
+def DashboardAdd(request):
+
+    context = {}
+    template_name = 'DashboardAdd.html'
+
+    return render(request, template_name, context)

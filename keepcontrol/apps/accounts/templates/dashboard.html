@@ -31,6 +31,13 @@
                     <li class="pure-menu-li">Favoritos</li>
                     <li><a href="{% url 'accounts:DashboardFavorites' %}">Favoritos</a></li>
                 </ul>
+                {% if user.is_staff %}
+                <ul>
+                    <li class="pure-menu-li">Gerenciar</li>
+                    <li><a href="{% url 'accounts:DashboardAdd' %}">Adicionar</a></li>
+                    <li><a href="{% url 'accounts:DashboardAdd' %}">Remover</a></li>
+                </ul>
+                {% endif %}
             </div>
         </div>
         <div class="right-side-body">

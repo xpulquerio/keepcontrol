@@ -21,4 +21,6 @@ urlpatterns = [
     
     path('favoritos/', views.DashboardFavorites, name='DashboardFavorites'),
     path('removerfavorito/<int:id>/<str:type>/', views.RemoverFavorito, name='RemoverFavorito'),
+
+    path('add/', views.DashboardAdd, name='DashboardAdd'),
 ]
