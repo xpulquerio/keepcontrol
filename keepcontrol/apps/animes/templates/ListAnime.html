@@ -22,7 +22,7 @@
             <td><a class="detalhe" href="{{ anime.get_absolute_url }}">{{anime.or_title}}</a></td>
             <td>{{anime.qtd_temps}}</td>
             <td>{{anime.situation}}</td>
-            {%if anime.watched %}
+            {%if anime.favorite %}
             <td>Salvo</td>
             {%else%}
             <td><a href="{% url 'animes:InserirAnimeFavorito' anime.id %}">Favoritar</a></td>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Serie, SeasonSerie, EpisodeSerie
-from apps.accounts.models import UserEpisodeSerie
+from apps.accounts.models import UserEpisodeSerie, FavoriteSerie
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.paginator import Paginator
@@ -17,10 +17,23 @@ def ListSerie (request):
         ).order_by('or_title')
     else:
         series = Serie.objects.all().order_by('-created_at')    
+    
+    #FAVORITOS
+    user_id = request.user.id
+    if user_id:
+        favoritos = FavoriteSerie.objects.filter(user_id=user_id)
+    else:
+        favoritos = []
+    
 
     for serie in series:
         temp_count = SeasonSerie.get_qtd_seasons(serie.id)
         serie.qtd_temps = temp_count
+
+        for temp in favoritos: #Verifica quais animes já estão favoritados
+            if temp.serie_id == serie.id and temp.user_id == user_id:
+                serie.favorite = True
+        
     
     movies_paginator = Paginator(series, 20) #Filtra apenas 20 de todos os animes
     
@@ -112,3 +125,19 @@ def InserirAssistidoSeasonSerie(request, season_id, serie_id):
         InserirAssistidoEpisodeSerie(request=request,episodeserie_id=ep_id)
         
     return redirect('series:ListSeasonSerie', id=serie_id)
+
+@login_required
+def InserirSerieFavorita(request, serie_id):
+    #Insere a serie como favorito!
+    
+    usuario = request.user
+    seriefavorita_user = FavoriteSerie.objects.filter(user=usuario.id, serie_id=serie_id)
+        
+    if seriefavorita_user:
+        print (str(seriefavorita_user)+" já foi favoritada pelo usuário")
+        return redirect('series:ListSerie')
+    else:
+        x = FavoriteSerie(user=usuario, serie_id=serie_id)
+        x.save()
+        print (str(x)+" favoritada!")
+        return redirect('series:ListSerie')

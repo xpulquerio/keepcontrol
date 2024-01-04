@@ -21,7 +21,11 @@
             <td><a class="detalhe" href="{{ serie.get_absolute_url }}">{{serie.or_title}}</a></td>
             <td>{{serie.qtd_temps}}</td>
             <td>{{serie.situation}}</td>      
-           
+            {%if serie.favorite %}
+            <td>Salvo</td>
+            {%else%}
+            <td><a href="{% url 'series:InserirSerieFavorita' serie.id %}">Favoritar</a></td>
+            {%endif%}
         </tr>
         {% endfor %}
     </table>

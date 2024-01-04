@@ -30,7 +30,7 @@ def ListAnime (request):
                 
         for temp in favoritos: #Verifica quais animes já estão favoritados
             if temp.anime_id == anime.id and temp.user_id == user_id:
-                anime.watched = True
+                anime.favorite = True
         
     movies_paginator = Paginator(animes, 20) #Filtra apenas 20 de todos os animes
     
