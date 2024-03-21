@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model #Para usar o model do nosso usuário
-
+from apps.series.models import Serie, SeasonSerie, EpisodeSerie
 User = get_user_model()
 
 class RegisterForm(forms.ModelForm):
@@ -32,11 +32,62 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+ 
     
 class EditAccountForm(forms.ModelForm):
      
     class Meta:
         model = User
         fields = ['username', 'email', 'name']
+
+    def __init__(self, *args, **kwargs):
+        super(EditAccountForm, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+ 
+
+class AdicionarSerieForm(forms.ModelForm):
+     
+    class Meta:
+        model = Serie
+        fields = "__all__"
+    
+    def __init__(self, *args, **kwargs):
+        super(AdicionarSerieForm, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+ 
+
+class AdicionarSeasonSerieForm(forms.ModelForm):
+     
+    class Meta:
+        model = SeasonSerie
+        fields = "__all__"
+    
+    def __init__(self, *args, **kwargs):
+        super(AdicionarSeasonSerieForm, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+            if self.fields['serie']:
+                self.fields['serie'].widget.attrs['class'] = 'select2'
+
+class AdicionarEpisodeSerieForm(forms.ModelForm):
+     
+    class Meta:
+        model = EpisodeSerie
+        fields = "__all__"
+    
+    def __init__(self, *args, **kwargs):
+        super(AdicionarEpisodeSerieForm, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+            if self.fields['season']:
+                self.fields['season'].widget.attrs['class'] = 'select2'
+
 
     

@@ -3,7 +3,7 @@ from .models import Serie, SeasonSerie, EpisodeSerie
 
 class SerieAdmin(admin.ModelAdmin):
     list_display = ['or_title','pt_title', 'director', 'situation', 'created_at']
-    ordering = ['-created_at']
+    ordering = ['-or_title']
 
 class SeasonSerieAdmin(admin.ModelAdmin):
     list_display = ['display_number', 'pt_title', 'or_title', 'serie']

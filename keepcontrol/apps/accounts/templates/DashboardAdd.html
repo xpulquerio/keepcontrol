@@ -6,33 +6,93 @@
     <li><a href="{% url 'accounts:DashboardAdd' %}">Adicionar</a></li>
 {% endblock %}
 
+<!-- <style>
+    .form-control {
+        color: red;
+        background-color: aqua;
+    }
+</style> -->
+
+
 {% block dashboard_content %}
 <div>
-    <div class="pure-menu-li">Favoritos</div>
-    <table class="table_c">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Título</th>
-                <th>Percentual assistido</th>
-                <th>#</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for favorito in favorites %}
-            <tr>
-                    <td>{{favorito.type}}</td>
-                {% if favorito.pt_title%}
-                    <td><a class="detalhe" href="{{ favorito.get_absolute_url }}">{{ favorito.pt_title }}</a></td>
-                {%else%}
-                    <td><a class="detalhe" href="{{ favorito.get_absolute_url }}">{{ favorito.or_title }}</a></td>
-                {%endif%}
-                    <td>{{ favorito.percentual|floatformat:2 }}%</td>
-                    <td><a class="detalhe" href="{% url 'accounts:RemoverFavorito' favorito.id favorito.type %}">Remover</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="pure-menu-li">Adicionar</div>
+    <div>
+        <br>
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Adicionar Séries</legend>
+                {{ form.non_field_errors }}
+                {% for field in form_serie %}
+                <div class="pure-control-group">
+                    {{field.label_tag}}
+                    {{field}}
+                    {{field.errors}}
+                </div>
+                {% endfor %}
+                <br>
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form>
+        <br>
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Adicionar Temporadas</legend>
+                {{ form.non_field_errors }}
+                {% for field in form_seasonserie %}
+                <div class="pure-control-group">
+                    {{field.label_tag}}
+                    {{field}}
+                    {{field.errors}}
+                </div>
+                {% endfor %}
+                <br>
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form>
+        <br>
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Adicionar Episódios</legend>
+                {{ form.non_field_errors }}
+                {{ form_episodeserie.or_title.label_tag }}
+                {{ form_episodeserie.or_title }}
+                {{ form_episodeserie.or_title.errors }}
+                
+                {{ form_episodeserie.pt_title.label_tag }}
+                {{ form_episodeserie.pt_title }}
+                {{ form_episodeserie.pt_title.errors }}
+                
+                {{ form_episodeserie.number.label_tag }}
+                {{ form_episodeserie.number }}
+                {{ form_episodeserie.number.errors }}
+                
+                {{ form_episodeserie.season.label_tag }}
+                {{ form_episodeserie.season }}
+                {{ form_episodeserie.season.errors }}
+                <br><br>
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form> 
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script type="application/javascript">
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
 {% endblock %}

@@ -1,0 +1,27 @@
+{% extends "dashboard.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>|</li>
+    <li><a href="{% url 'accounts:DashboardRemove' %}">Adicionar</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<div>
+    <div class="pure-menu-li">Remover</div>
+    <table class="table_c">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Título</th>
+                <th>Percentual assistido</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

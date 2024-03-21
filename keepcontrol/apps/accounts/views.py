@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.conf import settings
-from .forms import RegisterForm, EditAccountForm
+from .forms import RegisterForm, EditAccountForm, AdicionarSerieForm, AdicionarSeasonSerieForm, AdicionarEpisodeSerieForm
 from apps.movies.models import Movie
 from apps.series.models import EpisodeSerie, Serie, SeasonSerie
 from apps.animes.models import EpisodeAnime, Anime, SeasonAnime
@@ -322,8 +322,45 @@ def RemoverFavorito(request, id, type):
     
 @user_passes_test(lambda u: u.is_staff)
 def DashboardAdd(request):
+    if request.method == 'POST':
+        form_serie = AdicionarSerieForm(request.POST)
+        if form_serie.is_valid():
+            form_serie.save()
+            return redirect('accounts:DashboardAdd')
+    else:
+        form_serie = AdicionarSerieForm()
 
-    context = {}
+    if request.method == 'POST':
+        form_seasonserie = AdicionarSeasonSerieForm(request.POST)
+        if form_seasonserie.is_valid():
+            form_seasonserie.save()
+            return redirect('accounts:DashboardAdd')
+    else:
+        form_seasonserie = AdicionarSeasonSerieForm()
+
+    if request.method == 'POST':
+        form_episodeserie = AdicionarEpisodeSerieForm(request.POST)
+        if form_episodeserie.is_valid():
+            form_episodeserie.save()
+            return redirect('accounts:DashboardAdd')
+    else:
+        form_episodeserie = AdicionarEpisodeSerieForm()
+
+    context = {
+        'form_serie': form_serie,
+        'form_seasonserie': form_seasonserie,
+        'form_episodeserie': form_episodeserie
+        }
     template_name = 'DashboardAdd.html'
+
+    return render(request, template_name, context)
+
+@user_passes_test(lambda u: u.is_staff)
+def DashboardRemove(request):
+    
+    context = {
+        
+    }
+    template_name = 'DashboardRemove.html'
 
     return render(request, template_name, context)

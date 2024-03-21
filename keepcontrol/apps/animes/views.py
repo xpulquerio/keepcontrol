@@ -128,12 +128,12 @@ def InserirAssistidoEpisodeAnime(request, episode_id):
     episodeanime_user = UserEpisodeAnime.objects.filter(user=usuario.id, episode=episode_id)
         
     if episodeanime_user:
-        print (str(episodeanime_user)+" já foi assistido pelo usuário")
+        #print (str(episodeanime_user)+" já foi assistido pelo usuário")
         return redirect('animes:ListEpisodeAnime', anime_id=anime_id, season_id=season_id)
     else:
         x = UserEpisodeAnime(episode=episodio_anime, user=usuario, date_watched=date) #timezone.now()Depois alterar o banco para inserir a data automaticamente
         x.save()
-        print (str(episodio_anime)+" inserido!")
+        #print (str(episodio_anime)+" inserido!")
         return redirect('animes:ListEpisodeAnime', anime_id=anime_id, season_id=season_id)
 
 @login_required

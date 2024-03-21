@@ -22,7 +22,7 @@
         {% for movie in page %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{movie.pt_title}}</td>
+            <td><a href="https://www.google.com/search?q={{movie.pt_title}} {{movie.year}}">{{movie.pt_title}}</a></td>
             <td>{{movie.year}}</td>
             <td>{{movie.collection}}</td>
             {% if movie in user.movies.all %}

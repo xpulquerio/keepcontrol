@@ -47,9 +47,9 @@ class SeasonSerie(models.Model):
 
     def __str__ (self):
         if self.serie.pt_title:
-            return f"Temporada {self.number} - {self.serie.pt_title}"
+            return f"{self.serie.pt_title} - Temporada {self.number}"
         else:
-            return f"Temporada {self.number} - {self.serie.or_title}"
+            return f"{self.serie.or_title} - Season {self.number}"
     
     def get_qtd_seasons(serie_id):
         return SeasonSerie.objects.filter(serie_id=serie_id).count() #Número de temporadas da série com este ID
@@ -80,6 +80,8 @@ class SeasonSerie(models.Model):
     class Meta:
         verbose_name = 'Temporada'
         verbose_name_plural = 'Temporadas'
+        unique_together = ['number', 'serie']
+        ordering = ['serie__pt_title', 'number']
             
 class EpisodeSerie(models.Model):
     pt_title = models.CharField('Título brasileiro', max_length=255, blank=True, null=True)
@@ -102,3 +104,4 @@ class EpisodeSerie(models.Model):
     class Meta:
         verbose_name = 'Episódio'
         verbose_name_plural = 'Episódios'
+        unique_together = ['number', 'season']
