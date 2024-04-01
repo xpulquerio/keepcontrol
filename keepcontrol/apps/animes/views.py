@@ -96,14 +96,10 @@ def ListEpisodeAnime (request, anime_id, season_id):
     quantidade_de_seasons = SeasonAnime.objects.filter(anime_id=anime_id).count() #Quantidade de Seasons
     
     last_season = False
-    
-    print ("Season clicada "+str(number_season))
-    print ("Quantidade de seasons "+str(quantidade_de_seasons))
 
     if number_season == quantidade_de_seasons: #Se a última season adicionar for igual a quantidade de seasons TRUE
         last_season = True
 
-    print(last_season)
     context['last_season'] = last_season
     context['eps'] = eps
     context['season'] = season.first()

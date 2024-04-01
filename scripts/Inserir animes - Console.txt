@@ -1,17 +1,33 @@
 from apps.animes.models import Anime
 from apps.animes.models import SeasonAnime
 
-a = Anime(or_title='Solo Leveling')
+a = Anime(or_title='Naruto Shippuden')
 
 a.save()
 
-a.insert_temps(1)
+a.insert_temps(20)
 
 anime_name = a.or_title
 
 x = SeasonAnime.objects.filter(anime__or_title=anime_name)
 x
-x[0].insert_eps(5, 1)
-x[1].insert_eps(24, 1)
-x[2].insert_eps(24, 1)
-x[3].insert_eps(10, 1)
+x[0].insert_eps(30, 1)
+x[1].insert_eps(23, 31)
+x[2].insert_eps(24, 54)
+x[3].insert_eps(25, 78)
+x[4].insert_eps(26, 103)
+x[5].insert_eps(25, 129)
+x[6].insert_eps(26, 154)
+x[7].insert_eps(26, 180)
+x[8].insert_eps(25, 206)
+x[9].insert_eps(26, 231)
+x[10].insert_eps(25,257)
+x[11].insert_eps(25,282)
+x[12].insert_eps(26,307)
+x[13].insert_eps(24,333)
+x[14].insert_eps(23,357)
+x[15].insert_eps(26,380)
+x[16].insert_eps(26,406)
+x[17].insert_eps(27,432)
+x[18].insert_eps(21,459)
+x[19].insert_eps(21,480)
