@@ -304,15 +304,16 @@ def percentual_lido_serie(request, serie):
 
 def RemoverFavorito(request, id, type):
     if type == 'Anime':
-        temp = FavoriteAnime.objects.get(anime_id=id)
+        temp = FavoriteAnime.objects.get(anime_id=id, user=request.user)
+        print(temp)
     if type == 'Livro':
-        temp = FavoriteBook.objects.get(book_id=id)
+        temp = FavoriteBook.objects.get(book_id=id, user=request.user)
     if type == 'Mangá':
-        temp = FavoriteManga.objects.get(manga_id=id)
+        temp = FavoriteManga.objects.get(manga_id=id, user=request.user)
     if type == 'Filme':
-        temp = FavoriteMovie.objects.get(movie_id=id)
+        temp = FavoriteMovie.objects.get(movie_id=id, user=request.user)
     if type == 'Série':
-        temp = FavoriteSerie.objects.get(serie_id=id)
+        temp = FavoriteSerie.objects.get(serie_id=id, user=request.user)
         
     if (temp):
         temp.delete()
