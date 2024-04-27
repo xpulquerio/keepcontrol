@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.conf import settings
-from .forms import RegisterForm, EditAccountForm, AdicionarSerieForm, AdicionarSeasonSerieForm, AdicionarEpisodeSerieForm
+from .forms import RegisterForm, EditAccountForm, AdicionarSerieForm, AdicionarSeasonSerieForm, AdicionarEpisodeSerieForm, AdicionarSerieCompletaForm
 from apps.movies.models import Movie
 from apps.series.models import EpisodeSerie, Serie, SeasonSerie
 from apps.animes.models import EpisodeAnime, Anime, SeasonAnime
@@ -12,6 +12,9 @@ from apps.books.models import Book
 from .models import UserEpisodeAnime, UserEpisodeSerie, UserMovie, UserChapterManga, UserBook, FavoriteManga, FavoriteAnime, FavoriteBook, FavoriteMovie, FavoriteSerie, FavoritesView
 from itertools import chain
 from django.contrib.auth.decorators import user_passes_test
+from apps.series.views import *
+from django.contrib import messages
+from django.db import IntegrityError
 # Create your views here.
 @login_required
 def dashboard(request):
@@ -320,14 +323,24 @@ def RemoverFavorito(request, id, type):
         return redirect('accounts:DashboardFavorites')
     else:
         return redirect('accounts:DashboardFavorites')
-    
+
 @user_passes_test(lambda u: u.is_staff)
-def DashboardAdd(request):
+def DashboardManager(request):
+    
+    context = {
+        
+    }
+    template_name = 'DashboardManager.html'
+
+    return render(request, template_name, context)
+   
+@user_passes_test(lambda u: u.is_staff)
+def DashboardAddSerie(request):
     if request.method == 'POST':
         form_serie = AdicionarSerieForm(request.POST)
         if form_serie.is_valid():
             form_serie.save()
-            return redirect('accounts:DashboardAdd')
+            return redirect('accounts:DashboardAddSerie')
     else:
         form_serie = AdicionarSerieForm()
 
@@ -335,7 +348,7 @@ def DashboardAdd(request):
         form_seasonserie = AdicionarSeasonSerieForm(request.POST)
         if form_seasonserie.is_valid():
             form_seasonserie.save()
-            return redirect('accounts:DashboardAdd')
+            return redirect('accounts:DashboardAddSerie')
     else:
         form_seasonserie = AdicionarSeasonSerieForm()
 
@@ -343,7 +356,7 @@ def DashboardAdd(request):
         form_episodeserie = AdicionarEpisodeSerieForm(request.POST)
         if form_episodeserie.is_valid():
             form_episodeserie.save()
-            return redirect('accounts:DashboardAdd')
+            return redirect('accounts:DashboardAddSerie')
     else:
         form_episodeserie = AdicionarEpisodeSerieForm()
 
@@ -352,7 +365,78 @@ def DashboardAdd(request):
         'form_seasonserie': form_seasonserie,
         'form_episodeserie': form_episodeserie
         }
-    template_name = 'DashboardAdd.html'
+    template_name = 'DashboardAddSerie.html'
+
+    return render(request, template_name, context)
+
+@user_passes_test(lambda u: u.is_staff)
+def DashboardAddSerieCompleta(request):
+    if request.method == 'POST':
+        form = AdicionarSerieCompletaForm(request.POST)
+        if form.is_valid():
+            serie_id = form.cleaned_data['serie']
+            season_number = form.cleaned_data['season_number']
+            qtd_eps = form.cleaned_data['qtd_eps']
+        
+            try:
+                # Tenta criar a temporada
+                season_temporaria = SeasonSerie(number=season_number, serie_id=serie_id)
+                season_temporaria.save()
+                messages.success(request, 'Temporada adicionada com sucesso.')
+            except IntegrityError:
+                # Se a temporada já existe, exibe uma mensagem de erro
+                messages.error(request, 'Já existe uma temporada com este número e série.')
+
+            return redirect('accounts:DashboardAddSerieCompleta')
+        else:
+            form = AdicionarSerieCompletaForm()
+    else:
+        form = AdicionarSerieCompletaForm()
+
+    context = {
+        'form': form,
+        }
+    template_name = 'DashboardAddSerieCompleta.html'
+
+    return render(request, template_name, context)
+
+@user_passes_test(lambda u: u.is_staff)
+def DashboardAddAnime(request):
+    
+    context = {
+        
+    }
+    template_name = 'DashboardAddSerie.html'
+
+    return render(request, template_name, context)
+
+@user_passes_test(lambda u: u.is_staff)
+def DashboardAddManga(request):
+    
+    context = {
+        
+    }
+    template_name = 'DashboardAddSerie.html'
+
+    return render(request, template_name, context)
+
+@user_passes_test(lambda u: u.is_staff)
+def DashboardAddMovie(request):
+    
+    context = {
+        
+    }
+    template_name = 'DashboardAddSerie.html'
+
+    return render(request, template_name, context)
+
+@user_passes_test(lambda u: u.is_staff)
+def DashboardAddBook(request):
+    
+    context = {
+        
+    }
+    template_name = 'DashboardAddSerie.html'
 
     return render(request, template_name, context)
 
@@ -365,3 +449,4 @@ def DashboardRemove(request):
     template_name = 'DashboardRemove.html'
 
     return render(request, template_name, context)
+

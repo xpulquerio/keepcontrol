@@ -1,0 +1,39 @@
+<style>
+    .button_gerenciar {
+        padding: 7px;
+        margin: 5px;
+    }
+</style>
+
+{% extends "dashboard.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>|</li>
+    <li><a href="{% url 'accounts:DashboardManager' %}">Gerenciar</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<div>
+    <div class="pure-menu-li">Adicionar</div>
+    <div>
+        <a href="{% url 'accounts:DashboardAddSerie' %}"><button class="button_gerenciar">Adicionar Série/Temporada/Episódio</button></a>
+        <a href="{% url 'accounts:DashboardAddSerieCompleta' %}"><button class="button_gerenciar">Adicionar Série Completa</button></a>
+    </div>
+    <div class="pure-menu-li">Remover</div>
+    <div>
+        <button class="button_gerenciar">Adicionar Série/Temporada/Episódio</button>
+        <button class="button_gerenciar">Adicionar Série completa</button>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script type="application/javascript">
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
+{% endblock %}

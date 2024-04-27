@@ -34,8 +34,7 @@
                 {% if user.is_staff %}
                 <ul>
                     <li class="pure-menu-li">Gerenciar</li>
-                    <li><a href="{% url 'accounts:DashboardAdd' %}">Adicionar</a></li>
-                    <li><a href="{% url 'accounts:DashboardRemove' %}">Remover</a></li>
+                    <li><a href="{% url 'accounts:DashboardManager' %}">Gerenciar</a></li>
                 </ul>
                 {% endif %}
             </div>

@@ -22,6 +22,12 @@ urlpatterns = [
     path('favoritos/', views.DashboardFavorites, name='DashboardFavorites'),
     path('removerfavorito/<int:id>/<str:type>/', views.RemoverFavorito, name='RemoverFavorito'),
 
-    path('add/', views.DashboardAdd, name='DashboardAdd'),
+    path('gerenciar/', views.DashboardManager, name='DashboardManager'),
+    path('add_serie/', views.DashboardAddSerie, name='DashboardAddSerie'),
+    path('add_serie_completa/', views.DashboardAddSerieCompleta, name='DashboardAddSerieCompleta'),
+    path('add_anime/', views.DashboardAddAnime, name='DashboardAddAnime'),
+    path('add_manga/', views.DashboardAddManga, name='DashboardAddManga'),
+    path('add_filme/', views.DashboardAddMovie, name='DashboardAddMovie'),
+    path('add_livro/', views.DashboardAddBook, name='DashboardAddBook'),
     path('remove/', views.DashboardRemove, name='DashboardRemove'),
 ]

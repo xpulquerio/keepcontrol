@@ -89,5 +89,12 @@ class AdicionarEpisodeSerieForm(forms.ModelForm):
             if self.fields['season']:
                 self.fields['season'].widget.attrs['class'] = 'select2'
 
+class AdicionarSerieCompletaForm(forms.Form):
+    series_choices = [(serie.id, serie.or_title) for serie in Serie.objects.all()]
+
+    serie = forms.ChoiceField(label="Série", choices=series_choices)
+    season_number = forms.IntegerField(label="Temporada")
+    qtd_eps = forms.IntegerField(label="Quantidade de Episódios")
+
 
     

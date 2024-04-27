@@ -1,9 +1,9 @@
-{% extends "dashboard.html" %}
+{% extends "DashboardManager.html" %}
 
 {% block breadcrumb %}
     {{block.super}}
     <li>|</li>
-    <li><a href="{% url 'accounts:DashboardAdd' %}">Adicionar</a></li>
+    <li><a href="{% url 'accounts:DashboardAddSerie' %}">Adicionar</a></li>
 {% endblock %}
 
 <!-- <style>
