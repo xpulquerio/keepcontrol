@@ -337,36 +337,49 @@ def DashboardManager(request):
 @user_passes_test(lambda u: u.is_staff)
 def DashboardAddSerie(request):
     if request.method == 'POST':
-        form_serie = AdicionarSerieForm(request.POST)
-        if form_serie.is_valid():
-            form_serie.save()
-            return redirect('accounts:DashboardAddSerie')
+        if 'submit_serie' in request.POST:
+            form_serie = AdicionarSerieForm(request.POST)
+            if form_serie.is_valid():
+                nome_da_serie = form_serie.cleaned_data['or_title']
+                if Serie.objects.filter(or_title=nome_da_serie).first():
+                    messages.error(request, 'Erro ao adicionar série.')
+                    return redirect('accounts:DashboardAddSerie')
+                else:
+                    form_serie.save()
+                    messages.success(request, 'Série adicionada com sucesso.')
+                return redirect('accounts:DashboardAddSerie')
+            else:
+                messages.error(request, 'Erro ao adicionar série.')
+                return redirect('accounts:DashboardAddSerie')
+        elif 'submit_season' in request.POST:
+            form_seasonserie = AdicionarSeasonSerieForm(request.POST)
+            if form_seasonserie.is_valid():
+                form_seasonserie.save()
+                messages.success(request, 'Temporada adicionada com sucesso.')
+                return redirect('accounts:DashboardAddSerie')
+            else:
+                messages.error(request, 'Erro ao adicionar temporada.')
+                return redirect('accounts:DashboardAddSerie')
+        elif 'submit_episode' in request.POST:
+            form_episodeserie = AdicionarEpisodeSerieForm(request.POST)
+            if form_episodeserie.is_valid():
+                form_episodeserie.save()
+                messages.success(request, 'Episódio adicionado com sucesso.')
+                return redirect('accounts:DashboardAddSerie')
+            else:
+                messages.error(request, 'Erro ao adicionar episódio.')
+                return redirect('accounts:DashboardAddSerie')
     else:
         form_serie = AdicionarSerieForm()
-
-    if request.method == 'POST':
-        form_seasonserie = AdicionarSeasonSerieForm(request.POST)
-        if form_seasonserie.is_valid():
-            form_seasonserie.save()
-            return redirect('accounts:DashboardAddSerie')
-    else:
         form_seasonserie = AdicionarSeasonSerieForm()
-
-    if request.method == 'POST':
-        form_episodeserie = AdicionarEpisodeSerieForm(request.POST)
-        if form_episodeserie.is_valid():
-            form_episodeserie.save()
-            return redirect('accounts:DashboardAddSerie')
-    else:
         form_episodeserie = AdicionarEpisodeSerieForm()
 
     context = {
         'form_serie': form_serie,
         'form_seasonserie': form_seasonserie,
         'form_episodeserie': form_episodeserie
-        }
+    }
     template_name = 'DashboardAddSerie.html'
-
     return render(request, template_name, context)
 
 @user_passes_test(lambda u: u.is_staff)

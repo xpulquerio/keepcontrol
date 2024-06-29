@@ -89,11 +89,22 @@ def ListEpisodeSerie (request, serie_id, season_id):
             ep.date_watched = user_episode.date_watched
     
     template_name = 'ListEpisodeSerie.html'
+    
+    # pegado last season of the serie
+    number_season = SeasonSerie.objects.filter(id=season_id).first().number #Numero da season que clicou
+    quantidade_de_seasons = SeasonSerie.objects.filter(serie_id=serie_id).count() #Quantidade de Seasons
+    
+    last_season = False
+
+    if number_season == quantidade_de_seasons: #Se a última season adicionar for igual a quantidade de seasons TRUE
+        last_season = True
+ 
 
     context = {
         'eps': eps,
         'season': season.first(),
-        'serie': serie.first()
+        'serie': serie.first(),
+        'last_season': last_season
     }
 
     return render(request, template_name, context)
@@ -141,3 +152,16 @@ def InserirSerieFavorita(request, serie_id):
         x.save()
         print (str(x)+" favoritada!")
         return redirect('series:ListSerie')
+    
+@login_required
+def AdicionarNovoEP(request, season_id, serie_id):
+    #Pegar número do último episódio da temporada
+    x = EpisodeSerie.objects.filter(season_id=season_id).order_by('number').last().number
+    #Soma +1 ao número do episódio
+    x = x+1
+    #Cria um novo episódio para aquela temporada
+    novo_ep = EpisodeSerie(number=x, season_id=season_id)
+    #Salvar esse novo episódio
+    novo_ep.save()
+        
+    return redirect('animes:ListEpisodeSerie', serie_id=serie_id, season_id=season_id)

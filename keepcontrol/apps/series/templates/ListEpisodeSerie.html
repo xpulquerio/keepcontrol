@@ -32,6 +32,16 @@
                 {%endif%}
         </tr>
         {% endfor %}
+        {%if last_season %}
+        <tr>
+            <td>
+                <a href="{% url 'animes:AdicionarNovoEP' season.id season.serie_id %}"> Novo EP </a>
+            </td>
+            <td>
+
+            </td> 
+        </tr>
+        {%endif%}
     </table>
 
 </article>

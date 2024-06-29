@@ -8,5 +8,5 @@ urlpatterns = [
     path('inserirepisodeanime/<int:episodeserie_id>/', views.InserirAssistidoEpisodeSerie, name='InserirAssistidoEpisodeSerie'),
     path('inserirseasonserie/<int:season_id>/<int:serie_id>/', views.InserirAssistidoSeasonSerie, name='InserirAssistidoSeasonSerie'),
     path('inserirfavoritaserie/<int:serie_id>/', views.InserirSerieFavorita, name='InserirSerieFavorita'),
-
+    path('adicionarNovoEP/<int:season_id>/<int:serie_id>/', views.AdicionarNovoEP, name='AdicionarNovoEP')
 ]
