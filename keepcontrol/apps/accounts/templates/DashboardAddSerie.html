@@ -13,11 +13,17 @@
     }
 </style> -->
 
-
 {% block dashboard_content %}
 <div>
     <div class="pure-menu-li">Adicionar</div>
     <div>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <br>
         <form class="pure-form pure-form-stacked" method="POST">
             {% csrf_token %}
@@ -33,7 +39,7 @@
                 {% endfor %}
                 <br>
                 <div class="pure-controls">
-                    <button type="submit" class="pure-button pure-button-primary">Adicionar</button>
+                    <button type="submit" name="submit_serie" class="pure-button pure-button-primary">Adicionar</button>
                 </div>
             </fieldset>
         </form>
@@ -52,7 +58,7 @@
                 {% endfor %}
                 <br>
                 <div class="pure-controls">
-                    <button type="submit" class="pure-button pure-button-primary">Adicionar</button>
+                    <button type="submit" name="submit_season" class="pure-button pure-button-primary">Adicionar</button>
                 </div>
             </fieldset>
         </form>
@@ -79,7 +85,7 @@
                 {{ form_episodeserie.season.errors }}
                 <br><br>
                 <div class="pure-controls">
-                    <button type="submit" class="pure-button pure-button-primary">Adicionar</button>
+                    <button type="submit" name="submit_episode" class="pure-button pure-button-primary">Adicionar</button>
                 </div>
             </fieldset>
         </form> 

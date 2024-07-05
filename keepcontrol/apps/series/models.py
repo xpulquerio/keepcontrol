@@ -34,7 +34,7 @@ class Serie(models.Model):
                     cont = cont+1
             return 'Número de temporadas adicionadas: '+str(cont)
         
-    class Meta:
+    class Meta: 
         verbose_name = 'Série'
         verbose_name_plural = 'Séries'
         ordering = ['pt_title']

@@ -337,36 +337,49 @@ def DashboardManager(request):
 @user_passes_test(lambda u: u.is_staff)
 def DashboardAddSerie(request):
     if request.method == 'POST':
-        form_serie = AdicionarSerieForm(request.POST)
-        if form_serie.is_valid():
-            form_serie.save()
-            return redirect('accounts:DashboardAddSerie')
+        if 'submit_serie' in request.POST:
+            form_serie = AdicionarSerieForm(request.POST)
+            if form_serie.is_valid():
+                nome_da_serie = form_serie.cleaned_data['or_title']
+                if Serie.objects.filter(or_title=nome_da_serie).first():
+                    messages.error(request, 'Erro ao adicionar série.')
+                    return redirect('accounts:DashboardAddSerie')
+                else:
+                    form_serie.save()
+                    messages.success(request, 'Série adicionada com sucesso.')
+                return redirect('accounts:DashboardAddSerie')
+            else:
+                messages.error(request, 'Erro ao adicionar série.')
+                return redirect('accounts:DashboardAddSerie')
+        elif 'submit_season' in request.POST:
+            form_seasonserie = AdicionarSeasonSerieForm(request.POST)
+            if form_seasonserie.is_valid():
+                form_seasonserie.save()
+                messages.success(request, 'Temporada adicionada com sucesso.')
+                return redirect('accounts:DashboardAddSerie')
+            else:
+                messages.error(request, 'Erro ao adicionar temporada.')
+                return redirect('accounts:DashboardAddSerie')
+        elif 'submit_episode' in request.POST:
+            form_episodeserie = AdicionarEpisodeSerieForm(request.POST)
+            if form_episodeserie.is_valid():
+                form_episodeserie.save()
+                messages.success(request, 'Episódio adicionado com sucesso.')
+                return redirect('accounts:DashboardAddSerie')
+            else:
+                messages.error(request, 'Erro ao adicionar episódio.')
+                return redirect('accounts:DashboardAddSerie')
     else:
         form_serie = AdicionarSerieForm()
-
-    if request.method == 'POST':
-        form_seasonserie = AdicionarSeasonSerieForm(request.POST)
-        if form_seasonserie.is_valid():
-            form_seasonserie.save()
-            return redirect('accounts:DashboardAddSerie')
-    else:
         form_seasonserie = AdicionarSeasonSerieForm()
-
-    if request.method == 'POST':
-        form_episodeserie = AdicionarEpisodeSerieForm(request.POST)
-        if form_episodeserie.is_valid():
-            form_episodeserie.save()
-            return redirect('accounts:DashboardAddSerie')
-    else:
         form_episodeserie = AdicionarEpisodeSerieForm()
 
     context = {
         'form_serie': form_serie,
         'form_seasonserie': form_seasonserie,
         'form_episodeserie': form_episodeserie
-        }
+    }
     template_name = 'DashboardAddSerie.html'
-
     return render(request, template_name, context)
 
 @user_passes_test(lambda u: u.is_staff)
@@ -402,7 +415,39 @@ def DashboardAddSerieCompleta(request):
 
 @user_passes_test(lambda u: u.is_staff)
 def DashboardAddAnime(request):
+
+    context = {
+        
+    }
+    template_name = 'DashboardAddSerie.html'
+
+    return render(request, template_name, context)
+
+@user_passes_test(lambda u: u.is_staff)
+def DashboardAddAnimeCompleto(request):
     
+    if request.method == 'POST':
+        form = AdicionarAnimeCompletoForm(request.POST)
+        if form.is_valid():
+            anime_id = form.cleaned_data['anime']
+            season_number = form.cleaned_data['season_number']
+            qtd_eps = form.cleaned_data['qtd_eps']
+        
+            try:
+                # Tenta criar a temporada
+                season_temporaria = SeasonAnime(number=season_number, anime_id=anime_id)
+                season_temporaria.save()
+                messages.success(request, 'Temporada adicionada com sucesso.')
+            except IntegrityError:
+                # Se a temporada já existe, exibe uma mensagem de erro
+                messages.error(request, 'Já existe uma temporada com este número e anime.')
+
+            return redirect('accounts:DashboardAddAnimeCompleto')
+        else:
+            form = AdicionarAnimeCompletoForm()
+    else:
+        form = AdicionarAnimeCompletoForm()
+
     context = {
         
     }
@@ -412,6 +457,16 @@ def DashboardAddAnime(request):
 
 @user_passes_test(lambda u: u.is_staff)
 def DashboardAddManga(request):
+    
+    context = {
+        
+    }
+    template_name = 'DashboardAddSerie.html'
+
+    return render(request, template_name, context)
+
+@user_passes_test(lambda u: u.is_staff)
+def DashboardAddMangaCompleto(request):
     
     context = {
         
