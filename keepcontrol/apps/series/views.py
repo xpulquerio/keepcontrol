@@ -156,12 +156,16 @@ def InserirSerieFavorita(request, serie_id):
 @login_required
 def AdicionarNovoEP(request, season_id, serie_id):
     #Pegar número do último episódio da temporada
-    x = EpisodeSerie.objects.filter(season_id=season_id).order_by('number').last().number
+    try:
+        x = EpisodeSerie.objects.filter(season_id=season_id).order_by('number').last().number
+    except:
+        x = 0
     #Soma +1 ao número do episódio
     x = x+1
+
     #Cria um novo episódio para aquela temporada
     novo_ep = EpisodeSerie(number=x, season_id=season_id)
     #Salvar esse novo episódio
     novo_ep.save()
         
-    return redirect('animes:ListEpisodeSerie', serie_id=serie_id, season_id=season_id)
+    return redirect('series:ListEpisodeSerie', serie_id=serie_id, season_id=season_id)

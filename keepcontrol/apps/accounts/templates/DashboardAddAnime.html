@@ -1,0 +1,97 @@
+{% extends "DashboardManager.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>|</li>
+    <li><a href="{% url 'accounts:DashboardAddAnime' %}">Adicionar</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<div>
+    <div class="pure-menu-li">Adicionar</div>
+    <div>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br>
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Adicionar Animes</legend>
+                {{ form.non_field_errors }}
+                {% for field in form_anime %}
+                <div class="pure-control-group">
+                    {{field.label_tag}}
+                    {{field}}
+                    {{field.errors}}
+                </div>
+                {% endfor %}
+                <br>
+                <div class="pure-controls">
+                    <button type="submit" name="submit_anime" class="pure-button pure-button-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form>
+        <br>
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Adicionar Temporadas</legend>
+                {{ form.non_field_errors }}
+                {% for field in form_seasonanime %}
+                <div class="pure-control-group">
+                    {{field.label_tag}}
+                    {{field}}
+                    {{field.errors}}
+                </div>
+                {% endfor %}
+                <br>
+                <div class="pure-controls">
+                    <button type="submit" name="submit_season" class="pure-button pure-button-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form>
+        <br>
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Adicionar Episódios</legend>
+                {{ form.non_field_errors }}
+                {{ form_episodeanime.or_title.label_tag }}
+                {{ form_episodeanime.or_title }}
+                {{ form_episodeanime.or_title.errors }}
+                
+                {{ form_episodeanime.pt_title.label_tag }}
+                {{ form_episodeanime.pt_title }}
+                {{ form_episodeanime.pt_title.errors }}
+                
+                {{ form_episodeanime.number.label_tag }}
+                {{ form_episodeanime.number }}
+                {{ form_episodeanime.number.errors }}
+                
+                {{ form_episodeanime.season.label_tag }}
+                {{ form_episodeanime.season }}
+                {{ form_episodeanime.season.errors }}
+                <br><br>
+                <div class="pure-controls">
+                    <button type="submit" name="submit_episode" class="pure-button pure-button-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form> 
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script type="application/javascript">
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
+{% endblock %}

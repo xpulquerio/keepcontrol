@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.conf import settings
-from .forms import RegisterForm, EditAccountForm, AdicionarSerieForm, AdicionarSeasonSerieForm, AdicionarEpisodeSerieForm, AdicionarSerieCompletaForm
+from .forms import *
 from apps.movies.models import Movie
 from apps.series.models import EpisodeSerie, Serie, SeasonSerie
 from apps.animes.models import EpisodeAnime, Anime, SeasonAnime
@@ -415,12 +415,50 @@ def DashboardAddSerieCompleta(request):
 
 @user_passes_test(lambda u: u.is_staff)
 def DashboardAddAnime(request):
+    if request.method == 'POST':
+        if 'submit_anime' in request.POST:
+            form_anime = AdicionarAnimeForm(request.POST)
+            if form_anime.is_valid():
+                nome_do_anime = form_anime.cleaned_data['or_title']
+                if Serie.objects.filter(or_title=nome_do_anime).first():
+                    messages.error(request, 'Erro ao adicionar anime.')
+                    return redirect('accounts:DashboardAddAnime')
+                else:
+                    form_anime.save()
+                    messages.success(request, 'Anime adicionada com sucesso.')
+                return redirect('accounts:DashboardAddAnime')
+            else:
+                messages.error(request, 'Erro ao adicionar Anime.')
+                return redirect('accounts:DashboardAddAnime')
+        elif 'submit_season' in request.POST:
+            form_seasonanime = AdicionarSeasonAnimeForm(request.POST)
+            if form_seasonanime.is_valid():
+                form_seasonanime.save()
+                messages.success(request, 'Temporada adicionada com sucesso.')
+                return redirect('accounts:DashboardAddAnime')
+            else:
+                messages.error(request, 'Erro ao adicionar temporada.')
+                return redirect('accounts:DashboardAddAnime')
+        elif 'submit_episode' in request.POST:
+            form_episodeanime = AdicionarEpisodeAnimeForm(request.POST)
+            if form_episodeanime.is_valid():
+                form_episodeanime.save()
+                messages.success(request, 'Episódio adicionado com sucesso.')
+                return redirect('accounts:DashboardAddAnime')
+            else:
+                messages.error(request, 'Erro ao adicionar episódio.')
+                return redirect('accounts:DashboardAddAnime')
+    else:
+        form_anime = AdicionarAnimeForm()
+        form_seasonanime = AdicionarSeasonAnimeForm()
+        form_episodeanime = AdicionarEpisodeAnimeForm()
 
     context = {
-        
+        'form_anime': form_anime,
+        'form_seasonanime': form_seasonanime,
+        'form_episodeanime': form_episodeanime
     }
-    template_name = 'DashboardAddSerie.html'
-
+    template_name = 'DashboardAddAnime.html'
     return render(request, template_name, context)
 
 @user_passes_test(lambda u: u.is_staff)
@@ -449,9 +487,9 @@ def DashboardAddAnimeCompleto(request):
         form = AdicionarAnimeCompletoForm()
 
     context = {
-        
+        'form': form
     }
-    template_name = 'DashboardAddSerie.html'
+    template_name = 'DashboardAddAnimeCompleto.html'
 
     return render(request, template_name, context)
 

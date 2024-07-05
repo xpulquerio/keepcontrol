@@ -1,0 +1,51 @@
+{% extends "DashboardManager.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>|</li>
+    <li><a href="{% url 'accounts:DashboardAddAnimeCompleto' %}">Adicionar completo</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<div>
+    <div class="pure-menu-li">Adicionar</div>
+    <div>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br>
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Adicionar Animes</legend>
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                <div class="pure-control-group">
+                    {{field.label_tag}}
+                    {{field}}
+                    {{field.errors}}
+                </div>
+                {% endfor %}
+                <br>
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form> 
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script type="application/javascript">
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
+{% endblock %}
