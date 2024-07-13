@@ -1,0 +1,104 @@
+{% extends "DashboardManager.html" %}
+
+{% block breadcrumb %}
+    {{block.super}}
+    <li>|</li>
+    <li><a href="{% url 'accounts:DashboardAddManga' %}">Adicionar</a></li>
+{% endblock %}
+
+<!-- <style>
+    .form-control {
+        color: red;
+        background-color: aqua;
+    }
+</style> -->
+
+{% block dashboard_content %}
+<div>
+    <div class="pure-menu-li">Adicionar</div>
+    <div>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <br>
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Adicionar Mangás</legend>
+                {{ form.non_field_errors }}
+                {% for field in form_manga %}
+                <div class="pure-control-group">
+                    {{field.label_tag}}
+                    {{field}}
+                    {{field.errors}}
+                </div>
+                {% endfor %}
+                <br>
+                <div class="pure-controls">
+                    <button type="submit" name="submit_manga" class="pure-button pure-button-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form>
+        <br>
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Adicionar Volumes</legend>
+                {{ form.non_field_errors }}
+                {% for field in form_volumemanga %}
+                <div class="pure-control-group">
+                    {{field.label_tag}}
+                    {{field}}
+                    {{field.errors}}
+                </div>
+                {% endfor %}
+                <br>
+                <div class="pure-controls">
+                    <button type="submit" name="submit_volume" class="pure-button pure-button-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form>
+        <br>
+        <form class="pure-form pure-form-stacked" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Adicionar Capítulos</legend>
+                {{ form.non_field_errors }}
+                {{ form_chaptermanga.or_title.label_tag }}
+                {{ form_chaptermanga.or_title }}
+                {{ form_chaptermanga.or_title.errors }}
+                
+                {{ form_chaptermanga.pt_title.label_tag }}
+                {{ form_chaptermanga.pt_title }}
+                {{ form_chaptermanga.pt_title.errors }}
+                
+                {{ form_chaptermanga.number.label_tag }}
+                {{ form_chaptermanga.number }}
+                {{ form_chaptermanga.number.errors }}
+                
+                {{ form_chaptermanga.volume.label_tag }}
+                {{ form_chaptermanga.volume }}
+                {{ form_chaptermanga.volume.errors }}
+                <br><br>
+                <div class="pure-controls">
+                    <button type="submit" name="submit_chapter" class="pure-button pure-button-primary">Adicionar</button>
+                </div>
+            </fieldset>
+        </form> 
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script type="application/javascript">
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
+{% endblock %}

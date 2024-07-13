@@ -470,15 +470,19 @@ def DashboardAddAnimeCompleto(request):
             anime_id = form.cleaned_data['anime']
             season_number = form.cleaned_data['season_number']
             qtd_eps = form.cleaned_data['qtd_eps']
+            ep_inicial = form.cleaned_data['ep_inicial']
         
             try:
                 # Tenta criar a temporada
                 season_temporaria = SeasonAnime(number=season_number, anime_id=anime_id)
                 season_temporaria.save()
+                season_temporaria.insert_eps(qtd_eps=qtd_eps, number_ep=ep_inicial)
                 messages.success(request, 'Temporada adicionada com sucesso.')
             except IntegrityError:
                 # Se a temporada já existe, exibe uma mensagem de erro
-                messages.error(request, 'Já existe uma temporada com este número e anime.')
+                season_temporaria = SeasonAnime.objects.get(number=season_number, anime_id=anime_id)
+                season_temporaria.insert_eps(qtd_eps=qtd_eps, number_ep=ep_inicial)
+                messages.error(request, 'Já existe uma temporada com este número e anime. Porém, adicionamos os episódios')
 
             return redirect('accounts:DashboardAddAnimeCompleto')
         else:
@@ -496,11 +500,50 @@ def DashboardAddAnimeCompleto(request):
 @user_passes_test(lambda u: u.is_staff)
 def DashboardAddManga(request):
     
-    context = {
-        
-    }
-    template_name = 'DashboardAddSerie.html'
+    if request.method == 'POST':
+        if 'submit_manga' in request.POST:
+            form_manga = AdicionarMangaForm(request.POST)
+            if form_manga.is_valid():
+                manga_name = form_manga.cleaned_data['or_title']
+                if Manga.objects.filter(or_title=manga_name).first():
+                    messages.error(request, 'Erro ao adicionar mangá.')
+                    return redirect('accounts:DashboardAddManga')
+                else:
+                    form_manga.save()
+                    messages.success(request, 'Mangá adicionado com sucesso.')
+                return redirect('accounts:DashboardAddManga')
+            else:
+                messages.error(request, 'Erro ao adicionar Mangá.')
+                return redirect('accounts:DashboardAddManga')
+        elif 'submit_volume' in request.POST:
+            form_volumemanga = AdicionarVolumeMangaForm(request.POST)
+            if form_volumemanga.is_valid():
+                form_volumemanga.save()
+                messages.success(request, 'Volume adicionada com sucesso.')
+                return redirect('accounts:DashboardAddManga')
+            else:
+                messages.error(request, 'Erro ao adicionar volume.')
+                return redirect('accounts:DashboardAddManga')
+        elif 'submit_chapter' in request.POST:
+            form_chaptermanga = AdicionarChapterMangaForm(request.POST)
+            if form_chaptermanga.is_valid():
+                form_chaptermanga.save()
+                messages.success(request, 'Capítulo adicionado com sucesso.')
+                return redirect('accounts:DashboardAddManga')
+            else:
+                messages.error(request, 'Erro ao adicionar capítulo.')
+                return redirect('accounts:DashboardAddManga')
+    else:
+        form_manga = AdicionarMangaForm()
+        form_volumemanga = AdicionarVolumeMangaForm()
+        form_chaptermanga = AdicionarChapterMangaForm()
 
+    context = {
+        'form_manga': form_manga,
+        'form_volumemanga': form_volumemanga,
+        'form_chaptermanga': form_chaptermanga
+    }
+    template_name = 'DashboardAddManga.html'
     return render(request, template_name, context)
 
 @user_passes_test(lambda u: u.is_staff)
@@ -509,7 +552,7 @@ def DashboardAddMangaCompleto(request):
     context = {
         
     }
-    template_name = 'DashboardAddSerie.html'
+    template_name = 'DashboardAddMangaCompleto.html'
 
     return render(request, template_name, context)
 

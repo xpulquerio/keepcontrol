@@ -2,6 +2,9 @@ from django import forms
 from django.contrib.auth import get_user_model #Para usar o model do nosso usuário
 from apps.series.models import Serie, SeasonSerie, EpisodeSerie
 from apps.animes.models import Anime, SeasonAnime, EpisodeAnime
+from apps.mangas.models import Manga, VolumeManga, ChapterManga
+from apps.movies.models import Movie
+from apps.books.models import Book
 User = get_user_model()
 
 class RegisterForm(forms.ModelForm):
@@ -140,16 +143,78 @@ class AdicionarEpisodeAnimeForm(forms.ModelForm):
         self.fields['season'].widget.attrs['class'] = 'form-control select2'
 
 class AdicionarAnimeCompletoForm(forms.Form):
-    animes_choices = [(anime.id, anime.or_title) for anime in Anime.objects.all().order_by('or_title')]
 
-    anime = forms.ChoiceField(label="Anime", choices=animes_choices)
+    anime = forms.ChoiceField(label="Anime")
     season_number = forms.IntegerField(label="Temporada")
+    ep_inicial = forms.IntegerField(label="Número do primeiro episódio")
     qtd_eps = forms.IntegerField(label="Quantidade de Episódios")
 
     def __init__(self, *args, **kwargs):
         super(AdicionarAnimeCompletoForm, self).__init__(*args, **kwargs)
+        #SETANDO OS ANIMES_CHOICES NO INIT PORQUE SEMPRE ATUALIZARÁ
+        self.fields['anime'].choices = [(anime.id, anime.or_title) for anime in Anime.objects.all().order_by('or_title')]
+
         for myField in self.fields:
             self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
         self.fields['anime'].widget.attrs['class'] = 'form-control select2'
+
+
+## ------------ MANGA --------------------
+
+
+class AdicionarMangaForm(forms.ModelForm):
+     
+    class Meta:
+        model = Manga
+        fields = "__all__"
+    
+    def __init__(self, *args, **kwargs):
+        super(AdicionarMangaForm, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+ 
+
+class AdicionarVolumeMangaForm(forms.ModelForm):
+     
+    class Meta:
+        model = VolumeManga
+        fields = "__all__"
+    
+    def __init__(self, *args, **kwargs):
+        super(AdicionarVolumeMangaForm, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+            
+        self.fields['manga'].widget.attrs['class'] = 'form-control select2'
+
+class AdicionarChapterMangaForm(forms.ModelForm):
+     
+    class Meta:
+        model = ChapterManga
+        fields = "__all__"
+    
+    def __init__(self, *args, **kwargs):
+        super(AdicionarChapterMangaForm, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+            
+        self.fields['volume'].widget.attrs['class'] = 'form-control select2'
+
+class AdicionarMangaCompletoForm(forms.Form):
+
+    manga = forms.ChoiceField(label="Mangá")
+    volume_number = forms.IntegerField(label="Volume")
+    cap_inicial = forms.IntegerField(label="Número do primeiro capítulo")
+    qtd_caps = forms.IntegerField(label="Quantidade de Capítulos")
+
+    def __init__(self, *args, **kwargs):
+        super(AdicionarMangaCompletoForm, self).__init__(*args, **kwargs)
+        #SETANDO OS ANIMES_CHOICES NO INIT PORQUE SEMPRE ATUALIZARÁ
+        self.fields['manga'].choices = [(manga.id, manga.or_title) for manga in Manga.objects.all().order_by('or_title')]
+
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+        self.fields['manga'].widget.attrs['class'] = 'form-control select2'
+
 
     

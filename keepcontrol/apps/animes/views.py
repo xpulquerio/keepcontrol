@@ -162,8 +162,13 @@ def InserirAnimeFavorito(request, anime_id):
 
 @login_required
 def AdicionarNovoEP(request, season_id, anime_id):
-    #Pegar número do último episódio da temporada
-    x = EpisodeAnime.objects.filter(season_id=season_id).order_by('number').last().number
+    
+    #Pegar número do último episódio da temporada e não tiver último zera
+    try:
+        EpisodeAnime.objects.filter(season_id=season_id).order_by('number').last().number
+    except:
+        x=0
+    
     #Soma +1 ao número do episódio
     x = x+1
     #Cria um novo episódio para aquela temporada

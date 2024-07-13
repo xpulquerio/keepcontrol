@@ -79,6 +79,7 @@ class SeasonAnime(models.Model):
     class Meta:
         verbose_name = 'Temporada'
         verbose_name_plural = 'Temporadas'
+        unique_together = ['number', 'anime']
         ordering = ['anime__or_title', 'number']
         
 class EpisodeAnime(models.Model):

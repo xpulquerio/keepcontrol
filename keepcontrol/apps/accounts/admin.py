@@ -21,6 +21,7 @@ class UserEpisodeAnimeAdmin(admin.ModelAdmin):
     
 class UserMovieAdmin(admin.ModelAdmin):
     list_display = ['movie', 'user', 'date_watched']
+    ordering = ['movie__or_title']
     
 class UserChapterMangaAdmin(admin.ModelAdmin):
     list_display = ['chapter', 'user', 'date_watched']
