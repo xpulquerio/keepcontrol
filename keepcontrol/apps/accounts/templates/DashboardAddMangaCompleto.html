@@ -3,7 +3,7 @@
 {% block breadcrumb %}
     {{block.super}}
     <li>|</li>
-    <li><a href="{% url 'accounts:DashboardAddSerieCompleta' %}">Adicionar Completa</a></li>
+    <li><a href="{% url 'accounts:DashboardAddMangaCompleto' %}">Adicionar Completo</a></li>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -21,7 +21,7 @@
         <form class="pure-form pure-form-stacked" method="POST">
             {% csrf_token %}
             <fieldset>
-                <legend>Adicionar Séries</legend>
+                <legend>Adicionar Mangás</legend>
                 {{ form.non_field_errors }}
                 {% for field in form %}
                 <div class="pure-control-group">

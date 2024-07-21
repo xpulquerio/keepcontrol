@@ -31,7 +31,10 @@ class Anime(models.Model):
                     print('Temporada '+str(temp.number)+' inserida!')
                     cont = cont+1
             return 'Número de temporadas adicionadas: '+str(cont)
-        
+    
+    def descricao_completa(self):
+            return f"{self.__class__.__name__}: {', '.join([f'{chave}={valor}' for chave, valor in self.__dict__.items()])}"
+
     class Meta:
         verbose_name = 'Anime'
         verbose_name_plural = 'Animes'

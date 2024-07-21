@@ -1,5 +1,8 @@
+from typing import Any, Mapping
 from django import forms
-from django.contrib.auth import get_user_model #Para usar o model do nosso usuário
+from django.contrib.auth import get_user_model
+from django.forms.renderers import BaseRenderer
+from django.forms.utils import ErrorList #Para usar o model do nosso usuário
 from apps.series.models import Serie, SeasonSerie, EpisodeSerie
 from apps.animes.models import Anime, SeasonAnime, EpisodeAnime
 from apps.mangas.models import Manga, VolumeManga, ChapterManga
@@ -95,11 +98,19 @@ class AdicionarEpisodeSerieForm(forms.ModelForm):
         self.fields['season'].widget.attrs['class'] = 'form-control select2'
 
 class AdicionarSerieCompletaForm(forms.Form):
-    series_choices = [(serie.id, serie.or_title) for serie in Serie.objects.all().order_by('or_title')]
-
-    serie = forms.ChoiceField(label="Série", choices=series_choices)
+   
+    serie = forms.ChoiceField(label="Série")
     season_number = forms.IntegerField(label="Temporada")
     qtd_eps = forms.IntegerField(label="Quantidade de Episódios")
+
+    def __init__(self, *args, **kwargs):
+        super(AdicionarSerieCompletaForm, self).__init__(*args, **kwargs)
+        #SETANDO OS ANIMES_CHOICES NO INIT PORQUE SEMPRE ATUALIZARÁ
+        self.fields['serie'].choices =  [(serie.id, serie.or_title) for serie in Serie.objects.all().order_by('or_title')]
+
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+        self.fields['serie'].widget.attrs['class'] = 'form-control select2'
 
 ## ------------ ANIME --------------------
 

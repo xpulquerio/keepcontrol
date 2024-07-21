@@ -390,11 +390,11 @@ def DashboardAddSerieCompleta(request):
             serie_id = form.cleaned_data['serie']
             season_number = form.cleaned_data['season_number']
             qtd_eps = form.cleaned_data['qtd_eps']
-        
             try:
                 # Tenta criar a temporada
                 season_temporaria = SeasonSerie(number=season_number, serie_id=serie_id)
                 season_temporaria.save()
+                season_temporaria.insert_eps(qtd_eps=qtd_eps)
                 messages.success(request, 'Temporada adicionada com sucesso.')
             except IntegrityError:
                 # Se a temporada já existe, exibe uma mensagem de erro
@@ -549,8 +549,34 @@ def DashboardAddManga(request):
 @user_passes_test(lambda u: u.is_staff)
 def DashboardAddMangaCompleto(request):
     
-    context = {
+    if request.method == 'POST':
+        form = AdicionarMangaCompletoForm(request.POST)
+        if form.is_valid():
+            manga_id = form.cleaned_data['manga']
+            volume_number = form.cleaned_data['volume_number']
+            qtd_caps = form.cleaned_data['qtd_caps']
+            cap_inicial = form.cleaned_data['cap_inicial']
         
+            try:
+                # Tenta criar a temporada
+                volume_temporario = VolumeManga(number=volume_number, manga_id=manga_id)
+                volume_temporario.save()
+                volume_temporario.insert_caps(qtd_caps=qtd_caps, number_cap=cap_inicial)
+                messages.success(request, 'Volume adicionado com sucesso.')
+            except IntegrityError:
+                # Se a temporada já existe, exibe uma mensagem de erro
+                volume_temporario = VolumeManga.objects.get(number=volume_number, manga_id=manga_id)
+                volume_temporario.insert_caps(qtd_caps=qtd_caps, number_cap=cap_inicial)
+                messages.error(request, 'Já existe um volume com este número e mangá. Porém, adicionamos os capítulos')
+
+            return redirect('accounts:DashboardAddMangaCompleto')
+        else:
+            form = AdicionarMangaCompletoForm()
+    else:
+        form = AdicionarMangaCompletoForm()
+
+    context = {
+        'form': form
     }
     template_name = 'DashboardAddMangaCompleto.html'
 

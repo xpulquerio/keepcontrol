@@ -27,6 +27,8 @@ def ListAnime (request):
     for anime in animes:
         temp_count = SeasonAnime.get_qtd_seasons(anime.id)
         anime.qtd_temps = temp_count
+        
+        anime.descricao_completa()
                 
         for temp in favoritos: #Verifica quais animes já estão favoritados
             if temp.anime_id == anime.id and temp.user_id == user_id:
@@ -164,10 +166,11 @@ def InserirAnimeFavorito(request, anime_id):
 def AdicionarNovoEP(request, season_id, anime_id):
     
     #Pegar número do último episódio da temporada e não tiver último zera
+
     try:
-        EpisodeAnime.objects.filter(season_id=season_id).order_by('number').last().number
+        x = EpisodeAnime.objects.filter(season_id=season_id).order_by('number').last().number
     except:
-        x=0
+        x = 0
     
     #Soma +1 ao número do episódio
     x = x+1
