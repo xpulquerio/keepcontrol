@@ -8,14 +8,23 @@ from django.db.models import Q
 # Create your models here.
 
 def ListMovie(request):
+    search_query1 = request.GET.get('search1', '')
+    search_query2 = request.GET.get('search2', '')
     
-    search_query = request.GET.get('search')
-    
-    if search_query:
-        movies = Movie.objects.search(search_query)
+    if search_query1 and search_query2:
         movies = Movie.objects.filter(
-            Q(pt_title__icontains=search_query) |  # Busca por título em português (case-insensitive)
-            Q(or_title__icontains=search_query)    # Busca por título em inglês (case-insensitive)
+            (Q(pt_title__icontains=search_query1) |
+            Q(or_title__icontains=search_query1)) and
+            Q(collection__icontains=search_query2)
+        ).order_by('pt_title')
+    elif search_query1:
+        movies = Movie.objects.filter(
+            Q(pt_title__icontains=search_query1) |
+            Q(or_title__icontains=search_query1)
+        ).order_by('pt_title')
+    elif search_query2:
+        movies = Movie.objects.filter(
+            Q(collection__icontains=search_query2)
         ).order_by('pt_title')
     else:
         movies = Movie.objects.all().order_by('collection', '-created_at')
@@ -28,18 +37,16 @@ def ListMovie(request):
             movie.date_watched = user_movie.date_watched
     
     movies_paginator = Paginator(movies, 20)
-    
     page_num = request.GET.get('page')
-   
     page = movies_paginator.get_page(page_num)
     
     template_name = 'movies.html'
     context = {
         'page': page,
-        #'qtd_movies': movies.count()
         'qtd_movies': movies_paginator.count,
         'qtd_pages': movies_paginator.num_pages,
-        'search_query': search_query  # Passar o valor de busca para o template
+        'search_query1': search_query1,
+        'search_query2': search_query2,
     }
 
     return render(request, template_name, context)
