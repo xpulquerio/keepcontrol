@@ -584,21 +584,45 @@ def DashboardAddMangaCompleto(request):
 
 @user_passes_test(lambda u: u.is_staff)
 def DashboardAddMovie(request):
-    
+    if request.method == 'POST':
+        form = AdicionarMovieForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Filme adicionado com sucesso.')
+            return redirect('accounts:DashboardAddMovie')
+        else:
+            messages.error(request, 'Erro ao adicionar filme!')
+            return redirect('accounts:DashboardAddMovie')
+    else:
+        form = AdicionarMovieForm()
+
     context = {
-        
+        'form': form
     }
-    template_name = 'DashboardAddSerie.html'
+    template_name = 'DashboardAddMovie.html'
 
     return render(request, template_name, context)
 
 @user_passes_test(lambda u: u.is_staff)
 def DashboardAddBook(request):
     
+    if request.method == 'POST':
+        form = AdicionarBookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Livro adicionado com sucesso.')
+            return redirect('accounts:DashboardAddBook')
+        else:
+            messages.error(request, 'Erro ao adicionar')
+            return redirect('accounts:DashboardAddBook')
+    else:
+        form = AdicionarBookForm()
+
     context = {
-        
+        'form': form
     }
-    template_name = 'DashboardAddSerie.html'
+
+    template_name = 'DashboardAddBook.html'
 
     return render(request, template_name, context)
 

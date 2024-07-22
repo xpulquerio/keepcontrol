@@ -228,4 +228,31 @@ class AdicionarMangaCompletoForm(forms.Form):
         self.fields['manga'].widget.attrs['class'] = 'form-control select2'
 
 
+## ------------ MOVIE --------------------
+
+
+class AdicionarMovieForm(forms.ModelForm):
+     
+    class Meta:
+        model = Movie
+        fields = "__all__"
     
+    def __init__(self, *args, **kwargs):
+        super(AdicionarMovieForm, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
+
+
+## ------------ BOOK --------------------
+
+
+class AdicionarBookForm(forms.ModelForm):
+     
+    class Meta:
+        model = Book
+        fields = "__all__"
+    
+    def __init__(self, *args, **kwargs):
+        super(AdicionarBookForm, self).__init__(*args, **kwargs)
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control' #Adicionando uma class para os fields
