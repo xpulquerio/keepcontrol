@@ -50,7 +50,7 @@ MY_APPS = [
 ]
 
 THIRD_APPS = [
-    
+    'import_export',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + MY_APPS + THIRD_APPS #ORGANIZANDO MINHAS APLICAÇÕES
@@ -94,14 +94,25 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # },
-    'default': {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'db_conteudo',
+    #     'USER': 'postgres',
+    #     'PASSWORD': '123456', #123456 #i1o05s
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    # },
+        'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_conteudo',
-        'USER': 'postgres',
-        'PASSWORD': '123456', #123456 #i1o05s
-        'HOST': 'localhost',
+        'OPTIONS': {
+                'options': '-c search_path=cnt'
+        },
+        'NAME': 'organization',
+        'USER': 'root',
+        'PASSWORD': 'e0w8fi7', #123456 #i1o05s
+        'HOST': '164.163.10.134',
         'PORT': '5432',
-    },
+    }
 }
 
 
